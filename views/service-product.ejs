@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= service.title %></title>
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <style>
+        /* Icon Colors for Service Product Page */
+        .fa-solid, .fas {
+            color: #10c610 !important; /* Primary green color */
+        }
+        
+        /* Social Media Icons */
+        .social-icon a i.fab.fa-facebook-f,
+        .social-icon a i.fab.fa-instagram {
+            color: #fff !important;
+        }
+        
+        /* Navigation Icons */
+        .fa-angle-down,
+        .fa-bars,
+        .fa-times,
+        .fa-search,
+        .fa-chevron-up,
+        .fa-arrow-right-long {
+            color: #10c610 !important;
+        }
+        
+        /* User Icons */
+        .fa-user-circle,
+        .fa-gauge,
+        .fa-cart-shopping,
+        .fa-right-from-bracket {
+            color: #10c610 !important;
+        }
+        
+        /* Contact Icons */
+        .fa-map-marker-alt,
+        .fa-envelope,
+        .fa-clock,
+        .fa-phone {
+            color: #10c610 !important;
+        }
+        
+        /* Feature Icons */
+        .feature-icon {
+            color: #10c610 !important;
+        }
+        
+        /* Mobile Menu Icons */
+        .mobile-nav-list .fa-chevron-down {
+            color: #fff !important;
+        }
+        
+        /* Dropdown Icons */
+        .dropdown-toggle::after {
+            color: #10c610 !important;
+        }
+        
+        /* Back to Top Icon */
+        .back-to-top i {
+            color: #fff !important;
+        }
+        
+        /* Alert Close Icon */
+        .btn-close {
+            color: #10c610 !important;
+        }
+        
+        /* Theme Button Icons */
+        .theme-btn i {
+            color: #fff !important;
+        }
+        
+        /* Quantity Button Icons */
+        .quantity-btn {
+            color: #10c610 !important;
+        }
+        
+        /* How It Works Arrow */
+        .how-step div:first-child {
+            color: #10c610 !important;
+        }
+
+        /* Product Detail Section Styles */
+        .product-img-box {
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .product-img-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img-box img {
+            max-width: 320px;
+            width: 100%;
+           height: 420px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .buy-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .buy-box h2 {
+            color: #0a2233;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .buy-box .text-muted {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .plan-price {
+            font-size: 1.3rem;
+            color: #10c610;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-radius: 12px;
+            width: fit-content;
+            border: 1px solid #e9ecef;
+            margin: 1.5rem 0;
+        }
+
+        .quantity-btn {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            color: #10c610;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .quantity-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .quantity-display {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0a2233;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .total-price {
+            font-size: 1.4rem;
+            color: #0a2233;
+            margin: 1.5rem 0;
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #10c610 0%, #0da30d 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(16, 198, 16, 0.2);
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 198, 16, 0.3);
+        }
+
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Features Section Styles */
+        .features-section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+
+        .features-section h3 {
+            color: #0a2233;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .features-section h5 {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: #10c610;
+        }
+
+        .feature-content b {
+            color: #0a2233;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .feature-content .text-muted {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .how-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .how-step:hover {
+            transform: translateX(5px);
+        }
+
+        .how-step b {
+            color: #0a2233;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .how-step .text-muted {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Related Products Section Styles */
+        .related-products {
+            margin: 3rem 0;
+        }
+
+        .related-products h4 {
+            color: #0a2233;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .related-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .related-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .related-content {
+            padding: 20px;
+        }
+
+        .related-title {
+            color: #0a2233;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .related-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .related-price {
+            color: #10c610;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-bottom{
+            background: #0a2233 !important;
+        }
+        /* Responsive Styles */
+        @media (max-width: 991px) {
+            .buy-box {
+                margin-top: 2rem;
+            }
+
+            .buy-box h2 {
+                font-size: 1.8rem;
+            }
+
+            .features-section {
+                padding: 30px;
+            }
+
+            .features-section h3 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .product-img-box {
+                padding: 15px;
+            }
+
+            .buy-box {
+                padding: 20px;
+            }
+
+            .buy-box h2 {
+                font-size: 1.6rem;
+            }
+
+            .quantity-box {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-section {
+                padding: 20px;
+            }
+
+            .feature-box, .how-step {
+                padding: 15px;
+            }
+
+            .related-img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+<%- include('navbar') %>
+<div class="container py-5" >
+    <!-- Section 1: Product Detail -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div class="product-img-box">
+                <img src="<%= service.image %>" alt="<%= service.title %>" style="max-width: 520px; width: 100%; height: auto; ">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="buy-box">
+                <h2><%= service.title %></h2>
+                <p class="text-muted"><%= service.shortDescription %></p>
+                <div class="plan-price">Plan Price: ₹<%= service.price %>.00</div>
+                <div class="quantity-box">
+                    <button class="quantity-btn" onclick="changeQty(-1)">-</button>
+                    <input id="qtyInput" type="number" min="1" value="1" class="quantity-display" style="width:60px;text-align:center;" onchange="manualQtyChange(this)">
+                    <button class="quantity-btn" onclick="changeQty(1)">+</button>
+                </div>
+                <div class="total-price">Total: <span id="total"><%= service.price %>.00</span></div>
+                <button class="add-to-cart-btn" id="addToCartBtn" data-service="<%= service.serviceKey %>" data-price="<%= service.price %>">
+                    <i class="fas fa-cart-plus" style="color:white !important;"></i> Add to Cart
+                </button>
+                <div class="secure-checkout">
+                    <i class="fas fa-lock"></i> Secure checkout
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Section 2: Detailed Information -->
+    <div class="features-section">
+        <div class="col-lg-10 mx-auto">
+            <h3><%= service.title %></h3>
+            <h5 class="text-secondary"><%= service.shortDescription %></h5>
+            <p><%= service.detailedDescription %></p>
+            <hr>
+            <h4 class="mb-4">Key Features</h4>
+            <div class="row mb-4">
+                <% service.features.forEach(function(feature) { %>
+                    <div class="col-md-6">
+                        <div class="feature-box">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <div class="feature-content">
+                                <b><%= feature.title %></b>
+                                <span class="text-muted"><%= feature.desc %></span>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+            <hr>
+            <h4 class="mb-4">How It Works</h4>
+            <% service.howItWorks.forEach(function(step) { %>
+                <div class="how-step">
+                    <div class="step-icon">→</div>
+                    <div class="step-content">
+                        <b><%= step.title %></b>
+                        <span class="text-muted"><%= step.desc %></span>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <!-- Section 3: Related Products -->
+    <% if (related && related.length > 0) { %>
+    <div class="related-products">
+        <div class="container">
+            <h4>Related Services</h4>
+            <div class="row">
+                <% related.forEach(function(prod) { %>
+                    <div class="col-md-4 mb-4">
+                        <a href="/service/<%= prod.slug %>" style="text-decoration:none;color:inherit;">
+                            <div class="related-card">
+                                <img src="<%= prod.image %>" style="width:100% !important;height:320px !important;object-fit:cover;" class="related-img" alt="<%= prod.title %>">
+                                <div class="related-content">
+                                    <div class="related-title"><%= prod.title %></div>
+                                    <div class="related-description"><%= prod.shortDescription %></div>
+                                    <div class="related-price">₹<%= prod.price %>.00</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+<%- include('footer') %>
+<script>
+    let qty = 1;
+    var price = <%= service.price %>;
+    
+    function changeQty(val) {
+        qty = Math.max(1, qty + val);
+        document.getElementById('qtyInput').value = qty;
+        document.getElementById('total').innerText = `₹${qty * price}.00`;
+    }
+
+    function manualQtyChange(input) {
+        let val = parseInt(input.value, 10);
+        if (isNaN(val) || val < 1) val = 1;
+        qty = val;
+        input.value = qty;
+        document.getElementById('total').innerText = `₹${qty * price}.00`;
+    }
+
+    document.getElementById('addToCartBtn').addEventListener('click', async function() {
+        const service = this.dataset.service;
+        const price = this.dataset.price;
+        try {
+            const response = await fetch('/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    service,
+                    price,
+                    quantity: qty
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // Show success message
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                alertDiv.style.zIndex = '1050';
+                alertDiv.innerHTML = `
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 2000);
+                window.location.href = data.viewCartUrl;
+            } else if (data.redirect) {
+                // Redirect to login page
+                window.location.href = data.redirect;
+            } else {
+                throw new Error(data.message || 'Could not add to cart.');
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            alert(err.message || 'Could not add to cart.');
+        }
+    });
+</script>
+
+<!--<< All JS Plugins >>-->
+<script src="/js/jquery-3.7.1.min.js"></script>
+<!--<< Bootstrap Js >>-->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<!--<< Waypoints Js >>-->
+<script src="/js/jquery.waypoints.js"></script>
+<!--<< Counterup Js >>-->
+<script src="/js/jquery.counterup.min.js"></script>
+<!--<< Viewport Js >>-->
+<script src="/js/viewport.jquery.js"></script>
+<!--<< Tilt Js >>-->
+<script src="/js/tilt.min.js"></script>
+<!--<< Swiper Slider Js >>-->
+<script src="/js/swiper-bundle.min.js"></script>
+<!--<< MeanMenu Js >>-->
+<script src="/js/jquery.meanmenu.min.js"></script>
+<!--<< Magnific popup Js >>-->
+<script src="/js/magnific-popup.min.js"></script>
+<!--<< Wow Animation Js >>-->
+<script src="/js/wow.min.js"></script>
+<!--<< NIce Select Js >>-->
+<script src="/js/nice-select.min.js"></script>
+<!--<< Main.js >>-->
+<script src="/js/main.js"></script>
+
+<!-- Navigation and Dropdown Scripts -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Bootstrap dropdowns
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            return new bootstrap.Dropdown(dropdownToggleEl);
+        });
+
+        // Services dropdown specific handling
+        const servicesDropdown = document.querySelector('li a[href="/services"]');
+        const servicesSubmenu = document.querySelector('.submenu-grid');
+        
+        if (servicesDropdown && servicesSubmenu) {
+            // Desktop hover behavior
+            if (window.innerWidth > 991) {
+                servicesDropdown.addEventListener('mouseenter', function() {
+                    servicesSubmenu.style.display = 'block';
+                });
+
+                const servicesLi = servicesDropdown.closest('li');
+                servicesLi.addEventListener('mouseleave', function() {
+                    servicesSubmenu.style.display = 'none';
+                });
+            }
+
+            // Mobile click behavior
+            if (window.innerWidth <= 991) {
+                servicesDropdown.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isVisible = servicesSubmenu.style.display === 'block';
+                    servicesSubmenu.style.display = isVisible ? 'none' : 'block';
+                });
+            }
+        }
+
+        // Mobile menu toggle
+        const sidebarToggle = document.querySelector('.sidebar__toggle');
+        const headerMiddle = document.querySelector('.header-middle');
+        const offcanvasOverlay = document.querySelector('.offcanvas__overlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            headerMiddle.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        }
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+        }
+
+        if (offcanvasOverlay) {
+            offcanvasOverlay.addEventListener('click', function() {
+                toggleMenu();
+            });
+        }
+
+        // Handle window resize for services dropdown
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 991) {
+                // Reset mobile-specific styles
+                if (servicesSubmenu) {
+                    servicesSubmenu.style.display = '';
+                }
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 991) {
+                if (!e.target.closest('li') && servicesSubmenu) {
+                    servicesSubmenu.style.display = 'none';
+                }
+            }
+        });
+
+        // Mobile nav dropdown toggle
+        var mobileDropdown = document.querySelector('.mobile-dropdown');
+        var dropdownToggle = document.getElementById('mobileServicesToggle');
+        var dropdownMenu = document.getElementById('mobileServicesMenu');
+        
+        if (mobileDropdown && dropdownToggle && dropdownMenu) {
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                mobileDropdown.classList.toggle('open');
+            });
+        }
+
+        // Handle user dropdown
+        const userDropdown = document.getElementById('userDropdown');
+        const dropdownMenu = userDropdown?.nextElementSibling;
+        
+        if (userDropdown && dropdownMenu) {
+            userDropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 991) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('show');
+                    dropdownMenu.classList.toggle('show');
+                }
+            });
+
+            // Close user dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 991) {
+                    if (!userDropdown.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        userDropdown.classList.remove('show');
+                        dropdownMenu.classList.remove('show');
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html> 

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --admin-accent: #2563eb;
+            --admin-accent-light: #e0e7ff;
+            --admin-danger: #ef4444;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .services-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .services-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            height: 100%;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background: white;
+            padding: 8px;
+        }
+
+        .service-card .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-card .token-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+            background: var(--sidebar-active);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .token-count.no-tokens {
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .token-count.no-tokens::before {
+            content: '⚠️ ';
+        }
+
+        .service-card.disabled {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .service-card.disabled .btn-primary {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .service-card.disabled .token-count {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .service-card .btn-primary {
+            background: var(--primary);
+            border: none;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 22px;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .service-card .btn-primary:hover {
+            background: #166b48;
+            box-shadow: 0 0 0 3px #e0e7ff, 0 4px 16px rgba(37,99,235,0.18);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .service-card .dropdown-menu {
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            padding: 8px;
+        }
+
+        .service-card .dropdown-item {
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .service-card .dropdown-item:hover {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .service-card .dropdown-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-card .btn-group {
+            width: 100%;
+        }
+
+        .service-card .btn-group .btn {
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .service-card .btn-group .btn::after {
+            margin-left: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                padding: 20px;
+            }
+            .services-header {
+                padding: 20px;
+            }
+            .services-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+   <%- include('sidenav') %>
+    <main class="main" style="margin-top: 100px;"   >
+        <div class="services-header">
+            <h1>All Services</h1>
+        </div>
+
+        <div class="row g-4">
+            <!-- Profile Services -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.profile === 0 ? 'disabled' : '' %>">
+                    <img src="https://marketplace.canva.com/EAF75m0WyyA/1/0/1600w/canva-white-grey-simple-minimalist-student-id-card-TsPWqeUiHcI.jpg" alt="Profile Services" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-user me-2"></i>Profile Services</h6>
+                        <span class="token-count <%= user.tokens.profile === 0 ? 'no-tokens' : '' %>" data-service="profile">
+                            <%= user.tokens.profile === 0 ? 'No Tokens Available' : user.tokens.profile %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/profile/fetch-personal">Fetch Personal Info</a></li>
+                                <li><a class="dropdown-item" href="/profile/fetch-national-ids">Fetch National IDs</a></li>
+                                <li><a class="dropdown-item" href="/profile/fetch-address">Fetch Address</a></li>
+                                <li><a class="dropdown-item" href="/profile/fetch-pan">Fetch PAN</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAN Card -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.pan === 0 ? 'disabled' : '' %>">
+                    <img src="https://www.pancardapp.com/blog/wp-content/uploads/2019/04/sample-pan-card.jpg" alt="PAN Card" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-id-card me-2"></i>PAN Card</h6>
+                        <span class="token-count <%= user.tokens.pan === 0 ? 'no-tokens' : '' %>" data-service="pan">
+                            <%= user.tokens.pan === 0 ? 'No Tokens Available' : user.tokens.pan %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/pan-verify">Verify PAN</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aadhar Card -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.aadhar === 0 ? 'disabled' : '' %>">
+                    <img src="https://adharcarddownload.co/wp-content/uploads/2024/06/aadhaar-card.webp" alt="Aadhar Card" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-id-card me-2"></i>Aadhar Card</h6>
+                        <span class="token-count <%= user.tokens.aadhar === 0 ? 'no-tokens' : '' %>" data-service="aadhar">
+                            <%= user.tokens.aadhar === 0 ? 'No Tokens Available' : user.tokens.aadhar %>
+                        </span>
+                        <a href="/verification/aadhar-verify" class="btn btn-primary w-100">Verify Aadhar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GST -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.gst === 0 ? 'disabled' : '' %>">
+                    <img src="https://www.indiafilings.com/learn/wp-content/uploads/2016/12/gst-number-format-decoding-the-GST-registration-number.png" alt="GST" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-building me-2"></i>GST</h6>
+                        <span class="token-count <%= user.tokens.gst === 0 ? 'no-tokens' : '' %>" data-service="gst">
+                            <%= user.tokens.gst === 0 ? 'No Tokens Available' : user.tokens.gst %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/gst-fetch-detailed">GST Fetch Detailed</a></li>
+                                <li><a class="dropdown-item" href="/gst-fetch-by-pan">GST Fetch by PAN</a></li>
+                                <li><a class="dropdown-item" href="/gst-fetch-by-name">GST Fetch by Name</a></li>
+                                <li><a class="dropdown-item" href="/gst-fetch-contact-details">GST Fetch Contact Details</a></li>
+                                <li><a class="dropdown-item" href="/gst-fetch-by-mobile">GST Fetch by Mobile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Driving License -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.dl === 0 ? 'disabled' : '' %>">
+                    <img src="/DL.png" alt="Driving License" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-car me-2"></i>Driving License</h6>
+                        <span class="token-count <%= user.tokens.dl === 0 ? 'no-tokens' : '' %>" data-service="dl">
+                            <%= user.tokens.dl === 0 ? 'No Tokens Available' : user.tokens.dl %>
+                        </span>
+                        <a href="/dl-verify" class="btn btn-primary w-100">Verify DL</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voter ID -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.voter === 0 ? 'disabled' : '' %>">
+                    <img src="https://cleartax-media.s3.amazonaws.com/finfo/wg-utils/cms-tool/49e3852e-07ad-45dd-8fe5-34b1cc500449.PNG" alt="Voter ID" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-vote-yea me-2"></i>Voter ID</h6>
+                        <span class="token-count <%= user.tokens.voter === 0 ? 'no-tokens' : '' %>" data-service="voter">
+                            <%= user.tokens.voter === 0 ? 'No Tokens Available' : user.tokens.voter %>
+                        </span>
+                        <a href="/voter-verify" class="btn btn-primary w-100">Verify Voter ID</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CoWIN -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.cowin === 0 ? 'disabled' : '' %>">
+                    <img src="https://5.imimg.com/data5/SELLER/Default/2021/10/DC/FF/NZ/118894861/cowin-id-card.jpg" alt="CoWIN" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-syringe me-2"></i>CoWIN</h6>
+                        <span class="token-count <%= user.tokens.cowin === 0 ? 'no-tokens' : '' %>" data-service="cowin">
+                            <%= user.tokens.cowin === 0 ? 'No Tokens Available' : user.tokens.cowin %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/cowin-generate-otp">Generate OTP</a></li>
+                                <li><a class="dropdown-item" href="/cowin-validate-otp">Validate OTP</a></li>
+                                <li><a class="dropdown-item" href="/cowin-beneficiaries">Fetch Beneficiaries</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Verification -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.bank === 0 ? 'disabled' : '' %>">
+                    <img src="https://cdn.prod.website-files.com/64be86eaa29fa71f24b00685/65c4b96edb1a5dc0920934ff_How%20does%20instant%20bank%20account%20verification%20work_.png" alt="Bank Verification" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-building-columns me-2"></i>Bank Verification</h6>
+                        <span class="token-count <%= user.tokens.bank === 0 ? 'no-tokens' : '' %>" data-service="bank">
+                            <%= user.tokens.bank === 0 ? 'No Tokens Available' : user.tokens.bank %>
+                        </span>
+                        <a href="/bank-verification" class="btn btn-primary w-100">Verify Bank Account</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCA -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.mca === 0 ? 'disabled' : '' %>">
+                    <img src="https://media.licdn.com/dms/image/v2/C4E0BAQHA3ZaW3AU_BA/company-logo_200_200/company-logo_200_200/0/1630623585283/mca_services_and_engineering_logo?e=2147483647&v=beta&t=O_BJ4kMjN9fhXQFGVQ4A9g971uRgo0gpdaOzStRZqyU" alt="MCA Services" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-building me-2"></i>MCA Services</h6>
+                        <span class="token-count <%= user.tokens.mca === 0 ? 'no-tokens' : '' %>" data-service="mca">
+                            <%= user.tokens.mca === 0 ? 'No Tokens Available' : user.tokens.mca %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/mca-fetch-company">Fetch by Company ID</a></li>
+                                <li><a class="dropdown-item" href="/mca-fetch-director">Fetch by Director DIN</a></li>
+                                <li><a class="dropdown-item" href="/mca-fetch-by-name">Fetch by Company Name</a></li>
+                                <li><a class="dropdown-item" href="/mca-fetch-din-by-pan">Fetch DIN by PAN</a></li>
+                                <li><a class="dropdown-item" href="/mca-fetch-pan-by-din">Fetch PAN by DIN</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criminal & Court -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.ccrv === 0 ? 'disabled' : '' %>">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1fG15qplOyvkJ5n3ba45g1v8v1fFb8Y5tRw&s" alt="Criminal & Court" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-gavel me-2"></i>Criminal & Court</h6>
+                        <span class="token-count <%= user.tokens.ccrv === 0 ? 'no-tokens' : '' %>" data-service="ccrv">
+                            <%= user.tokens.ccrv === 0 ? 'No Tokens Available' : user.tokens.ccrv %>
+                        </span>
+                        <a href="/verification/services/criminal-court" class="btn btn-primary w-100">Verify CCRV</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employee Verification -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.employee === 0 ? 'disabled' : '' %>">
+                    <img src="https://www.vinmaya.com/wp-content/uploads/2023/04/Employee-Verification-Company-in-Bangalore-7.png" alt="Employee Verification" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-user-tie me-2"></i>Employee Verification</h6>
+                        <span class="token-count <%= user.tokens.employee === 0 ? 'no-tokens' : '' %>" data-service="employee">
+                            <%= user.tokens.employee === 0 ? 'No Tokens Available' : user.tokens.employee %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/employee-fetch-uan">Fetch UAN</a></li>
+                                <li><a class="dropdown-item" href="/employee-fetch-uan-by-pan">Fetch UAN by PAN</a></li>
+                                <li><a class="dropdown-item" href="/employee-verify-employer">Verify Employer</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RC Verification -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.rc === 0 ? 'disabled' : '' %>">
+                    <img src="https://kotaielectronics.com/wp-content/uploads/2024/04/rc.png" alt="RC Verification" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-car me-2"></i>RC Verification</h6>
+                        <span class="token-count <%= user.tokens.rc === 0 ? 'no-tokens' : '' %>" data-service="rc">
+                            <%= user.tokens.rc === 0 ? 'No Tokens Available' : user.tokens.rc %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/rc-fetch-detailed">RC Fetch Detailed</a></li>
+                                <li><a class="dropdown-item" href="/rc-fetch-detailed-challan">RC Fetch Detailed Challan</a></li>
+                                <li><a class="dropdown-item" href="/rc-fetch-by-chassis">RC Fetch by Chassis</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passport Verification -->
+            <div class="col-md-4">
+                <div class="service-card <%= user.tokens.passport === 0 ? 'disabled' : '' %>">
+                    <img src="https://acko-cms.s3.ap-south-1.amazonaws.com/large_police_verification_for_passport_5766e425e5.png" alt="Passport Verification" class="card-image">
+                    <div class="card-content">
+                        <h6 class="card-title"><i class="fa-solid fa-passport me-2"></i>Passport Verification</h6>
+                        <span class="token-count <%= user.tokens.passport === 0 ? 'no-tokens' : '' %>" data-service="passport">
+                            <%= user.tokens.passport === 0 ? 'No Tokens Available' : user.tokens.passport %>
+                        </span>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Select Service
+                            </button>
+                            <ul class="dropdown-menu w-100">
+                                <li><a class="dropdown-item" href="/services/passport-generate-mrz">Generate MRZ</a></li>
+                                <li><a class="dropdown-item" href="/services/passport-verify-mrz">Verify MRZ</a></li>
+                                <li><a class="dropdown-item" href="/services/passport-verify">Passport Verify</a></li>
+                                <li><a class="dropdown-item" href="/services/passport-fetch">Passport Fetch</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/services/passport">All Options</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Function to update token counts
+    function updateTokenCounts(tokens) {
+        Object.entries(tokens).forEach(([service, count]) => {
+            const elements = document.querySelectorAll(`.token-count[data-service="${service}"]`);
+            const cards = document.querySelectorAll(`.service-card:has(.token-count[data-service="${service}"])`);
+            
+            elements.forEach(element => {
+                if (count === 0) {
+                    element.textContent = 'No Tokens Available';
+                    element.classList.add('no-tokens');
+                } else {
+                    element.textContent = count;
+                    element.classList.remove('no-tokens');
+                }
+            });
+
+            cards.forEach(card => {
+                if (count === 0) {
+                    card.classList.add('disabled');
+                } else {
+                    card.classList.remove('disabled');
+                }
+            });
+        });
+    }
+
+    // Check for token updates every 2 seconds
+    setInterval(async function() {
+        try {
+            const response = await fetch('/dashboard/update-tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    updateTokenCounts(data.tokens);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking token updates:', error);
+        }
+    }, 2000);
+</script>
+</body>
+</html> 

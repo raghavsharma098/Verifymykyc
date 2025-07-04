@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+</head>
+<body>
+   
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Verification History</h2>
+        
+        <% if (verifications && verifications.length > 0) { %>
+            <% verifications.forEach(function(verification) { %>
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <% if (verification.service === 'gst') { %>
+                                GST Verification
+                            <% } else if (verification.service === 'pan') { %>
+                                PAN Verification
+                            <% } else if (verification.service === 'voter') { %>
+                                Voter ID Verification
+                            <% } else if (verification.service === 'dl') { %>
+                                Driving License Verification
+                            <% } else if (verification.service === 'aadhar') { %>
+                                Aadhar Verification
+                            <% } %>
+                        </h5>
+                        <span class="badge bg-primary">Verified</span>
+                    </div>
+                    <div class="card-body">
+                        <% if (verification.service === 'gst') { %>
+                            <p><strong>GSTIN:</strong> <%= verification.result.data.gstin %></p>
+                            <p><strong>Business Name:</strong> <%= verification.result.data.businessName %></p>
+                            <p><strong>Legal Name:</strong> <%= verification.result.data.legalName %></p>
+                            <p><strong>PAN:</strong> <%= verification.result.data.pan %></p>
+                            <p><strong>Address:</strong> <%= verification.result.data.address %></p>
+                            <p><strong>State:</strong> <%= verification.result.data.state %></p>
+                            <p><strong>Pincode:</strong> <%= verification.result.data.pincode %></p>
+                            <p><strong>Registration Date:</strong> <%= verification.result.data.registrationDate %></p>
+                            <p><strong>Status:</strong> <%= verification.result.data.status %></p>
+                            <p><strong>Constitution of Business:</strong> <%= verification.result.data.constitutionOfBusiness %></p>
+                            <p><strong>Taxpayer Type:</strong> <%= verification.result.data.taxpayerType %></p>
+                            <p><strong>Center Jurisdiction:</strong> <%= verification.result.data.centerJurisdiction %></p>
+                            <p><strong>State Jurisdiction:</strong> <%= verification.result.data.stateJurisdiction %></p>
+                            <p><strong>Verified on:</strong> <%= verification.result.data.verificationDate %></p>
+                        <% } else if (verification.service === 'pan') { %>
+                            <p><strong>PAN Number:</strong> <%= verification.result.data.panNumber %></p>
+                            <p><strong>Name:</strong> <%= verification.result.data.firstName %> <%= verification.result.data.lastName %></p>
+                            <p><strong>Status:</strong> <%= verification.result.data.status %></p>
+                            <p><strong>Verified on:</strong> <%= verification.result.data.verificationDate %></p>
+                        <% } else if (verification.service === 'voter') { %>
+                            <p><strong>Name:</strong> <%= verification.result.data.name %></p>
+                            <p><strong>Husband's Name:</strong> <%= verification.result.data.husbandName %></p>
+                            <p><strong>Age:</strong> <%= verification.result.data.age %></p>
+                            <p><strong>Gender:</strong> <%= verification.result.data.gender %></p>
+                            <p><strong>District:</strong> <%= verification.result.data.district %></p>
+                            <p><strong>State:</strong> <%= verification.result.data.state %></p>
+                            <p><strong>Assembly Constituency:</strong> <%= verification.result.data.assemblyConstituency %></p>
+                            <p><strong>Parliamentary Constituency:</strong> <%= verification.result.data.parliamentaryConstituency %></p>
+                            <p><strong>Part Name:</strong> <%= verification.result.data.partName %></p>
+                            <p><strong>Polling Station:</strong> <%= verification.result.data.pollingStation %></p>
+                            <p><strong>Verified on:</strong> <%= verification.result.data.verificationDate %></p>
+                        <% } else if (verification.service === 'dl') { %>
+                            <p><strong>Name:</strong> <%= verification.result.data.name %></p>
+                            <p><strong>Date of Birth:</strong> <%= verification.result.data.dateOfBirth %></p>
+                            <p><strong>Valid From:</strong> <%= verification.result.data.validFrom %></p>
+                            <p><strong>Valid To:</strong> <%= verification.result.data.validTo %></p>
+                            <p><strong>Address:</strong> <%= verification.result.data.address %></p>
+                            <p><strong>State:</strong> <%= verification.result.data.state %></p>
+                            <p><strong>Pincode:</strong> <%= verification.result.data.pincode %></p>
+                            <p><strong>Blood Group:</strong> <%= verification.result.data.bloodGroup %></p>
+                            <p><strong>Vehicle Classes:</strong> <%= verification.result.data.vehicleClasses.join(', ') %></p>
+                            <p><strong>Status:</strong> <%= verification.result.data.status %></p>
+                            <p><strong>Verified on:</strong> <%= verification.result.data.verificationDate %></p>
+                        <% } else if (verification.service === 'aadhar') { %>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Aadhaar Number:</strong> <%= verification.result.data.aadhaar_number || verification.result.data.data.aadhaar_number %></p>
+                                    <p><strong>Name:</strong> <%= verification.result.data.data.aadhaar_data.name %></p>
+                                    <p><strong>Gender:</strong> <%= verification.result.data.data.aadhaar_data.gender %></p>
+                                    <p><strong>Date of Birth:</strong> <%= verification.result.data.data.aadhaar_data.date_of_birth %></p>
+                                    <p><strong>Care Of:</strong> <%= verification.result.data.data.aadhaar_data.care_of %></p>
+                                    <p><strong>Address:</strong> <%= [
+                                        verification.result.data.data.aadhaar_data.house,
+                                        verification.result.data.data.aadhaar_data.locality,
+                                        verification.result.data.data.aadhaar_data.district,
+                                        verification.result.data.data.aadhaar_data.state,
+                                        verification.result.data.data.aadhaar_data.pincode
+                                    ].filter(Boolean).join(', ') %></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Landmark:</strong> <%= verification.result.data.data.aadhaar_data.landmark %></p>
+                                    <p><strong>Post Office:</strong> <%= verification.result.data.data.aadhaar_data.post_office_name %></p>
+                                    <p><strong>VTC Name:</strong> <%= verification.result.data.data.aadhaar_data.vtc_name %></p>
+                                    <p><strong>Country:</strong> <%= verification.result.data.data.aadhaar_data.country %></p>
+                                    <p><strong>Reference ID:</strong> <%= verification.result.data.data.aadhaar_data.reference_id %></p>
+                                    <p><strong>Verified on:</strong> <%= verification.result.data.verificationDate %></p>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="alert alert-info">
+                No verification history found.
+            </div>
+        <% } %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

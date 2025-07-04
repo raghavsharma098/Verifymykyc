@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Verify My KYC">
+    <meta name="description" content="Verify My KYC">
+    <!-- ======== Page title ============ -->
+    <title>Verify My KYC</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href=images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+
+        .theme-btn {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        /* Buttons */
+        .theme-btn,
+        .theme-btn.style4,
+        .theme-btn.style5 {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-green) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .theme-btn:hover,
+        .theme-btn:focus {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .theme-btn.style2 {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-orange) !important;
+            color: #fff !important;
+        }
+
+        /* Header */
+        .header-section-33,
+        #header-sticky.header-1.header-3 {
+            background: white !important;
+            border-bottom: 3px solid var(--primary-green);
+        }
+
+        .header-logo img {
+            filter: drop-shadow(0 2px 8px rgba(26, 121, 179, 0.08));
+        }
+
+        /* Navigation links */
+        .main-menu ul li a {
+            color: #000 !important;
+            font-weight: 500;
+        }
+
+        .main-menu ul li.active>a,
+        .main-menu ul li a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        /* Section Titles */
+        .section-title .title,
+        .single-section-title {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .section-title .subtitle,
+        .single-section-title .subtitle {
+            color: black !important;
+            font-weight: 600;
+        }
+
+        /* Subtitles with bg2 */
+        .bg2 {
+            background: var(--primary-orange) !important;
+            color: #fff !important;
+            border-radius: 6px;
+            padding: 0.2em 0.8em;
+        }
+
+        /* Pricing Cards */
+        .pricing-card.style1 {
+            border: 2px solid var(--primary-blue) !important;
+            box-shadow: 0 2px 16px 0 rgba(26, 121, 179, 0.08);
+        }
+
+        .pricing-card-header {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .pricing-card .price {
+            color: var(--primary-orange) !important;
+            font-weight: 700;
+        }
+
+        /* Checklist icons */
+        .checklist img,
+        .checklist svg {
+            filter: drop-shadow(0 2px 4px rgba(16, 198, 16, 0.10));
+            color: var(--primary-green) !important;
+            fill: var(--primary-green) !important;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--primary-dark) !important;
+            color: #fff !important;
+        }
+
+        .footer-section a {
+            color: var(--primary-green) !important;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        .footer-bottom.style1 {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        /* Icons */
+        .fa-chevron-up,
+        .fa-arrow-right-long,
+        .fa-search,
+        .fa-bars,
+        .fa-plus,
+        .fa-angle-down {
+            color: var(--primary-green) !important;
+        }
+
+        .fa-facebook-f,
+        .fa-twitter,
+        .fa-linkedin-in,
+        .fa-instagram,
+        .fa-youtube {
+            color: var(--primary-blue) !important;
+        }
+
+        /* Blog Cards */
+        .blog-card.style1 {
+            border-top: 4px solid var(--primary-orange) !important;
+        }
+
+        /* Misc */
+        .back-to-top {
+            color: #fff !important;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-orange) !important;
+        }
+
+        .header-button a {
+            background-color: #1a79b3 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .header-button a:hover {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .subtitle {
+            color: black !important;
+        }
+
+        .wow {
+            color: black !important;
+        }
+
+        .fadeInUp {
+            color: black !important;
+        }
+
+        .hero-image {
+            width: 500px;
+            height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .hero-image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Terms and Conditions Page Styles */
+        .terms-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: #fff;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .terms-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .terms-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .terms-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .terms-content h2 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .terms-content h3 {
+            color: var(--primary-orange);
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+        }
+
+        .terms-content p {
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .terms-content ul li strong {
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .terms-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .terms-content a:hover {
+            color: var(--primary-orange);
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 40px 15px;
+            }
+
+            .terms-header {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+
+            .terms-header h1 {
+                font-size: 2rem;
+            }
+
+            .terms-content {
+                padding: 25px;
+            }
+
+            .terms-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .terms-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .terms-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .terms-content {
+                padding: 20px;
+            }
+
+            .terms-content h2 {
+                font-size: 1.3rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('navbar') %>
+    <!-- Safety Section -->
+    <section class="terms-section">
+        <div class="terms-container">
+            <div class="terms-header" style="background: #019022; color: white;">
+                <h1 style="color: white;">Safety & Security Guidelines</h1>
+                <p>Last updated: June 05, 2025</p>
+            </div>
+            
+            <div class="terms-content">
+                <p>At Verify My KYC, ensuring the safety and security of our users is our highest priority. These guidelines are designed to inform users of the steps we take to protect their data, the measures they should adopt, and the general security practices to follow while using the platform.</p>
+
+                <h2>1. Data Privacy and Protection</h2>
+                <p>We are committed to protecting your personal and sensitive information. Verify My KYC uses advanced encryption technologies to safeguard all data shared through the platform. However, no data transmission over the internet or method of electronic storage can be guaranteed as 100% secure. While we apply best-in-class security measures, we cannot promise absolute data security.</p>
+
+                <h2>2. User Authentication</h2>
+                <p>Accessing certain features or services on Verify My KYC may require users to create an account or log in. We strongly encourage the use of strong, unique passwords and recommend never sharing your credentials with anyone. Immediately report any suspicious login or account activity to our support team.</p>
+
+                <h2>3. Secure Use of the Platform</h2>
+                <ul class="checklist">
+                    <li><strong>Device Security:</strong> Keep your device (laptop, smartphone, tablet, etc.) protected with updated antivirus and anti-malware software.</li>
+                    <li><strong>Network Security:</strong> Always use a secure and private internet connection. Avoid accessing Verify My KYC over public Wi-Fi when entering sensitive details.</li>
+                    <li><strong>Session Management:</strong> Log out after each session, especially when using shared or public devices.</li>
+                </ul>
+
+                <h2>4. Handling of Sensitive Information</h2>
+                <p>We advise users to share personal information only where it is strictly necessary for the verification process. Verify My KYC will never request passwords, banking details, or government identification information through email, calls, or unofficial messaging platforms.</p>
+
+                <h2>5. Reporting Security Issues</h2>
+                <p>If you believe your account has been compromised or notice any suspicious or malicious activity, contact our support team immediately at <a href="mailto:verifymykyc@navigantinc.com">verifymykyc@navigantinc.com</a>. We take all reports seriously and will act promptly to investigate and mitigate any threats.</p>
+
+                <h2>6. Updates and Vulnerability Management</h2>
+                <p>We routinely monitor and update our platform to counteract emerging threats. Software patches and system upgrades are regularly deployed to ensure compliance with current security standards. Users will be notified of any critical updates that may affect their use of Verify My KYC.</p>
+
+                <h2>7. User Responsibility</h2>
+                <p>Users are responsible for maintaining the security of their own accounts and devices. This includes using secure passwords, managing session activity, and safeguarding their personal information. Any unauthorized access caused by user negligence is not the responsibility of Verify My KYC.</p>
+
+                <h2>8. No Liability for External Security Breaches</h2>
+                <p>Although we implement stringent security practices, Verify My KYC is not liable for breaches caused by third-party systems, internet vulnerabilities, or other external threats beyond our control.</p>
+
+                <h2>9. Changes to Safety & Security Guidelines</h2>
+                <p>Verify My KYC reserves the right to update or amend these safety and security guidelines at any time. All changes will be published on this page with the revised date. We encourage users to check this section periodically for the latest information.</p>
+            </div>
+        </div>
+    </section>
+
+    <%- include('footer') %>
+
+    <!--<< All JS Plugins >>-->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

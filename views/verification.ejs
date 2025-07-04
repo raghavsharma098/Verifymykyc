@@ -1,0 +1,47 @@
+        <!-- Aadhar Verification Status -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Aadhar Verification Status</h5>
+            </div>
+            <div class="card-body">
+                <% if (user.documents && user.documents.verifications && user.documents.verifications.length > 0) { %>
+                    <% const aadharVerification = user.documents.verifications.find(v => v.service === 'aadhar') %>
+                    <% if (aadharVerification) { %>
+                        <div class="alert alert-success">
+                            <h6 class="mb-3">Aadhar Verification Completed</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Name:</strong> <%= aadharVerification.result.data.data.aadhaar_data.name %></p>
+                                    <p><strong>Gender:</strong> <%= aadharVerification.result.data.data.aadhaar_data.gender %></p>
+                                    <p><strong>Date of Birth:</strong> <%= aadharVerification.result.data.data.aadhaar_data.date_of_birth %></p>
+                                    <p><strong>Care Of:</strong> <%= aadharVerification.result.data.data.aadhaar_data.care_of %></p>
+                                    <p><strong>Address:</strong> <%= [
+                                        aadharVerification.result.data.data.aadhaar_data.house,
+                                        aadharVerification.result.data.data.aadhaar_data.locality,
+                                        aadharVerification.result.data.data.aadhaar_data.district,
+                                        aadharVerification.result.data.data.aadhaar_data.state,
+                                        aadharVerification.result.data.data.aadhaar_data.pincode
+                                    ].filter(Boolean).join(', ') %></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Landmark:</strong> <%= aadharVerification.result.data.data.aadhaar_data.landmark %></p>
+                                    <p><strong>Post Office:</strong> <%= aadharVerification.result.data.data.aadhaar_data.post_office_name %></p>
+                                    <p><strong>VTC Name:</strong> <%= aadharVerification.result.data.data.aadhaar_data.vtc_name %></p>
+                                    <p><strong>Country:</strong> <%= aadharVerification.result.data.data.aadhaar_data.country %></p>
+                                    <p><strong>Reference ID:</strong> <%= aadharVerification.result.data.data.aadhaar_data.reference_id %></p>
+                                    <p><strong>Verified on:</strong> <%= new Date(aadharVerification.result.data.verificationDate).toLocaleDateString() %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="alert alert-warning">
+                            Aadhar verification not completed yet.
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <div class="alert alert-warning">
+                        No Aadhar verification found.
+                    </div>
+                <% } %>
+            </div>
+        </div> 

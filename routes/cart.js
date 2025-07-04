@@ -6,8 +6,8 @@ const Payment = require('../models/Payment');
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
-    key_id: 'rzp_test_adhAr7uGRzaZhu',
-    key_secret: 'WZsEE5ahNuW9FcgsT7ubwOfN'
+    key_id: 't_rzp_tesadhAr7uGRzaZ',
+    key_secret: 'WZsEE5ahNuW9FcgsT7ubw'
 });
 
 // Middleware to check if user is logged in

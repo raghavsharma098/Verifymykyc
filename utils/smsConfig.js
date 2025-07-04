@@ -1,9 +1,6 @@
 const axios = require('axios');
 
-const SMS_COUNTRY_USER = 'navigant';
-const SMS_COUNTRY_PASSWORD = 'sms_navigant';
-const SMS_COUNTRY_SID = 'VFMKYC';
-const DLT_TEMPLATE_ID = '1207174886554014248'; // Replace with your actual DLT template ID
+ // Replace with your actual DLT template ID
 
 async function sendSMS(phoneNumber, message) {
     try {

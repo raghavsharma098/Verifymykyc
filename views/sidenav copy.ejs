@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #e6ffe8;
+            --sidebar-active: #8effae;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #066524;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --admin-accent: #2563eb;
+            --admin-accent-light: #e0e7ff;
+            --admin-danger: #ef4444;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            gap: 0;
+        }
+
+        .sidebar ul {
+            gap: 0;
+        }
+
+        .sidebar li {
+            display: block;
+        }
+
+        .sidebar .sidebar-section {
+            display: block;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a, .sidebar .sidebar-link {
+            flex-direction: row;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active, .sidebar .sidebar-link.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover, .sidebar .sidebar-link:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                left: -85vw;
+                top: 0;
+                width: 80vw;
+                max-width: 320px;
+                min-width: 220px;
+                height: 100vh;
+                z-index: 1202;
+                background: #fff;
+                box-shadow: 2px 0 24px rgba(0,0,0,0.18);
+                transition: left 0.35s cubic-bezier(.4,2,.6,1);
+                border-right: 1px solid #e0e0e0;
+                padding: 0 0 24px 0;
+                overflow-y: auto;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .sidebar-hamburger {
+                display: block;
+            }
+            .sidebar-close {
+                display: block;
+            }
+        }
+
+        .dropdown-verification {
+            width: 100%;
+            margin-bottom: 6px;
+        }
+        .dropdown-toggle-verification {
+            width: 100%;
+            background: var(--sidebar-active);
+            border: none;
+            outline: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.98rem;
+       
+            gap: 10px;
+            padding: 8px 18px 8px 22px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background 0.18s, box-shadow 0.18s;
+            margin-bottom: 0;
+            box-shadow: 0 1px 4px rgba(37,99,235,0.03);
+            position: relative;
+            min-height: 38px;
+        }
+        .dropdown-toggle-verification .chevron {
+            margin-left: auto;
+            transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+            font-size: 1em;
+        }
+        .dropdown-toggle-verification.open .chevron {
+            transform: rotate(180deg);
+        }
+        .dropdown-menu-verification {
+            list-style: none;
+            padding: 0 0 0 0;
+            margin: 0;
+            background: #f7fafc;
+            border-radius: 0 0 9px 9px;
+            box-shadow: 0 4px 16px rgba(16,30,54,0.07);
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(.4,2,.6,1);
+        }
+        .dropdown-menu-verification.show {
+            max-height: 550px;
+            transition: max-height 1.1s cubic-bezier(.4,2,.6,1);
+        }
+        .dropdown-item-verification {
+            gap: 10px;
+            color: #222;
+            font-size: 0.9rem;
+            padding: 8px 18px 8px 22px;
+            border-radius: 7px;
+            text-decoration: none;
+            transition: background 0.18s, color 0.18s, font-weight 0.18s;
+            margin-bottom: 1px;
+            position: relative;
+            cursor: pointer;
+            min-height: 28px;
+        }
+        .dropdown-item-verification .icon {
+            min-width: 20px;
+            text-align: center;
+            font-size: 1em;
+        }
+        .dropdown-item-verification.active, .dropdown-item-verification:hover {
+            background: #e6f4ea;
+            color: #15803d !important;
+            font-weight: 700;
+        }
+        .dropdown-item-verification.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 3px;
+            border-radius: 3px;
+            background: #15803d;
+        }
+        .sidebar-hamburger {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 1201;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            transition: background 0.2s;
+        }
+        .hamburger-icon {
+            width: 28px;
+            height: 22px;
+            position: relative;
+            display: inline-block;
+        }
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 4px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        }
+        .hamburger-icon span:nth-child(1) { top: 0; }
+        .hamburger-icon span:nth-child(2) { top: 9px; }
+        .hamburger-icon span:nth-child(3) { top: 18px; }
+        .sidebar-hamburger.active .hamburger-icon span:nth-child(1) {
+            top: 9px;
+            transform: rotate(45deg);
+        }
+        .sidebar-hamburger.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        .sidebar-hamburger.active .hamburger-icon span:nth-child(3) {
+            top: 9px;
+            transform: rotate(-45deg);
+        }
+        .sidebar {
+            transition: left 0.35s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+        }
+        .sidebar.open {
+            box-shadow: 2px 0 24px rgba(0,0,0,0.18);
+        }
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 2.2rem;
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 1202;
+            cursor: pointer;
+            display: none;
+            padding: 0;
+            line-height: 1;
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.48);
+            z-index: 1200;
+            display: none;
+            transition: opacity 0.3s;
+        }
+        .sidebar-header {
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 24px 18px 24px;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            flex: 1;
+            text-align: left;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav {
+            gap: 0;
+        }
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+        .sidebar .section-title {
+            font-size: 1.05rem;
+            color: var(--muted);
+            font-weight: 700;
+            margin: 18px 0 10px 24px;
+            letter-spacing: 0.5px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 12px;
+        }
+        .sidebar a, .sidebar .sidebar-link {
+            align-items: center;
+            gap: 16px;
+            padding: 14px 28px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1.08rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 8px;
+        }
+        .sidebar a.active, .sidebar .sidebar-link.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar a:hover, .sidebar .sidebar-link:hover {
+            background: #e9ecef;
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        .sidebar i {
+            font-size: 1.25rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+        .dropdown-verification {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .dropdown-toggle-verification {
+            width: 100%;
+            background: var(--sidebar-active);
+            border: none;
+            outline: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px 12px 32px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background 0.18s, box-shadow 0.18s;
+            margin-bottom: 0;
+            box-shadow: 0 1px 4px rgba(37,99,235,0.03);
+            position: relative;
+            min-height: 38px;
+        }
+        .dropdown-toggle-verification .chevron {
+            margin-left: auto;
+            transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+            font-size: 1em;
+        }
+        .dropdown-toggle-verification.open .chevron {
+            transform: rotate(180deg);
+        }
+        .dropdown-menu-verification {
+            list-style: none;
+            padding: 0 0 0 0;
+            margin: 0;
+            background: #f7fafc;
+            border-radius: 0 0 9px 9px;
+            box-shadow: 0 4px 16px rgba(16,30,54,0.07);
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(.4,2,.6,1);
+        }
+        .dropdown-menu-verification.show {
+            max-height: 550px;
+            transition: max-height 1.1s cubic-bezier(.4,2,.6,1);
+        }
+        .dropdown-item-verification {
+            align-items: center;
+            gap: 10px;
+            color: #222;
+            font-size: 1rem;
+            padding: 10px 24px 10px 36px;
+            border-radius: 7px;
+            text-decoration: none;
+            transition: background 0.18s, color 0.18s, font-weight 0.18s;
+            margin-bottom: 2px;
+            position: relative;
+            cursor: pointer;
+            min-height: 36px;
+        }
+        .dropdown-item-verification .icon {
+            min-width: 20px;
+            text-align: center;
+            font-size: 1em;
+        }
+        .dropdown-item-verification.active, .dropdown-item-verification:hover {
+            background: #e6f4ea;
+            color: #15803d !important;
+            font-weight: 700;
+        }
+        .dropdown-item-verification.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 3px;
+            border-radius: 3px;
+            background: #15803d;
+        }
+       .sidebar a, .sidebar .sidebar-link{
+        display: flex !important;
+       }
+
+       .header-container {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 16px 24px;
+           background: #fff;
+           border-bottom: 1px solid var(--border);
+           position: fixed;
+           top: 0;
+           left: 0;
+           right: 0;
+           z-index: 1000;
+           box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+       }
+
+       .header-logo {
+           height: 40px;
+           width: auto;
+       }
+
+       .menu-button {
+           background: var(--primary);
+           color: #fff;
+           border: none;
+           border-radius: 8px;
+           padding: 10px 16px;
+           display: flex;
+           align-items: center;
+           gap: 8px;
+           font-weight: 500;
+           cursor: pointer;
+           transition: var(--transition);
+       }
+
+       .menu-button:hover {
+           background: #156b4a;
+           transform: translateY(-1px);
+       }
+
+       .menu-button i {
+           font-size: 1.2rem;
+       }
+
+       .sidebar-close {
+           position: absolute;
+           top: 20px;
+           right: 20px;
+           background: none;
+           border: none;
+           color: var(--muted);
+           font-size: 1.5rem;
+           cursor: pointer;
+           padding: 8px;
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           transition: var(--transition);
+           z-index: 1002;
+       }
+
+       .sidebar-close:hover {
+           background: rgba(0,0,0,0.05);
+           color: var(--primary);
+       }
+
+       @media (max-width: 991px) {
+           .sidebar {
+               padding-top: 80px;
+           }
+           
+           .sidebar-close {
+               display: flex;
+           }
+       }
+
+       @media (min-width: 992px) {
+           .menu-button {
+               display: none;
+           }
+           
+           .sidebar-close {
+               display: none;
+           }
+       }
+    </style>
+</head>
+<body>
+    <header class="header-container">
+        <a href="/" class="d-flex align-items-center">
+            <img src="/logo.png" alt="Logo" class="header-logo">
+        </a>
+        <button class="menu-button d-lg-none" id="sidebarHamburger" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <aside class="sidebar" id="dashboardSidebar" aria-label="Sidebar Navigation">
+        <button class="sidebar-close d-lg-none" id="sidebarClose" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <nav>
+            <ul>
+                <li><a class="" href="/dashboard"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+            </ul>
+            
+            <div class="sidebar-section">
+                <div class="section-title">Services</div>
+                <ul>
+                    <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i><span>Cart</span></a></li>
+                    <li><a href="/history"><i class="fa-solid fa-history"></i><span>View History</span></a></li>
+                    <li><a href="/dashboard/services"><i class="fa-solid fa-history"></i><span>Verification</span></a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section" id="verificationDropdownMenu">
+                <div class="section-title">Buy Token</div>
+                <li><a href="/dashboard/identity" class="dropdown-item-verification" data-category="identity"><span class="icon"><i class="fa-solid fa-id-card"></i></span> Identity</a></li>
+                <li><a href="/dashboard/business" class="dropdown-item-verification" data-category="business"><span class="icon"><i class="fa-solid fa-building-user"></i></span> Business</a></li>
+                <li><a href="/dashboard/employment" class="dropdown-item-verification" data-category="employment"><span class="icon"><i class="fa-solid fa-user-tie"></i></span> Employment</a></li>
+                <li><a href="/dashboard/assets" class="dropdown-item-verification" data-category="asset"><span class="icon"><i class="fa-solid fa-landmark"></i></span> <span style="color:#15803d;">Asset</span></a></li>
+                <li><a href="/dashboard/income" class="dropdown-item-verification" data-category="income"><span class="icon"><i class="fa-solid fa-money-bill-trend-up"></i></span> Income</a></li>
+                <li><a href="/dashboard/vaccination" class="dropdown-item-verification" data-category="vaccination"><span class="icon"><i class="fa-solid fa-syringe"></i></span> Vaccination</a></li>
+            </div>
+            <div class="sidebar-section">
+                <div class="section-title">Account</div>
+                <ul>
+                    <!-- <li><a href="/shared-dashboard"><i class="fa-solid fa-user-gear"></i><span>Shared Dashboard</span></a></li> -->
+                    <li><a href="/profile"><i class="fa-solid fa-user-gear"></i><span>Profile</span></a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+<script>
+    // Function to update token counts
+    function updateTokenCounts(tokens) {
+        Object.entries(tokens).forEach(([service, count]) => {
+            const elements = document.querySelectorAll(`.token-count[data-service="${service}"]`);
+            elements.forEach(element => {
+                element.textContent = count;
+            });
+        });
+    }
+
+    // Listen for token updates
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'lastTokenUpdate') {
+            fetch('/dashboard/update-tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateTokenCounts(data.tokens);
+                }
+            })
+            .catch(error => console.error('Error updating tokens:', error));
+        }
+    });
+
+    // Check for token updates every 5 seconds
+    setInterval(async function() {
+        try {
+            const response = await fetch('/dashboard/update-tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    updateTokenCounts(data.tokens);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking token updates:', error);
+        }
+    }, 5000);
+
+    // Handle view details button clicks
+    document.querySelectorAll('.view-details').forEach(button => {
+        button.addEventListener('click', async function() {
+            const type = this.dataset.type;
+            const number = this.dataset.number;
+            
+            try {
+                const response = await fetch(`/verification/details/${type}/${number}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const detailsContent = document.getElementById('detailsContent');
+                    detailsContent.innerHTML = formatDetails(data.details, type);
+                    
+                    const downloadBtn = document.getElementById('downloadPdf');
+                    downloadBtn.onclick = () => window.location.href = `/download/${type}/${number}`;
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                    modal.show();
+                }
+            } catch (error) {
+                console.error('Error fetching details:', error);
+            }
+        });
+    });
+
+    function formatDetails(details, type) {
+        let html = '<div class="table-responsive"><table class="table">';
+        
+        if (type === 'gst') {
+            html += `
+                <tr><th>GSTIN</th><td>${details.gstin}</td></tr>
+                <tr><th>Legal Name</th><td>${details.legalName}</td></tr>
+                <tr><th>Trade Name</th><td>${details.tradeName}</td></tr>
+                <tr><th>Registration Date</th><td>${details.registrationDate}</td></tr>
+                <tr><th>Status</th><td>${details.status}</td></tr>
+                <tr><th>Business Type</th><td>${details.businessType}</td></tr>
+                <tr><th>Address</th><td>${details.address}</td></tr>
+                <tr><th>State</th><td>${details.state}</td></tr>
+                <tr><th>Pincode</th><td>${details.pincode}</td></tr>
+            `;
+        } else if (type === 'pan') {
+            html += `
+                <tr><th>PAN Number</th><td>${details.panNumber}</td></tr>
+                <tr><th>Name</th><td>${details.name}</td></tr>
+                <tr><th>Status</th><td>${details.status}</td></tr>
+                <tr><th>Type</th><td>${details.type}</td></tr>
+            `;
+        }
+        
+        html += '</table></div>';
+        return html;
+    }
+
+    function toggleVerificationDropdown(btn) {
+        const menu = document.getElementById('verificationDropdownMenu');
+        const chevron = btn.querySelector('.chevron');
+        menu.classList.toggle('show');
+        btn.classList.toggle('open');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var sidebar = document.getElementById('dashboardSidebar');
+        var hamburger = document.getElementById('sidebarHamburger');
+        var overlay = document.getElementById('sidebarOverlay');
+        var closeBtn = document.getElementById('sidebarClose');
+        
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.style.display = 'block';
+            setTimeout(() => overlay.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+        
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                if (!sidebar.classList.contains('open')) {
+                    overlay.style.display = 'none';
+                }
+            }, 300);
+            document.body.style.overflow = '';
+            hamburger.focus();
+        }
+
+        if (hamburger) hamburger.addEventListener('click', openSidebar);
+        if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+
+        // Close on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSidebar();
+        });
+
+        // Close sidebar when clicking nav links on mobile
+        document.querySelectorAll('.sidebar a, .sidebar .sidebar-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 991) closeSidebar();
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 991) {
+                closeSidebar();
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
+<!-- SHARED DAHSBOARD IN PLACE OF SETTINGS -->

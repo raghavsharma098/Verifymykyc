@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Fetch by PAN</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 16px;
+            --card-shadow: 0 6px 24px rgba(16,30,54,0.10);
+            --transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .page-header, h1.mb-4 {
+            background: white;
+            padding: 32px 32px 24px 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 36px;
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--sidebar-text);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.15);
+        }
+
+        .form-check-input {
+            border: 2px solid var(--border);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #166b48;
+            border-color: #166b48;
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background-color: var(--sidebar-bg);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        .table td {
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+        .info-card {
+            background: #e6f4ea;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 32px;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 32px rgba(16,30,54,0.13);
+        }
+
+        .card-header {
+            background: #f7f8fa;
+            border-radius: var(--radius) var(--radius) 0 0;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 22px 32px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .card-text {
+            color: #444;
+            font-size: 1.02rem;
+            margin-bottom: 10px;
+        }
+
+        .token-count {
+            display: inline-block;
+            background: #e6f4ea;
+            color: #15803d;
+            font-weight: 700;
+            font-size: 1.08rem;
+            border-radius: 20px;
+            padding: 6px 18px;
+            margin-left: 6px;
+            box-shadow: 0 2px 8px rgba(16,204,113,0.08);
+        }
+
+        .btn-group .btn-primary.dropdown-toggle {
+            background: #15803d;
+            border: none;
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 10px 28px;
+            font-size: 1.01rem;
+            transition: background 0.18s, box-shadow 0.18s;
+            box-shadow: 0 2px 8px rgba(16,204,113,0.10);
+        }
+
+        .btn-group .btn-primary.dropdown-toggle:hover, .btn-group .btn-primary.dropdown-toggle:focus {
+            background: #1a7f5a;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(16,204,113,0.18);
+        }
+
+        .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(16,30,54,0.13);
+            border: 1px solid #e0e0e0;
+            padding: 8px 0;
+            font-size: 1.01rem;
+        }
+
+        .dropdown-item {
+            padding: 12px 24px;
+            border-radius: 7px;
+            transition: background 0.18s, color 0.18s;
+        }
+
+        .dropdown-item:hover, .dropdown-item:focus {
+            background: #e6f4ea;
+            color: #15803d;
+        }
+
+        .card-body {
+            padding: 32px 32px 24px 32px;
+        }
+
+        .row {
+            margin-left: -12px;
+            margin-right: -12px;
+        }
+
+        .col-md-4 {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .main {
+                padding: 18px;
+            }
+            .page-header, h1.mb-4 {
+                padding: 18px 10px 12px 10px;
+                font-size: 1.3rem;
+            }
+            .card-body {
+                padding: 18px 10px 12px 10px;
+            }
+            .card-header {
+                padding: 14px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+
+        <main class="main">
+            <h1 class="mb-4">Welcome to Shared Dashboard</h1>
+
+        <!-- Available Tokens -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Available Verification Tokens</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <% Object.entries(sharedTokens).forEach(([service, tokens]) => { %>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title"><%= service.toUpperCase() %></h6>
+                                    <p class="card-text">Available Tokens: <span class="token-count" data-service="<%= service %>"><%= tokens %></span></p>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Select Service
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <% if (service === 'pan') { %>
+                                                <li><a class="dropdown-item" href="/shared/pan-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/pan-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'aadhar') { %>
+                                                <li><a class="dropdown-item" href="/shared/aadhar-verify">Verify Aadhar</a></li>
+                                                <li><a class="dropdown-item" href="/shared/aadhar-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/aadhar-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'gst') { %>
+                                                <li><a class="dropdown-item" href="/shared/gst-fetch-detailed">GST Fetch Detailed</a></li>
+                                                <li><a class="dropdown-item" href="/shared/gst-fetch-by-pan">GST Fetch by PAN</a></li>
+                                                <li><a class="dropdown-item" href="/shared/gst-fetch-by-name">GST Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/gst-fetch-contact-details">GST Fetch Contact Details</a></li>
+                                                <li><a class="dropdown-item" href="/shared/gst-fetch-by-mobile">GST Fetch by Mobile</a></li>
+                                            <% } else if (service === 'dl') { %>
+                                                <li><a class="dropdown-item" href="/shared/dl-verify">Verify DL</a></li>
+                                                <li><a class="dropdown-item" href="/shared/dl-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/dl-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'voter') { %>
+                                                <li><a class="dropdown-item" href="/shared/voter-verify">Verify Voter ID</a></li>
+                                                <li><a class="dropdown-item" href="/shared/voter-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/voter-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'ccrv') { %>
+                                                <li><a class="dropdown-item" href="/shared/ccrv-verify">Verify CCRV</a></li>
+                                                <li><a class="dropdown-item" href="/shared/ccrv-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/ccrv-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'employee') { %>
+                                                <li><a class="dropdown-item" href="/shared/employee-fetch-uan">Fetch UAN</a></li>
+                                                <li><a class="dropdown-item" href="/shared/employee-fetch-uan-by-pan">Fetch UAN by PAN</a></li>
+                                                <li><a class="dropdown-item" href="/shared/employee-verify-employer">Verify Employer</a></li>
+                                            <% } else if (service === 'rc') { %>
+                                                <li><a class="dropdown-item" href="/shared/rc-fetch-detailed">RC Fetch Detailed</a></li>
+                                                <li><a class="dropdown-item" href="/shared/rc-fetch-detailed-challan">RC Fetch Detailed Challan</a></li>
+                                                <li><a class="dropdown-item" href="/shared/rc-fetch-by-chassis">RC Fetch by Chassis</a></li>
+                                            <% } else if (service === 'bank') { %>
+                                                <li><a class="dropdown-item" href="/shared/bank-verify">Bank Verify</a></li>
+                                                <li><a class="dropdown-item" href="/shared/bank-verify-penniless">Bank Verify Penniless</a></li>
+                                                <li><a class="dropdown-item" href="/shared/bank-verify-hybrid">Bank Verify Hybrid</a></li>
+                                            <% } else if (service === 'passport') { %>
+                                                <li><a class="dropdown-item" href="/shared/passport-verify">Verify Passport</a></li>
+                                                <li><a class="dropdown-item" href="/shared/passport-fetch-by-name">Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/passport-fetch-by-dob">Fetch by Date of Birth</a></li>
+                                            <% } else if (service === 'mca') { %>
+                                                <li><a class="dropdown-item" href="/shared/mca-fetch-company">MCA Fetch Company</a></li>
+                                                <li><a class="dropdown-item" href="/shared/mca-fetch-director">MCA Fetch Director</a></li>
+                                                <li><a class="dropdown-item" href="/shared/mca-fetch-by-name">MCA Fetch by Name</a></li>
+                                                <li><a class="dropdown-item" href="/shared/mca-fetch-din-by-pan">MCA Fetch DIN by PAN</a></li>
+                                                <li><a class="dropdown-item" href="/shared/mca-fetch-pan-by-din">MCA Fetch PAN by DIN</a></li>
+                                            <% } else if (service === 'cowin') { %>
+                                                <li><a class="dropdown-item" href="/shared/cowin-generate-otp">Generate OTP</a></li>
+                                                <li><a class="dropdown-item" href="/shared/cowin-validate-otp">Validate OTP</a></li>
+                                                <li><a class="dropdown-item" href="/shared/cowin-beneficiaries">View Beneficiaries</a></li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Update token counts every 30 seconds
+            setInterval(function() {
+                $.get('/shared/token-counts')
+                    .done(function(tokens) {
+                        Object.entries(tokens).forEach(([service, count]) => {
+                            $(`.token-count[data-service="${service}"]`).text(count);
+                        });
+                    })
+                    .fail(function(error) {
+                        console.error('Error updating token counts:', error);
+                    });
+            }, 30000);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= serviceInfo.name %> - Verification Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--sidebar-text);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.15);
+        }
+
+        .form-check-input {
+            border: 2px solid var(--border);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #166b48;
+            border-color: #166b48;
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background-color: var(--sidebar-bg);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        .table td {
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .main {
+                padding: 18px;
+            }
+            .page-header {
+                padding: 16px;
+            }
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+
+        <main class="main" style="margin-top: 100px;">
+            <div class="page-header">
+                <h1><%= serviceInfo.name %></h1>
+                <p class="subtitle"><%= serviceInfo.description %></p>
+                    </div>
+                        
+            <div class="form-card">
+                        <% if (!user) { %>
+                    <div class="alert alert-info">
+                                Please <a href="/login">login</a> or <a href="/register">register</a> to use this service.
+                            </div>
+                        <% } else if (user.tokens[service] <= 0) { %>
+                    <div class="alert alert-warning">
+                                You don't have enough tokens for this service. <a href="/cart">Add to cart</a> to purchase tokens.
+                            </div>
+                        <% } else { %>
+                    <div class="alert alert-success">
+                                You have <%= user.tokens[service] %> tokens available for this service.
+                            </div>
+                            
+                            <!-- Verification Form -->
+                    <form id="verificationForm">
+                                <% if (service === 'gst') { %>
+                                    <div class="verification-form">
+                                        <div class="form-group mb-3">
+                                            <label for="verification_type">Verification Type</label>
+                                            <select class="form-control" id="verification_type" name="verification_type" required>
+                                                <% serviceInfo.options.forEach(option => { %>
+                                                    <option value="<%= option.id %>"><%= option.name %></option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <!-- GST Verification Form -->
+                                        <div id="gst-verification" class="verification-fields">
+                                            <div class="form-group mb-3">
+                                                <label for="gst_number">GST Number</label>
+                                                <input type="text" class="form-control" id="gst_number" name="gst_number" 
+                                                       pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"
+                                                       placeholder="Enter GST number (e.g., 22AAAAA0000A1Z5)">
+                                                <div class="form-text">Enter your 15-digit GST number</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Company Details Verification Form -->
+                                        <div id="company-verification" class="verification-fields" style="display: none;">
+                                            <div class="form-group mb-3">
+                                                <label for="cin_number">CIN Number</label>
+                                                <input type="text" class="form-control" id="cin_number" name="cin_number" 
+                                                       pattern="^[A-Z]{1}[0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$"
+                                                       placeholder="Enter CIN number (e.g., L12345KA1234ABC123456)">
+                                                <div class="form-text">Enter your 21-character CIN number</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- DIN Verification Form -->
+                                        <div id="din-verification" class="verification-fields" style="display: none;">
+                                            <div class="form-group mb-3">
+                                                <label for="din_number">DIN Number</label>
+                                                <input type="text" class="form-control" id="din_number" name="din_number" 
+                                                       pattern="^[0-9]{8}$"
+                                                       placeholder="Enter DIN number (e.g., 12345678)">
+                                                <div class="form-text">Enter your 8-digit DIN number</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Udyam Verification Form -->
+                                        <div id="udyam-verification" class="verification-fields" style="display: none;">
+                                            <div class="form-group mb-3">
+                                                <label for="udyam_number">Udyam Number</label>
+                                                <input type="text" class="form-control" id="udyam_number" name="udyam_number" 
+                                                       pattern="^UDYAM-[A-Z]{2}-[0-9]{2}-[0-9]{7}$"
+                                                       placeholder="Enter Udyam number (e.g., UDYAM-MH-01-1234567)">
+                                                <div class="form-text">Enter your Udyam number</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-3">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="consent" name="consent" required>
+                                                <label class="form-check-label" for="consent">
+                                                    I consent to verify the provided details
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'pan') { %>
+                                    <div class="mb-3">
+                                        <label for="pan_number" class="form-label">PAN Number</label>
+                                        <input type="text" class="form-control" id="pan_number" name="pan_number" required 
+                                               pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" 
+                                               title="Please enter a valid PAN number (e.g., ABCDE1234F)">
+                                        <div class="form-text">Enter your 10-digit PAN number</div>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="consent" name="consent" required>
+                                        <label class="form-check-label" for="consent">
+                                            I consent to verify my PAN details
+                                        </label>
+                                    </div>
+                                <% } else if (service === 'voter') { %>
+                                    <!-- Redirect to the dedicated Voter ID verification page -->
+                                    <div class="mb-3">
+                                        <label for="voter_id" class="form-label">Voter ID Number</label>
+                                        <input type="text" class="form-control" id="voter_id" name="voter_id" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch Voter ID details
+                                            </label>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'dl') { %>
+                                    <div class="mb-3">
+                                        <label for="dl_number" class="form-label">Driving License Number</label>
+                                        <input type="text" class="form-control" id="dl_number" name="dl_number" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dob" class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" id="dob" name="dob" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch Driving License details
+                                            </label>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'aadhar') { %>
+                                    <div class="mb-3">
+                                        <label for="aadhar_number" class="form-label">Aadhar Number</label>
+                                        <input type="text" class="form-control" id="aadhar_number" name="aadhar_number" required 
+                                               pattern="[0-9]{12}" placeholder="Enter 12-digit Aadhar number">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch Aadhar details
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- OTP Verification Field -->
+                                    <div id="otpVerification" class="mb-3" style="display: none;">
+                                        <label for="otp" class="form-label">Enter OTP</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="otp" name="otp" 
+                                                   pattern="[0-9]{6}" placeholder="Enter 6-digit OTP" maxlength="6">
+                                            <button type="button" class="btn btn-primary" onclick="verifyAadharOTP()">Verify OTP</button>
+                                        </div>
+                                        <small class="text-muted">OTP has been sent to your registered mobile number</small>
+                                    </div>
+                                <% } else if (service === 'employee') { %>
+                                    <div class="mb-3">
+                                        <label for="verification_type" class="form-label">Verification Type</label>
+                                        <select class="form-control" id="verification_type" name="verification_type" required>
+                                            <option value="">Select Verification Type</option>
+                                            <% serviceInfo.options.forEach(option => { %>
+                                                <option value="<%= option.id %>"><%= option.name %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+
+                                    <!-- UAN Verification Fields -->
+                                    <div id="uan-fields" class="verification-fields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="mobile_number" class="form-label">Mobile Number</label>
+                                            <input type="tel" class="form-control" id="mobile_number" name="mobile_number" 
+                                                   pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pan" class="form-label">PAN Number</label>
+                                            <input type="text" class="form-control" id="pan" name="pan" 
+                                                   pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="Enter PAN number" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                                <label class="form-check-label" for="consent">
+                                                    I provide consent to fetch UAN information
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- PAN Verification Fields -->
+                                    <div id="pan-fields" class="verification-fields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="pan_number" class="form-label">PAN Number</label>
+                                            <input type="text" class="form-control" id="pan_number" name="pan_number" 
+                                                   pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="Enter PAN number">
+                                        </div>
+                                    </div>
+
+                                    <!-- Employer Verification Fields -->
+                                    <div id="employer-fields" class="verification-fields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="employer_name" class="form-label">Employer Name</label>
+                                            <input type="text" class="form-control" id="employer_name" name="employer_name" 
+                                                   placeholder="Enter employer name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="establishment_code_number" class="form-label">Establishment Code Number</label>
+                                            <input type="text" class="form-control" id="establishment_code_number" name="establishment_code_number" 
+                                                   placeholder="Enter establishment code number">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="establishment_id" class="form-label">Establishment ID</label>
+                                            <input type="text" class="form-control" id="establishment_id" name="establishment_id" 
+                                                   placeholder="Enter establishment ID">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch employee details
+                                            </label>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'rc') { %>
+                                    <div class="mb-3">
+                                        <label for="rc_number" class="form-label">RC Number</label>
+                                        <input type="text" class="form-control" id="rc_number" name="rc_number" required 
+                                               placeholder="Enter RC number">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch RC details
+                                            </label>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'bank') { %>
+                                    <div class="mb-3">
+                                        <label for="verification_type" class="form-label">Verification Type</label>
+                                        <select class="form-control" id="verification_type" name="verification_type" required>
+                                            <option value="">Select Verification Type</option>
+                                            <% serviceInfo.options.forEach(option => { %>
+                                                <option value="<%= option.toLowerCase().replace(/\s+/g, '-') %>"><%= option %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+
+                                    <!-- Bank Account Verification Fields -->
+                                    <div id="bank-account-verification" class="verification-fields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="account_number" class="form-label">Account Number</label>
+                                            <input type="text" class="form-control" id="account_number" name="account_number" 
+                                                   pattern="[0-9]{9,18}" placeholder="Enter account number">
+                                            <div class="form-text">Enter your bank account number (9-18 digits)</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ifsc" class="form-label">IFSC Code</label>
+                                            <input type="text" class="form-control" id="ifsc" name="ifsc" 
+                                                   pattern="^[A-Z]{4}0[A-Z0-9]{6}$" placeholder="Enter IFSC code">
+                                            <div class="form-text">Enter your bank's IFSC code (e.g., ICIC0000111)</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- UPI Verification Fields -->
+                                    <div id="upi-verification" class="verification-fields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="upi_id" class="form-label">UPI ID</label>
+                                            <input type="text" class="form-control" id="upi_id" name="upi_id" 
+                                                   placeholder="Enter UPI ID">
+                                            <div class="form-text">Enter your UPI ID (e.g., username@bank)</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="consent" name="consent" required>
+                                        <label class="form-check-label" for="consent">
+                                            I consent to verify my bank details
+                                        </label>
+                                    </div>
+                                <% } else if (service === 'passport') { %>
+                                    <!-- Passport Verification -->
+                                    <div class="mb-3">
+                                        <h4>Passport Verification Services</h4>
+                                        <p>Select the passport verification service you need:</p>
+                                        
+                                        <div class="mb-4">
+                                            <label for="passport_option" class="form-label">Select Verification Type:</label>
+                                            <select class="form-select" id="passport_option" name="passport_option">
+                                                <option value="generate-mrz">Generate MRZ</option>
+                                                <option value="verify-mrz">Verify MRZ</option>
+                                                <option value="passport-verify">Passport Verify</option>
+                                                <option value="passport-fetch">Passport Fetch</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Generate MRZ Form -->
+                                        <div id="generate-mrz-div" class="passport-option-div">
+                                            <h5>Generate MRZ</h5>
+                                            <div class="mb-3">
+                                                <label for="country_code" class="form-label">Country Code</label>
+                                                <input type="text" class="form-control" id="country_code" name="country_code" placeholder="e.g. IND">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="passport_number" class="form-label">Passport Number</label>
+                                                <input type="text" class="form-control" id="passport_number" name="passport_number" placeholder="e.g. Z4XXXXXX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="surname" class="form-label">Surname</label>
+                                                <input type="text" class="form-control" id="surname" name="surname" placeholder="e.g. DOE">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="given_name" class="form-label">Given Name</label>
+                                                <input type="text" class="form-control" id="given_name" name="given_name" placeholder="e.g. JOHN">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="gender" class="form-label">Gender</label>
+                                                <select class="form-select" id="gender" name="gender">
+                                                    <option value="MALE">MALE</option>
+                                                    <option value="FEMALE">FEMALE</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                                <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="e.g. 1977-XX-XX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="date_of_expiry" class="form-label">Date of Expiry</label>
+                                                <input type="text" class="form-control" id="date_of_expiry" name="date_of_expiry" placeholder="e.g. 2026-XX-XX">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Verify MRZ Form -->
+                                        <div id="verify-mrz-div" class="passport-option-div" style="display: none;">
+                                            <h5>Verify MRZ</h5>
+                                            <div class="mb-3">
+                                                <label for="mrz_country_code" class="form-label">Country Code</label>
+                                                <input type="text" class="form-control" id="mrz_country_code" name="country_code" placeholder="e.g. IND">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_passport_number" class="form-label">Passport Number</label>
+                                                <input type="text" class="form-control" id="mrz_passport_number" name="passport_number" placeholder="e.g. ZXXXXXXX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_surname" class="form-label">Surname</label>
+                                                <input type="text" class="form-control" id="mrz_surname" name="surname" placeholder="e.g. DOE">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_given_name" class="form-label">Given Name</label>
+                                                <input type="text" class="form-control" id="mrz_given_name" name="given_name" placeholder="e.g. JOHN">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_gender" class="form-label">Gender</label>
+                                                <select class="form-select" id="mrz_gender" name="gender">
+                                                    <option value="MALE">MALE</option>
+                                                    <option value="FEMALE">FEMALE</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_date_of_birth" class="form-label">Date of Birth</label>
+                                                <input type="text" class="form-control" id="mrz_date_of_birth" name="date_of_birth" placeholder="e.g. 1977-XX-XX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_date_of_expiry" class="form-label">Date of Expiry</label>
+                                                <input type="text" class="form-control" id="mrz_date_of_expiry" name="date_of_expiry" placeholder="e.g. 2026-XX-XX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_first_line" class="form-label">MRZ First Line</label>
+                                                <input type="text" class="form-control" id="mrz_first_line" name="mrz_first_line" placeholder="e.g. P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="mrz_second_line" class="form-label">MRZ Second Line</label>
+                                                <input type="text" class="form-control" id="mrz_second_line" name="mrz_second_line" placeholder="e.g. ZXXXXXXX<3IND77XXXXM26XXXXX<<<<<<<<<<<<<<<4">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Passport Verify Form -->
+                                        <div id="passport-verify-div" class="passport-option-div" style="display: none;">
+                                            <h5>Passport Verify</h5>
+                                            <div class="mb-3">
+                                                <label for="verify_file_number" class="form-label">File Number</label>
+                                                <input type="text" class="form-control" id="verify_file_number" name="file_number" placeholder="e.g. VS3XXXXXXXXXXXX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="verify_passport_number" class="form-label">Passport Number</label>
+                                                <input type="text" class="form-control" id="verify_passport_number" name="passport_number" placeholder="e.g. NXXXXXXXX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="verify_surname" class="form-label">Surname</label>
+                                                <input type="text" class="form-control" id="verify_surname" name="surname" placeholder="e.g. JOHN">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="verify_given_name" class="form-label">Given Name</label>
+                                                <input type="text" class="form-control" id="verify_given_name" name="given_name" placeholder="e.g. DOE">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="verify_date_of_birth" class="form-label">Date of Birth</label>
+                                                <input type="text" class="form-control" id="verify_date_of_birth" name="date_of_birth" placeholder="e.g. 1994-XX-XX">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Passport Fetch Form -->
+                                        <div id="passport-fetch-div" class="passport-option-div" style="display: none;">
+                                            <h5>Passport Fetch</h5>
+                                            <div class="mb-3">
+                                                <label for="fetch_file_number" class="form-label">File Number</label>
+                                                <input type="text" class="form-control" id="fetch_file_number" name="file_number" placeholder="e.g. VS3XXXXXXXXXXXX">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="fetch_date_of_birth" class="form-label">Date of Birth</label>
+                                                <input type="text" class="form-control" id="fetch_date_of_birth" name="date_of_birth" placeholder="e.g. 1995-XX-XX">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="passport_consent" name="consent" value="Y" required>
+                                                <label class="form-check-label" for="passport_consent">
+                                                    I provide consent to process passport information
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } else if (service === 'cowin') { %>
+                                    <!-- CoWIN Verification Form -->
+                                    <div class="mb-3">
+                                        <label for="mobile_number" class="form-label">Mobile Number</label>
+                                        <input type="text" class="form-control" id="mobile_number" name="mobile_number" required 
+                                               pattern="[0-9]{10}" placeholder="Enter 10-digit registered mobile number">
+                                        <div class="form-text">Enter the mobile number registered with CoWIN</div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" value="Y" required>
+                                            <label class="form-check-label" for="consent">
+                                                I provide consent to fetch CoWIN vaccination details
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- OTP Verification Field -->
+                                    <div id="cowinOtpVerification" class="mb-3" style="display: none;">
+                                        <label for="cowin_otp" class="form-label">Enter OTP</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="cowin_otp" name="cowin_otp" 
+                                                  pattern="[0-9]{6}" placeholder="Enter 6-digit OTP" maxlength="6">
+                                            <button type="button" class="btn btn-primary" onclick="verifyCowinOTP()">Verify OTP</button>
+                                        </div>
+                                        <small class="text-muted">OTP has been sent to your registered mobile number</small>
+                                    </div>
+
+                                    <!-- Beneficiaries List (shown after OTP verification) -->
+                                    <div id="beneficiariesList" class="mb-3" style="display: none;">
+                                        <label class="form-label">Select Beneficiary</label>
+                                        <div class="list-group" id="beneficiaries-container">
+                                            <!-- Beneficiaries will be populated here dynamically -->
+                                        </div>
+                                    </div>
+                                <% } %>
+                                
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary">Verify Now</button>
+                                    <a href="/cart" class="btn btn-secondary">Add More Tokens</a>
+                                </div>
+                            </form>
+
+                            <!-- Results Container -->
+                    <div id="verificationResult" class="results-card mt-4" style="display: none;"></div>
+                        <% } %>
+                    </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const service = '<%= service %>';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const verificationType = document.getElementById('verification_type');
+            if (verificationType) {
+                verificationType.addEventListener('change', function() {
+                    // Hide all verification fields
+                    document.querySelectorAll('.verification-fields').forEach(field => {
+                        field.style.display = 'none';
+                    });
+
+                    // Show selected verification fields
+                    const selectedType = this.value;
+                    if (selectedType) {
+                        const selectedFields = document.getElementById(`${selectedType}-verification`);
+                        if (selectedFields) {
+                            selectedFields.style.display = 'block';
+                        }
+                    }
+                });
+
+                // Trigger change event to show initial fields
+                verificationType.dispatchEvent(new Event('change'));
+            }
+            
+            // Handle passport options if on passport service page
+            const isPassportPage = service === 'passport';
+            const isMainPassportPage = <%= locals.isMainPassportPage ? 'true' : 'false' %>;
+            
+            if (isPassportPage && !isMainPassportPage) {
+                const passportOption = document.getElementById('passport_option');
+                if (passportOption) {
+                    // Function to set required attribute for visible fields
+                    const setRequiredFields = (selectedOption) => {
+                        // First, remove required attribute from all passport fields
+                        document.querySelectorAll('.passport-req').forEach(input => {
+                            input.removeAttribute('required');
+                        });
+                        
+                        // Then add required attribute only to visible fields
+                        if (selectedOption) {
+                            const selectedFields = document.getElementById(`${selectedOption}-fields`);
+                            if (selectedFields) {
+                                selectedFields.querySelectorAll('.passport-req').forEach(input => {
+                                    input.setAttribute('required', 'required');
+                                });
+                            }
+                        }
+                    };
+                    
+                    passportOption.addEventListener('change', function() {
+                        // Hide all passport fields
+                        document.querySelectorAll('.passport-fields').forEach(field => {
+                            field.style.display = 'none';
+                        });
+                        
+                        // Show selected passport fields
+                        const selectedOption = this.value;
+                        if (selectedOption) {
+                            const selectedFields = document.getElementById(`${selectedOption}-fields`);
+                            if (selectedFields) {
+                                selectedFields.style.display = 'block';
+                                // Set required fields
+                                setRequiredFields(selectedOption);
+                            }
+                        }
+                    });
+                    
+                    // Trigger change event to show initial fields
+                    passportOption.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+
+        document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const service = '<%= service %>';
+            let endpoint = '';
+            let requestBody = {};
+            const resultDiv = document.getElementById('verificationResult');
+
+            try {
+                if (service === 'gst') {
+                    const verificationType = formData.get('verification_type');
+                    
+                    switch(verificationType) {
+                        case 'gst':
+                            endpoint = '/verification/fetch-gst';
+                            requestBody = {
+                                gstin: formData.get('gst_number'),
+                                consent: "Y"
+                            };
+                            break;
+                        case 'company':
+                            endpoint = '/verification/verify-company';
+                            requestBody = {
+                                cin_number: formData.get('cin_number'),
+                                consent: "Y"
+                            };
+                            break;
+                        case 'din':
+                            endpoint = '/verification/verify-din';
+                            requestBody = {
+                                din_number: formData.get('din_number'),
+                                consent: "Y"
+                            };
+                            break;
+                        case 'udyam':
+                            endpoint = '/verification/verify-udyam';
+                            requestBody = {
+                                udyam_number: formData.get('udyam_number'),
+                                consent: "Y"
+                            };
+                            break;
+                    }
+                } else if (service === 'pan') {
+                    endpoint = '/verification/fetch-pan';
+                    requestBody = {
+                        pan_number: formData.get('pan_number'),
+                        consent: "Y"
+                    };
+                } else if (service === 'voter') {
+                    // Redirect to the dedicated Voter ID verification page
+                    window.location.href = '/voter-verify';
+                    return;
+                } else if (service === 'dl') {
+                    endpoint = '/verification/fetch-dl';
+                    requestBody = {
+                        dl_number: formData.get('dl_number'),
+                        dob: formData.get('dob'),
+                        consent: "Y"
+                    };
+                } else if (service === 'aadhar') {
+                    endpoint = '/verification/send-otp';
+                    requestBody = {
+                        aadharNumber: formData.get('aadhar_number'),
+                        consent: "Y"
+                    };
+                } else if (service === 'cowin') {
+                    endpoint = '/verification/cowin-generate-otp';
+                    requestBody = {
+                        mobile: formData.get('mobile_number'),
+                        consent: formData.get('consent')
+                    };
+                } else if (service === 'employee') {
+                    const verificationType = formData.get('verification_type');
+                    switch (verificationType) {
+                        case 'uan':
+                            endpoint = '/verification/fetch-uan';
+                            requestBody = {
+                                mobile_number: formData.get('mobile_number'),
+                                pan: formData.get('pan')
+                            };
+                            break;
+                        case 'pan':
+                            endpoint = '/verification/fetch-by-pan';
+                            requestBody = {
+                                pan_number: formData.get('pan_number'),
+                                consent: "Y"
+                            };
+                            break;
+                        case 'employer':
+                            endpoint = '/verification/employer-verify';
+                            requestBody = {
+                                employer_name: formData.get('employer_name'),
+                                establishment_code_number: formData.get('establishment_code_number'),
+                                establishment_id: formData.get('establishment_id'),
+                                consent: "Y"
+                            };
+                            break;
+                    }
+                } else if (service === 'rc') {
+                    endpoint = '/verification/verify-rc';
+                    requestBody = {
+                        rc_number: formData.get('rc_number'),
+                        consent: formData.get('consent')
+                    };
+                } else if (service === 'bank') {
+                    const verificationType = formData.get('verification_type');
+                    
+                    if (verificationType === 'bank-account-verification') {
+                        endpoint = '/verification/verify-bank-account';
+                        requestBody = {
+                            account_number: formData.get('account_number'),
+                            ifsc: formData.get('ifsc'),
+                            consent: formData.get('consent')
+                        };
+                    } else if (verificationType === 'upi-verification') {
+                        endpoint = '/verification/verify-upi';
+                        requestBody = {
+                            upi_id: formData.get('upi_id'),
+                            consent: formData.get('consent')
+                        };
+                    }
+                } else if (service === 'passport') {
+                    const passportOption = formData.get('passport_option');
+                    
+                    switch(passportOption) {
+                        case 'generate-mrz':
+                            endpoint = '/verification/generate-mrz';
+                            requestBody = {
+                                country_code: formData.get('country_code'),
+                                passport_number: formData.get('passport_number'),
+                                surname: formData.get('surname'),
+                                given_name: formData.get('given_name'),
+                                gender: formData.get('gender'),
+                                date_of_birth: formData.get('date_of_birth'),
+                                date_of_expiry: formData.get('date_of_expiry'),
+                                consent: formData.get('consent')
+                            };
+                            break;
+                        case 'verify-mrz':
+                            endpoint = '/verification/verify-mrz';
+                            requestBody = {
+                                country_code: formData.get('country_code'),
+                                passport_number: formData.get('passport_number'),
+                                surname: formData.get('surname'),
+                                given_name: formData.get('given_name'),
+                                gender: formData.get('gender'),
+                                date_of_birth: formData.get('date_of_birth'),
+                                date_of_expiry: formData.get('date_of_expiry'),
+                                mrz_first_line: formData.get('mrz_first_line'),
+                                mrz_second_line: formData.get('mrz_second_line'),
+                                consent: formData.get('consent')
+                            };
+                            break;
+                        case 'passport-verify':
+                            endpoint = '/verification/verify-passport';
+                            requestBody = {
+                                file_number: formData.get('file_number'),
+                                passport_number: formData.get('passport_number'),
+                                surname: formData.get('surname'),
+                                given_name: formData.get('given_name'),
+                                date_of_birth: formData.get('date_of_birth'),
+                                consent: formData.get('consent')
+                            };
+                            break;
+                        case 'passport-fetch':
+                            endpoint = '/verification/fetch-passport';
+                            requestBody = {
+                                file_number: formData.get('file_number'),
+                                date_of_birth: formData.get('date_of_birth'),
+                                consent: formData.get('consent')
+                            };
+                            break;
+                    }
+                }
+
+                console.log('Sending request to:', endpoint);
+                console.log('Request body:', requestBody);
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                console.log('Response:', data);
+
+                if (service === 'aadhar' && data.success) {
+                    // Show the OTP input field
+                    document.getElementById('otpVerification').style.display = 'block';
+                    // Optionally, scroll to OTP field
+                    document.getElementById('otpVerification').scrollIntoView({ behavior: 'smooth' });
+                    // Optionally, clear previous result
+                    resultDiv.innerHTML = '';
+                    return; // Stop further result rendering for OTP step
+                }
+                
+                if (service === 'cowin' && data.success) {
+                    // Show the CoWIN OTP input field
+                    document.getElementById('cowinOtpVerification').style.display = 'block';
+                    // Optionally, scroll to OTP field
+                    document.getElementById('cowinOtpVerification').scrollIntoView({ behavior: 'smooth' });
+                    // Optionally, clear previous result
+                    resultDiv.innerHTML = '';
+                    return; // Stop further result rendering for OTP step
+                }
+
+                if (data.success) {
+                    // Render beautiful card for each service
+                    let cardHtml = '';
+                    if (service === 'pan' && data.data) {
+                        cardHtml = `
+                        <div class="pan-details-card shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 540px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-id-card"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">PAN Verification Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-id-card-clip me-2"></i>PAN Number:</span><br><span class="fs-5">${data.data.panNumber || '-'}</span></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Name:</span><br><span class="fs-5">${data.data.name || '-'}</span></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-circle-check me-2"></i>Status:</span><br><span class="fs-6">${data.data.status || '-'}</span></div>
+                                </div>
+                                ${data.data.type ? `<div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class='fa-solid fa-tag me-2'></i>Type:</span><br><span class="fs-6">${data.data.type}</span></div></div>` : ''}
+                            </div>
+                            ${data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                    } else if (service === 'gst' && data.data) {
+                        cardHtml = `
+                        <div class="shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 700px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-building-columns"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">GST Verification Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-id-card me-2"></i>GSTIN:</span><br><span class="fs-5">${data.data.gstin || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Legal Name:</span><br><span class="fs-5">${data.data.legalName || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-briefcase me-2"></i>Trade Name:</span><br><span class="fs-6">${data.data.tradeName || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar me-2"></i>Registration Date:</span><br><span class="fs-6">${data.data.registrationDate || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-circle-check me-2"></i>Status:</span><br><span class="fs-6">${data.data.status || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-building me-2"></i>Business Type:</span><br><span class="fs-6">${data.data.businessType || '-'}</span></div></div>
+                                <div class="col-12 col-md-12"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-dot me-2"></i>Address:</span><br><span class="fs-6">${data.data.address || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map me-2"></i>State:</span><br><span class="fs-6">${data.data.state || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-barcode me-2"></i>Pincode:</span><br><span class="fs-6">${data.data.pincode || '-'}</span></div></div>
+                            </div>
+                            ${data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                    } else if (service === 'voter' && data.data) {
+                        const voterData = data.data.voter_data || data.data;
+                        cardHtml = `
+                        <div class="shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 700px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-address-card"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">Voter ID Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-id-card me-2"></i>Voter ID:</span><br><span class="fs-5">${voterData.document_id || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Name:</span><br><span class="fs-5">${voterData.name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user-friends me-2"></i>Husband's Name:</span><br><span class="fs-6">${voterData.husband_name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-venus-mars me-2"></i>Gender:</span><br><span class="fs-6">${voterData.gender || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar me-2"></i>Age:</span><br><span class="fs-6">${voterData.age || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map me-2"></i>District:</span><br><span class="fs-6">${voterData.district || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-dot me-2"></i>State:</span><br><span class="fs-6">${voterData.state || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-arrow me-2"></i>Assembly Constituency:</span><br><span class="fs-6">${voterData.assembly_constituency_name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-building me-2"></i>Part Number:</span><br><span class="fs-6">${voterData.part_number || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-hashtag me-2"></i>Serial Number:</span><br><span class="fs-6">${voterData.serial_number || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-building-columns me-2"></i>Polling Station:</span><br><span class="fs-6">${voterData.polling_station || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map-location-dot me-2"></i>Parliamentary Constituency:</span><br><span class="fs-6">${voterData.parliamentary_constituency_name || '-'}</span></div></div>
+                            </div>
+                            ${data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                    } else if (service === 'dl' && data.data) {
+                        cardHtml = `
+                        <div class="shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 700px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-id-badge"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">Driving License Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-id-card me-2"></i>DL Number:</span><br><span class="fs-5">${data.data.dlNumber || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Name:</span><br><span class="fs-5">${data.data.name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar me-2"></i>Date of Birth:</span><br><span class="fs-6">${data.data.dateOfBirth || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar-check me-2"></i>Valid From:</span><br><span class="fs-6">${data.data.validFrom || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar-xmark me-2"></i>Valid To:</span><br><span class="fs-6">${data.data.validTo || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-circle-check me-2"></i>Status:</span><br><span class="fs-6">${data.data.status || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-tint me-2"></i>Blood Group:</span><br><span class="fs-6">${data.data.bloodGroup || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-car me-2"></i>Vehicle Classes:</span><br><span class="fs-6">${Array.isArray(data.data.vehicleClasses) ? data.data.vehicleClasses.join(', ') : '-'}</span></div></div>
+                                <div class="col-12 col-md-12"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-dot me-2"></i>Address:</span><br><span class="fs-6">${data.data.address || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map me-2"></i>State:</span><br><span class="fs-6">${data.data.state || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-barcode me-2"></i>Pincode:</span><br><span class="fs-6">${data.data.pincode || '-'}</span></div></div>
+                            </div>
+                            ${data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                    } else if (service === 'aadhar' && data.data && data.data.data && data.data.data.aadhaar_data) {
+                        const aadhaar = data.data.data.aadhaar_data;
+                        // Mask mobile (show only last 4 digits if possible)
+                        let maskedMobile = '-';
+                        if (aadhaar.mobile && aadhaar.mobile.length >= 4) {
+                            maskedMobile = 'XXXXXX' + aadhaar.mobile.slice(-4);
+                        }
+                        // Show photo if present
+                        let photoHtml = '';
+                        if (aadhaar.photo_base64) {
+                            photoHtml = `<div class='text-center mb-3'><img src='data:image/jpeg;base64,${aadhaar.photo_base64}' alt='Aadhar Photo' style='max-width:120px; border-radius:8px; box-shadow:0 2px 8px #0001;'/></div>`;
+                        }
+                        // Create the card HTML
+                        const cardHtml = `
+                        <div class="shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 700px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-fingerprint"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">Aadhar Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            ${photoHtml}
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-file me-2"></i>Document Type:</span><br><span class="fs-6">${aadhaar.document_type || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-hashtag me-2"></i>Reference ID:</span><br><span class="fs-6">${aadhaar.reference_id || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Name:</span><br><span class="fs-5">${aadhaar.name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar me-2"></i>Date of Birth:</span><br><span class="fs-6">${aadhaar.date_of_birth || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-venus-mars me-2"></i>Gender:</span><br><span class="fs-6">${aadhaar.gender || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-mobile me-2"></i>Mobile:</span><br><span class="fs-6">${maskedMobile}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user-friends me-2"></i>Care Of:</span><br><span class="fs-6">${aadhaar.care_of || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-dot me-2"></i>District:</span><br><span class="fs-6">${aadhaar.district || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-arrow me-2"></i>Locality:</span><br><span class="fs-6">${aadhaar.locality || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map me-2"></i>State:</span><br><span class="fs-6">${aadhaar.state || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-barcode me-2"></i>Pincode:</span><br><span class="fs-6">${aadhaar.pincode || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-flag me-2"></i>Country:</span><br><span class="fs-6">${aadhaar.country || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-city me-2"></i>VTC Name:</span><br><span class="fs-6">${aadhaar.vtc_name || '-'}</span></div></div>
+                            </div>
+                            ${result.data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${result.data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                        // Insert the card after the OTP section
+                        otpSection.insertAdjacentHTML('afterend', cardHtml);
+                        resultDiv.innerHTML = '';
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <h4>Aadhar Verification Successful</h4>
+                                <p>Your Aadhar has been verified successfully.</p>
+                                <p><strong>Remaining Tokens:</strong> ${result.data.remainingTokens}</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Enhanced error handling for DL verification
+                    if (service === 'dl') {
+                        let errorMessage = 'Verification failed. Please check the details and try again.';
+                        let errorDetails = '';
+                        
+                        // Check for Gridlines API response structure
+                        if (data.data && data.data.code === '1001') {
+                            errorMessage = 'Driving License Not Found';
+                            errorDetails = 'The provided Driving License number does not exist in the records. Please verify the details and try again.';
+                        } else if (data.error && data.error.code === 'UPSTREAM_INTERNAL_SERVER_ERROR') {
+                            errorMessage = 'The government server is currently experiencing issues.';
+                            errorDetails = 'Please try again after some time.';
+                        } else if (data.error && data.error.code === 'INVALID_DL_NUMBER') {
+                            errorMessage = 'Invalid Driving License Number.';
+                            errorDetails = 'Please check the DL number and try again.';
+                        } else if (data.error && data.error.code === 'INVALID_DOB') {
+                            errorMessage = 'Invalid Date of Birth.';
+                            errorDetails = 'Please check the date of birth and try again.';
+                        }
+
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-warning">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-triangle-exclamation me-2" style="font-size: 1.5rem;"></i>
+                                    <h4 class="mb-0">${errorMessage}</h4>
+                                </div>
+                                ${errorDetails ? `<p class="mb-0">${errorDetails}</p>` : ''}
+                                ${data.remainingTokens !== undefined ? `<hr class="my-2"><p class="mb-0 text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></p>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-danger">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-circle-exclamation me-2" style="font-size: 1.5rem;"></i>
+                                    <h4 class="mb-0">Error</h4>
+                                </div>
+                                <p class="mb-0">${data.message || 'Verification failed. Please check the details and try again.'}</p>
+                                ${data.remainingTokens !== undefined ? `<hr class="my-2"><p class="mb-0 text-muted">Remaining Tokens: <span class="fw-bold">${data.remainingTokens}</span></p>` : ''}
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>${error.message || 'An error occurred during verification. Please try again.'}</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Function to verify CoWIN OTP
+        async function verifyCowinOTP() {
+            const otp = document.getElementById('cowin_otp').value;
+            if (!otp) {
+                alert('Please enter the OTP');
+                return;
+            }
+
+            // Disable the verify button to prevent multiple submissions
+            const verifyButton = document.querySelector('button[onclick="verifyCowinOTP()"]');
+            verifyButton.disabled = true;
+            verifyButton.textContent = 'Verifying...';
+
+            try {
+                const response = await fetch('/verification/cowin-validate-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        otp: otp
+                    })
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('verificationResult');
+
+                if (result.success) {
+                    // Show beneficiaries section
+                    fetchBeneficiaries();
+                } else {
+                    // Re-enable the verify button if verification fails
+                    verifyButton.disabled = false;
+                    verifyButton.textContent = 'Verify OTP';
+
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>${result.message || 'An error occurred while verifying OTP.'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('verificationResult');
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while verifying OTP. Please try again.</p>
+                    </div>
+                `;
+                // Re-enable the verify button on error
+                verifyButton.disabled = false;
+                verifyButton.textContent = 'Verify OTP';
+            }
+        }
+
+        // Function to fetch beneficiaries after OTP verification
+        async function fetchBeneficiaries() {
+            try {
+                const response = await fetch('/verification/cowin-beneficiaries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('verificationResult');
+                const beneficiariesContainer = document.getElementById('beneficiaries-container');
+                const beneficiariesList = document.getElementById('beneficiariesList');
+
+                if (result.success && result.data && result.data.length > 0) {
+                    // Show beneficiaries list
+                    beneficiariesList.style.display = 'block';
+                    beneficiariesContainer.innerHTML = '';
+
+                    // Create a button for each beneficiary
+                    result.data.forEach(beneficiary => {
+                        const btn = document.createElement('button');
+                        btn.className = 'list-group-item list-group-item-action';
+                        btn.innerHTML = `
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">${beneficiary.name}</h5>
+                                <small>ID: ${beneficiary.beneficiary_reference_id}</small>
+                            </div>
+                            <p class="mb-1">Birth Year: ${beneficiary.birth_year}</p>
+                            <p class="mb-1">Gender: ${beneficiary.gender}</p>
+                            <small>Vaccination Status: ${beneficiary.vaccination_status}</small>
+                        `;
+                        btn.onclick = () => downloadCertificate(beneficiary.beneficiary_reference_id);
+                        beneficiariesContainer.appendChild(btn);
+                    });
+
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success mt-3">
+                            <h4>Verification Successful</h4>
+                            <p>Found ${result.data.length} beneficiaries. Click on a beneficiary to download their certificate.</p>
+                            <p><strong>Remaining Tokens:</strong> ${result.remainingTokens}</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <h4>No Beneficiaries Found</h4>
+                            <p>No vaccination beneficiaries were found for this mobile number.</p>
+                            <p>${result.message || ''}</p>
+                            <p><strong>Remaining Tokens:</strong> ${result.remainingTokens}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching beneficiaries:', error);
+                const resultDiv = document.getElementById('verificationResult');
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while fetching beneficiaries.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to download certificate
+        async function downloadCertificate(beneficiaryId) {
+            try {
+                const response = await fetch('/verification/cowin-certificate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        beneficiary_id: beneficiaryId
+                    })
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('verificationResult');
+
+                if (result.success) {
+                    // Create download link for the certificate
+                    const certificateData = result.data.certificate;
+                    const dataBlob = new Blob([certificateData], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(dataBlob);
+                    
+                    // Open in new window or download
+                    window.open(url, '_blank');
+                    
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success mt-3">
+                            <h4>Certificate Downloaded</h4>
+                            <p>The vaccination certificate has been downloaded successfully.</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>${result.message || 'An error occurred while downloading the certificate.'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error downloading certificate:', error);
+                const resultDiv = document.getElementById('verificationResult');
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while downloading the certificate.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to verify Aadhar OTP
+        async function verifyAadharOTP() {
+            const otp = document.getElementById('otp').value;
+            if (!otp) {
+                alert('Please enter the OTP');
+                return;
+            }
+
+            // Disable the verify button to prevent multiple submissions
+            const verifyButton = document.querySelector('button[onclick="verifyAadharOTP()"]');
+            verifyButton.disabled = true;
+            verifyButton.textContent = 'Verifying...';
+
+            try {
+                const response = await fetch('/verification/verify-aadhar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        otp: otp,
+                        shareCode: "1234"
+                    })
+                });
+
+                const result = await response.json();
+                const resultDiv = document.getElementById('verificationResult');
+                const otpSection = document.getElementById('otpVerification');
+
+                if (result.success) {
+                    // Check for aadhaar_data in both possible locations
+                    let aadhaar = null;
+                    if (result.data && result.data.data && result.data.data.aadhaar_data) {
+                        aadhaar = result.data.data.aadhaar_data;
+                    } else if (result.data && result.data.aadhaar_data) {
+                        aadhaar = result.data.aadhaar_data;
+                    }
+                    // Debug log
+                    if (aadhaar) {
+                        console.log('Aadhaar Data Used for Card:', aadhaar);
+                        // Mask mobile (show only last 4 digits if possible)
+                        let maskedMobile = '-';
+                        if (aadhaar.mobile && aadhaar.mobile.length >= 4) {
+                            maskedMobile = 'XXXXXX' + aadhaar.mobile.slice(-4);
+                        }
+                        // Show photo if present
+                        let photoHtml = '';
+                        if (aadhaar.photo_base64) {
+                            photoHtml = `<div class='text-center mb-3'><img src='data:image/jpeg;base64,${aadhaar.photo_base64}' alt='Aadhar Photo' style='max-width:120px; border-radius:8px; box-shadow:0 2px 8px #0001;'/></div>`;
+                        }
+                        // Create the card HTML
+                        const cardHtml = `
+                        <div class="shadow-sm p-4 mb-4 bg-white rounded" style="max-width: 700px; margin: 0 auto; border: 1px solid #e0e0e0;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3" style="font-size:2.2rem; color:#1a7f5a;"><i class="fa-solid fa-fingerprint"></i></div>
+                                <div>
+                                    <h4 class="mb-0" style="color:#1a7f5a; font-weight:700;">Aadhar Details</h4>
+                                    <div class="text-muted" style="font-size:1rem;">Verified successfully</div>
+                                </div>
+                            </div>
+                            <hr>
+                            ${photoHtml}
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-file me-2"></i>Document Type:</span><br><span class="fs-6">${aadhaar.document_type || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-hashtag me-2"></i>Reference ID:</span><br><span class="fs-6">${aadhaar.reference_id || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user me-2"></i>Name:</span><br><span class="fs-5">${aadhaar.name || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-calendar me-2"></i>Date of Birth:</span><br><span class="fs-6">${aadhaar.date_of_birth || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-venus-mars me-2"></i>Gender:</span><br><span class="fs-6">${aadhaar.gender || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-mobile me-2"></i>Mobile:</span><br><span class="fs-6">${maskedMobile}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-user-friends me-2"></i>Care Of:</span><br><span class="fs-6">${aadhaar.care_of || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-dot me-2"></i>District:</span><br><span class="fs-6">${aadhaar.district || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-location-arrow me-2"></i>Locality:</span><br><span class="fs-6">${aadhaar.locality || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-map me-2"></i>State:</span><br><span class="fs-6">${aadhaar.state || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-barcode me-2"></i>Pincode:</span><br><span class="fs-6">${aadhaar.pincode || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-flag me-2"></i>Country:</span><br><span class="fs-6">${aadhaar.country || '-'}</span></div></div>
+                                <div class="col-12 col-md-6"><div class="mb-2"><span class="fw-semibold text-muted"><i class="fa-solid fa-city me-2"></i>VTC Name:</span><br><span class="fs-6">${aadhaar.vtc_name || '-'}</span></div></div>
+                            </div>
+                            ${result.data.remainingTokens !== undefined ? `<hr><div class="text-end text-muted">Remaining Tokens: <span class="fw-bold">${result.data.remainingTokens}</span></div>` : ''}
+                        </div>`;
+                        // Insert the card after the OTP section
+                        const otpSection = document.getElementById('otpVerification');
+                        otpSection.insertAdjacentHTML('afterend', cardHtml);
+                        resultDiv.innerHTML = '';
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <h4>Aadhar Verification Successful</h4>
+                                <p>Your Aadhar has been verified successfully.</p>
+                                <p><strong>Remaining Tokens:</strong> ${result.data.remainingTokens}</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Re-enable the verify button if verification fails
+                    verifyButton.disabled = false;
+                    verifyButton.textContent = 'Verify OTP';
+
+                    // Check for transaction in progress error
+                    if (result.message && result.message.includes('Transaction is already being processed')) {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-warning">
+                                <h4>Verification in Progress</h4>
+                                <p>Your verification request is already being processed. Please wait a moment and try again.</p>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-danger">
+                                <h4>Error</h4>
+                                <p>${result.message || 'An error occurred while verifying OTP.'}</p>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('verificationResult');
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while verifying OTP. Please try again.</p>
+                    </div>
+                `;
+                // Re-enable the verify button on error
+                verifyButton.disabled = false;
+                verifyButton.textContent = 'Verify OTP';
+            }
+        }
+
+        // Function to handle CoWIN verification form submission
+        if (service === 'cowin') {
+            document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const mobile = document.getElementById('mobile_number').value;
+                const consent = document.getElementById('consent').checked ? 'Y' : 'N';
+                
+                if (!mobile) {
+                    alert('Please enter your mobile number');
+                    return;
+                }
+                
+                if (consent !== 'Y') {
+                    alert('Please provide consent to proceed');
+                    return;
+                }
+                
+                const submitBtn = document.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending OTP...';
+                
+                try {
+                    const response = await fetch('/verification/cowin-generate-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ mobile, consent })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Show OTP field
+                        document.getElementById('cowinOtpVerification').style.display = 'block';
+                        document.getElementById('cowinOtpVerification').scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Hide the form submit button
+                        submitBtn.style.display = 'none';
+                    } else {
+                        document.getElementById('verificationResult').innerHTML = `
+                            <div class="alert alert-danger">
+                                <h4>Error</h4>
+                                <p>${data.message || 'Failed to send OTP. Please try again.'}</p>
+                            </div>
+                        `;
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Verify Now';
+                    }
+                } catch (error) {
+                    console.error('Error sending OTP:', error);
+                    document.getElementById('verificationResult').innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>An error occurred while sending OTP. Please try again.</p>
+                        </div>
+                    `;
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Verify Now';
+                }
+            });
+        }
+        
+        // Function to verify CoWIN OTP
+        async function verifyCowinOTP() {
+            const otp = document.getElementById('cowin_otp').value;
+            if (!otp) {
+                alert('Please enter the OTP');
+                return;
+            }
+            
+            // Disable the verify button to prevent multiple submissions
+            const verifyButton = document.querySelector('button[onclick="verifyCowinOTP()"]');
+            verifyButton.disabled = true;
+            verifyButton.textContent = 'Verifying...';
+            
+            try {
+                const response = await fetch('/verification/cowin-validate-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ otp })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Fetch beneficiaries
+                    fetchBeneficiaries();
+                } else {
+                    document.getElementById('verificationResult').innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>${data.message || 'Invalid OTP. Please try again.'}</p>
+                        </div>
+                    `;
+                    verifyButton.disabled = false;
+                    verifyButton.textContent = 'Verify OTP';
+                }
+            } catch (error) {
+                console.error('Error verifying OTP:', error);
+                document.getElementById('verificationResult').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while verifying OTP. Please try again.</p>
+                    </div>
+                `;
+                verifyButton.disabled = false;
+                verifyButton.textContent = 'Verify OTP';
+            }
+        }
+        
+        // Function to fetch CoWIN beneficiaries
+        async function fetchBeneficiaries() {
+            try {
+                const response = await fetch('/verification/cowin-beneficiaries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show beneficiaries list
+                    document.getElementById('beneficiariesList').style.display = 'block';
+                    
+                    const beneficiariesContainer = document.getElementById('beneficiaries-container');
+                    beneficiariesContainer.innerHTML = '';
+                    
+                    if (data.data && data.data.length > 0) {
+                        data.data.forEach(beneficiary => {
+                            beneficiariesContainer.innerHTML += `
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">${beneficiary.name}</h5>
+                                        <small>ID: ${beneficiary.beneficiary_reference_id}</small>
+                                    </div>
+                                    <p class="mb-1"><strong>Birth Year:</strong> ${beneficiary.birth_year}</p>
+                                    <p class="mb-1"><strong>Gender:</strong> ${beneficiary.gender}</p>
+                                    <p class="mb-1"><strong>Vaccination Status:</strong> ${beneficiary.vaccination_status}</p>
+                                    <button class="btn btn-sm btn-primary mt-2" onclick="downloadCertificate('${beneficiary.beneficiary_reference_id}')">
+                                        Download Certificate
+                                    </button>
+                                </div>
+                            `;
+                        });
+                        
+                        // Show remaining tokens
+                        document.getElementById('verificationResult').innerHTML = `
+                            <div class="alert alert-success">
+                                <p><strong>Remaining Tokens:</strong> ${data.remainingTokens}</p>
+                            </div>
+                        `;
+                    } else {
+                        beneficiariesContainer.innerHTML = `
+                            <div class="alert alert-info">
+                                <p>No beneficiaries found for this mobile number.</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    document.getElementById('verificationResult').innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>${data.message || 'Failed to fetch beneficiaries. Please try again.'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching beneficiaries:', error);
+                document.getElementById('verificationResult').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while fetching beneficiaries. Please try again.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to download CoWIN certificate
+        async function downloadCertificate(beneficiaryId) {
+            try {
+                const response = await fetch('/verification/cowin-certificate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ beneficiary_id: beneficiaryId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // If certificate URL is available, open it in a new tab
+                    if (data.data && data.data.certificate_url) {
+                        window.open(data.data.certificate_url, '_blank');
+                    } else {
+                        document.getElementById('verificationResult').innerHTML = `
+                            <div class="alert alert-success">
+                                <p>Certificate downloaded successfully. Please check your downloads folder.</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    document.getElementById('verificationResult').innerHTML = `
+                        <div class="alert alert-danger">
+                            <h4>Error</h4>
+                            <p>${data.message || 'Failed to download certificate. Please try again.'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error downloading certificate:', error);
+                document.getElementById('verificationResult').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while downloading the certificate. Please try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Add this to your form submit handler
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get selected passport option
+            const passportOption = document.getElementById('passport_option').value;
+            
+            // Set endpoint based on option
+            let endpoint;
+            if (passportOption === 'generate-mrz') {
+                endpoint = '/verification/generate-mrz';
+            } else if (passportOption === 'verify-mrz') {
+                endpoint = '/verification/verify-mrz';
+            } else if (passportOption === 'passport-verify') {
+                endpoint = '/verification/passport-verify';
+            } else if (passportOption === 'passport-fetch') {
+                endpoint = '/verification/passport-fetch';
+            }
+            
+            // Create form data with only the relevant fields
+            const formData = new FormData();
+            document.querySelectorAll(`#${passportOption}-div input`).forEach(input => {
+                formData.append(input.name, input.value);
+            });
+            formData.append('consent', document.getElementById('consent').checked ? 'Y' : 'N');
+            
+            // Submit the form to the correct endpoint
+            fetch(endpoint, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle response
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Update the passport option handling script at the bottom of the file
+        document.getElementById('passport_option').addEventListener('change', function() {
+            // Hide all option divs first
+            document.querySelectorAll('.passport-option-div').forEach(div => {
+                div.style.display = 'none';
+                // Remove required from all inputs in this div
+                div.querySelectorAll('input').forEach(input => {
+                    input.removeAttribute('required');
+                });
+            });
+            
+            // Show selected option div
+            const selectedOption = this.value;
+            document.getElementById(`${selectedOption}-div`).style.display = 'block';
+            
+            // Add required attribute only to visible inputs
+            document.querySelectorAll(`#${selectedOption}-div input`).forEach(input => {
+                // Skip the consent checkbox as it's handled separately
+                if (input.id !== 'consent') {
+                    input.setAttribute('required', 'required');
+                }
+            });
+        });
+
+        // Make sure consent checkbox is always required
+        document.getElementById('consent').setAttribute('required', 'required');
+    </script>
+</body>
+</html>

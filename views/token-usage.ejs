@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Usage History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <style>
+        :root {
+            --primary: #1a7f5a;
+            --secondary: #f7f8fa;
+            --accent: #e6f4ea;
+            --text: #333;
+            --light-text: #666;
+            --border: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--secondary);
+            color: var(--text);
+        }
+        .navbar {
+            background: var(--primary) !important;
+            box-shadow: var(--shadow);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table thead {
+            background: var(--accent);
+        }
+        .table th, .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+        .badge-added {
+            background-color: #28a745;
+        }
+        .badge-used {
+            background-color: #dc3545;
+        }
+        .badge-shared {
+            background-color: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Verification Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                    <a class="nav-link active" href="/token-usage">Token Usage</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-4">
+        <h1 class="mb-4">Token Usage History</h1>
+        
+        <% Object.entries(usageByService).forEach(([service, data]) => { %>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><%= service.toUpperCase() %></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Added</h6>
+                                    <p class="card-text h3"><%= data.added %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Used</h6>
+                                    <p class="card-text h3"><%= data.used %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Shared</h6>
+                                    <p class="card-text h3"><%= data.shared %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6 class="mb-3">Usage History</h6>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                    <th>Amount</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.history.forEach(record => { %>
+                                    <tr>
+                                        <td><%= new Date(record.timestamp).toLocaleString() %></td>
+                                        <td>
+                                            <span class="badge badge-<%= record.action %>">
+                                                <%= record.action.charAt(0).toUpperCase() + record.action.slice(1) %>
+                                            </span>
+                                        </td>
+                                        <td><%= record.amount %></td>
+                                        <td><%= record.details %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

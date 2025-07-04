@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Services</title>
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+        
+        body {
+            background: var(--primary-light);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hero Section Enhancement */
+        .hero-section {
+            background: linear-gradient(135deg, #ffffff 0%, #d0bfff 100%);
+            color: #fff;
+            padding: 100px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            opacity: 0.1;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* Service Categories */
+        .category-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .category-header .subtitle {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(26, 121, 179, 0.1);
+            border-radius: 50px;
+            position: relative;
+        }
+
+        .category-header .subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 3px;
+        }
+
+        .category-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .category-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Service Cards Enhancement */
+        .service-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .service-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(26, 121, 179, 0.2) 50%, 
+                transparent 100%
+            );
+        }
+
+        .service-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border: 1px solid rgba(26, 121, 179, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-card .icon {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .service-card .card-title {
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card .card-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .service-card .price {
+            color: var(--primary-orange);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: auto;
+            padding-top: 0.8rem;
+            margin-bottom:10px
+        }
+
+        .service-card .btn {
+            background: var(--primary-green);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 10px;
+        }
+
+        .service-card .btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .service-card .btn i {
+            font-size: 1.1rem;
+        }
+
+        .service-card .btn-secondary {
+            background: var(--primary-blue);
+        }
+
+        .service-card .btn-secondary:hover {
+            background: var(--primary-dark);
+            color: white !important;
+        }
+
+        /* Section Backgrounds */
+        .service-section.identity {
+            background: linear-gradient(135deg, #f6f9fa 0%, #ffffff 100%);
+        }
+
+        .service-section.business {
+            background: linear-gradient(135deg, #f0f7fa 0%, #ffffff 100%);
+        }
+
+        .service-section.health {
+            background: linear-gradient(135deg, #f9f6fa 0%, #ffffff 100%);
+        }
+
+        /* CTA Section Enhancement */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #ff7e3d 100%);
+            color: #fff;
+            padding: 80px 0;
+            border-radius: 30px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .theme-btn {
+            background: #fff;
+            color: var(--primary-orange);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .cta-section .theme-btn:hover {
+            background: var(--primary-dark);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .category-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .service-section {
+                padding: 60px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .category-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-section {
+                padding: 60px 0;
+                margin: 60px 0;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Add these styles to your existing style block */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            min-width: 300px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.5s ease-out forwards;
+            border: none;
+        }
+
+        .custom-alert .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-alert .alert-icon {
+            font-size: 1.2rem;
+        }
+
+        .custom-alert .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-alert .close-btn:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+        }
+
+        /* Swiper Customization - Simplified */
+        .swiper {
+            width: 100%;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .swiper-slide {
+            height: auto;
+        }
+
+        /* Navigation Buttons */
+        .swiper-nav-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .swiper-nav-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-nav-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .swiper-nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .swiper-pagination {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .swiper-pagination-bullet {
+            background: var(--primary-blue);
+            opacity: 0.5;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+        }
+
+        /* Grid Card Enhancement */
+        .row .service-card {
+            height: 100%;
+            margin-bottom: 0;
+        }
+
+        /* Update navigation button styles */
+        .swiper-nav-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .swiper-nav-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .swiper-nav-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .swiper-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .swiper-nav-btn i {
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        /* Ensure buttons are clickable on mobile */
+        @media (max-width: 768px) {
+            .swiper-nav-btn {
+                width: 45px;
+                height: 45px;
+            }
+
+            .swiper-nav-btn i {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Prevent button overlap with cards */
+        .swiper {
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('navbar') %>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="hero-content">
+                        <h1>Secure Verification Services for Every Need</h1>
+                        <p>Experience seamless, instant, and secure verification services for individuals and businesses. Our comprehensive suite of verification solutions helps you validate identities, documents, and credentials with confidence.</p>
+                        <a class="theme-btn" style="background: var(--primary-blue) !important; border-color: var(--primary-blue) !important; color: #fff !important;" href="/register">Get Started Now <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                    <img class="hero-img" src="https://www.shutterstock.com/image-vector/quality-test-satisfaction-concept-customers-600nw-2028412160.jpg" alt="Verification Illustration">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Identity Verification Section -->
+    <section class="service-section identity">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Identity Verification</div>
+                <h2>Personal Identity & Document Verification</h2>
+                <p>Comprehensive identity verification services to validate personal documents and credentials with utmost security and accuracy.</p>
+            </div>
+            <div class="swiper identity-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Aadhaar Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-address-card"></i></div>
+                            <h5 class="card-title">Aadhaar Verification</h5>
+                            <p class="card-text">Verify Aadhaar card details securely with OTP authentication. Ensure the authenticity of Aadhaar information.</p>
+                            <div class="price">₹75 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="aadhar" data-price="75">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- PAN Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-id-card"></i></div>
+                            <h5 class="card-title">PAN Verification</h5>
+                            <p class="card-text">Verify PAN card details instantly with our secure verification service. Get accurate information about PAN card status and ownership.</p>
+                            <div class="price">₹50 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="pan" data-price="50">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Passport Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-passport"></i></div>
+                            <h5 class="card-title">Passport Verification</h5>
+                            <p class="card-text">Verify passport details and validate international travel documents. Comprehensive passport verification service.</p>
+                            <div class="price">₹100 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="passport" data-price="100">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Voter ID Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-vote-yea"></i></div>
+                            <h5 class="card-title">Voter ID Verification</h5>
+                            <p class="card-text">Verify voter ID details and validate electoral information. Ensure authenticity of voter credentials.</p>
+                            <div class="price">₹75 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="voter" data-price="75">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Driving License Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-id-card"></i></div>
+                            <h5 class="card-title">Driving License Verification</h5>
+                            <p class="card-text">Verify driving license details and validate driving credentials. Comprehensive DL verification service.</p>
+                            <div class="price">₹75 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="dl" data-price="75">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="swiper-nav-buttons">
+                    <button class="swiper-nav-btn swiper-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="swiper-nav-btn swiper-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Address & Document Verification Section -->
+    <section class="service-section business">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Address & Document Verification</div>
+                <h2>Location & Vehicle Verification</h2>
+                <p>Verify addresses and vehicle documents with our comprehensive verification services. Ensure authenticity of location and vehicle information.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h5 class="card-title">Address Verification</h5>
+                        <p class="card-text">Verify residential and business addresses with our comprehensive address verification service.</p>
+                        <div class="price">₹80 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="address" data-price="80">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-car"></i></div>
+                        <h5 class="card-title">Vehicle RC Verification</h5>
+                        <p class="card-text">Verify vehicle registration certificate details including owner information and vehicle specifications.</p>
+                        <div class="price">₹150 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="rc" data-price="150">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial & Business Checks Section -->
+    <section class="service-section identity">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Financial & Business Checks</div>
+                <h2>Business & Financial Verification</h2>
+                <p>Comprehensive business and financial verification services to ensure compliance and validate business credentials.</p>
+            </div>
+            <div class="swiper financial-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Bank Account Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-university"></i></div>
+                            <h5 class="card-title">Bank Account Verification</h5>
+                            <p class="card-text">Verify bank account details and UPI IDs for secure financial transactions.</p>
+                            <div class="price">₹150 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="bank" data-price="150">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- GSTIN Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-building-columns"></i></div>
+                            <h5 class="card-title">GSTIN Verification</h5>
+                            <p class="card-text">Verify GST details and validate business registration. Ensure compliance with tax regulations.</p>
+                            <div class="price">₹100 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="gst" data-price="100">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Company Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-building"></i></div>
+                            <h5 class="card-title">Company Verification</h5>
+                            <p class="card-text">Comprehensive company verification through MCA. Includes detailed company information.</p>
+                            <div class="price">₹150 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="mca" data-price="150">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- MSME Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-industry"></i></div>
+                            <h5 class="card-title">MSME Verification</h5>
+                            <p class="card-text">Verify MSME registration and validate business credentials. Comprehensive MSME verification service.</p>
+                            <div class="price">₹120 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="msme" data-price="120">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- FSSAI License Verification -->
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="icon"><i class="fa-solid fa-utensils"></i></div>
+                            <h5 class="card-title">FSSAI License Verification</h5>
+                            <p class="card-text">Verify FSSAI license details and validate food business credentials. Ensure compliance with food safety regulations.</p>
+                            <div class="price">₹100 per verification</div>
+                            <% if (user) { %>
+                                <button class="theme-btn" data-service="fssai" data-price="100">
+                                    <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                </button>
+                            <% } else { %>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-nav-buttons">
+                    <button class="swiper-nav-btn swiper-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="swiper-nav-btn swiper-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal & Compliance Checks Section -->
+    <section class="service-section business">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Legal & Compliance Checks</div>
+                <h2>Legal & Background Verification</h2>
+                <p>Comprehensive legal and background verification services to ensure compliance and validate credentials.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-gavel"></i></div>
+                        <h5 class="card-title">Criminal & Court Record Verification</h5>
+                        <p class="card-text">Comprehensive background check including criminal records and court cases.</p>
+                        <div class="price">₹200 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="ccrv" data-price="200">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-user-tie"></i></div>
+                        <h5 class="card-title">Employment Verification</h5>
+                        <p class="card-text">Verify employee details through EPFO. Comprehensive background check for employment verification.</p>
+                        <div class="price">₹200 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="employee" data-price="200">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health & Government Records Section -->
+    <section class="service-section health">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Health & Government Records</div>
+                <h2>Health & Government Verification</h2>
+                <p>Verify health records and government documents with our specialized verification services.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-syringe"></i></div>
+                        <h5 class="card-title">CoWIN Verification</h5>
+                        <p class="card-text">Verify and download COVID-19 vaccination certificates securely.</p>
+                        <div class="price">₹50 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="cowin" data-price="50">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Biometric & AI-Based Verification Section -->
+    <section class="service-section identity">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Biometric & AI-Based Verification</div>
+                <h2>Advanced Identity Verification</h2>
+                <p>State-of-the-art biometric and AI-based verification services for enhanced security and accuracy.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-fingerprint"></i></div>
+                        <h5 class="card-title">Liveness Check</h5>
+                        <p class="card-text">Advanced liveness detection to prevent spoofing and ensure real-time presence.</p>
+                        <div class="price">₹100 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="liveness" data-price="100">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-face-smile"></i></div>
+                        <h5 class="card-title">Facematch</h5>
+                        <p class="card-text">AI-powered facial recognition to verify identity against official documents.</p>
+                        <div class="price">₹150 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="facematch" data-price="150">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile & Database Lookup Section -->
+    <section class="service-section business">
+        <div class="container">
+            <div class="category-header">
+                <div class="subtitle">Profile & Database Lookup</div>
+                <h2>Comprehensive Profile Verification</h2>
+                <p>Extensive database lookup services to verify and validate individual profiles.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="icon"><i class="fa-solid fa-database"></i></div>
+                        <h5 class="card-title">Profile Lookup</h5>
+                        <p class="card-text">Comprehensive profile verification across multiple databases and sources.</p>
+                        <div class="price">₹200 per verification</div>
+                        <% if (user) { %>
+                            <button class="theme-btn" data-service="profile" data-price="200">
+                                <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                            </button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">
+                                <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced CTA Section -->
+    <section class="cta-section text-center" style="background: var(--primary-blue) !important; color: #fff !important; margin: 50px 0 !important;">
+        <div class="container">
+            <h2 style="color: #fff !important;">Ready to Get Started?</h2>
+            <p style="color: #fff !important;">Join thousands of satisfied customers who trust our verification services. Sign up now and experience seamless, secure, and instant verification for all your needs.</p>
+            <a class="theme-btn" href="/register" style="background: #fff !important; border-color: #fff !important; color: var(--primary-blue) !important;">Create Your Free Account <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+        </div>
+    </section>
+
+    <%- include('footer') %>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/all.min.js"></script>
+    <script>
+        // Handle add to cart buttons
+        document.querySelectorAll('.theme-btn').forEach(button => {
+            button.addEventListener('click', async function() {
+                const service = this.dataset.service;
+                const price = this.dataset.price;
+                try {
+                    const response = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            service,
+                            price,
+                            quantity: 1
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        // Create and show the enhanced alert
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'custom-alert';
+                        alertDiv.innerHTML = `
+                            <div class="alert-content">
+                                <i class="fas fa-check-circle alert-icon"></i>
+                                <span>${data.message}</span>
+                            </div>
+                            <button type="button" class="close-btn" onclick="this.parentElement.remove()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        document.body.appendChild(alertDiv);
+
+                        // Remove the alert after 3 seconds with animation
+                        setTimeout(() => {
+                            alertDiv.style.animation = 'fadeOut 0.5s ease-out forwards';
+                            setTimeout(() => {
+                                alertDiv.remove();
+                            }, 500);
+                        }, 3000);
+
+                        // Redirect to cart page after a short delay
+                        setTimeout(() => {
+                            window.location.href = '/cart';
+                        }, 1000);
+                    } else {
+                        throw new Error(data.message);
+                    }
+                } catch (error) {
+                    // Create and show error alert
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'custom-alert';
+                    alertDiv.innerHTML = `
+                        <div class="alert-content">
+                            <i class="fas fa-exclamation-circle alert-icon"></i>
+                            <span>${error.message}</span>
+                        </div>
+                        <button type="button" class="close-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    document.body.appendChild(alertDiv);
+
+                    // Remove the alert after 3 seconds with animation
+                    setTimeout(() => {
+                        alertDiv.style.animation = 'fadeOut 0.5s ease-out forwards';
+                        setTimeout(() => {
+                            alertDiv.remove();
+                        }, 500);
+                    }, 3000);
+                }
+            });
+        });
+
+        // Initialize all swipers with fixed navigation
+        const swipers = {};
+        const swiperConfigs = {
+            identity: { 
+                slidesPerView: 3, 
+                spaceBetween: 20, 
+                cardCount: 5
+            },
+            financial: { 
+                slidesPerView: 3, 
+                spaceBetween: 20, 
+                cardCount: 5
+            }
+        };
+
+        // Initialize each swiper with proper navigation
+        Object.keys(swiperConfigs).forEach(section => {
+            const config = swiperConfigs[section];
+            if (config.cardCount >= 5) {
+                const swiperElement = document.querySelector(`.${section}-swiper`);
+                const prevBtn = swiperElement.querySelector('.swiper-prev');
+                const nextBtn = swiperElement.querySelector('.swiper-next');
+
+                const swiper = new Swiper(swiperElement, {
+                    slidesPerView: config.slidesPerView,
+                    spaceBetween: config.spaceBetween,
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    },
+                    breakpoints: {
+                        320: {
+                            slidesPerView: 1,
+                            spaceBetween: 20
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: config.slidesPerView,
+                            spaceBetween: 20
+                        }
+                    },
+                    on: {
+                        init: function() {
+                            updateButtonStates(this);
+                        },
+                        slideChange: function() {
+                            updateButtonStates(this);
+                        },
+                        resize: function() {
+                            updateButtonStates(this);
+                        }
+                    }
+                });
+
+                // Function to update button states
+                function updateButtonStates(swiperInstance) {
+                    // For loop mode, we don't need to disable buttons
+                    prevBtn.style.opacity = '1';
+                    nextBtn.style.opacity = '1';
+                    prevBtn.style.cursor = 'pointer';
+                    nextBtn.style.cursor = 'pointer';
+                }
+
+                // Add click event listeners
+                prevBtn.addEventListener('click', () => {
+                    swiper.slidePrev();
+                    // Pause autoplay briefly when manually navigating
+                    swiper.autoplay.stop();
+                    setTimeout(() => {
+                        swiper.autoplay.start();
+                    }, 3000);
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    swiper.slideNext();
+                    // Pause autoplay briefly when manually navigating
+                    swiper.autoplay.stop();
+                    setTimeout(() => {
+                        swiper.autoplay.start();
+                    }, 3000);
+                });
+
+                // Store swiper instance
+                swipers[section] = swiper;
+
+                // Add touch event handling for mobile
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                swiperElement.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                swiperElement.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                }, { passive: true });
+
+                function handleSwipe() {
+                    const swipeThreshold = 50;
+                    if (touchEndX < touchStartX - swipeThreshold) {
+                        // Swipe left
+                        swiper.slideNext();
+                    } else if (touchEndX > touchStartX + swipeThreshold) {
+                        // Swipe right
+                        swiper.slidePrev();
+                    }
+                }
+            }
+        });
+
+        // Update swiper on window resize with debounce
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                Object.values(swipers).forEach(swiper => {
+                    swiper.update();
+                    swiper.autoplay.start();
+                });
+            }, 250);
+        });
+
+        // Add hover pause functionality
+        document.querySelectorAll('.swiper').forEach(swiperElement => {
+            swiperElement.addEventListener('mouseenter', () => {
+                const swiper = swipers[swiperElement.classList[1].split('-')[0]];
+                if (swiper) {
+                    swiper.autoplay.stop();
+                }
+            });
+
+            swiperElement.addEventListener('mouseleave', () => {
+                const swiper = swipers[swiperElement.classList[1].split('-')[0]];
+                if (swiper) {
+                    swiper.autoplay.start();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superadmin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <style>
+        :root {
+            --primary: #1a7f5a;
+            --secondary: #f7f8fa;
+            --accent: #e6f4ea;
+            --text: #333;
+            --light-text: #666;
+            --border: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--secondary);
+            color: var(--text);
+        }
+        .navbar {
+            background: var(--primary) !important;
+            box-shadow: var(--shadow);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            transition: var(--transition);
+        }
+        .btn-primary:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.25);
+        }
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table thead {
+            background: var(--accent);
+        }
+        .table th, .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+        .modal-content {
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        .modal-header {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        @media (max-width: 991px) {
+            .card {
+                margin-bottom: 1.5rem;
+            }
+            .navbar .container {
+                flex-direction: row;
+            }
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .navbar-toggler {
+                margin-left: auto;
+            }
+        }
+        @media (max-width: 575px) {
+            h1, .card-header h5 {
+                font-size: 1.2rem;
+            }
+            .card-body, .modal-body {
+                padding: 1rem;
+            }
+            .form-label, label {
+                font-size: 0.98rem;
+            }
+            .form-control, .btn {
+                font-size: 1rem;
+                padding: 0.5rem 0.75rem;
+            }
+            .table {
+                font-size: 0.95rem;
+            }
+        }
+        .navbar-toggler {
+            border: none;
+            background: transparent;
+        }
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Verification Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#superadminNavbar" aria-controls="superadminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="superadminNavbar">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" href="/superadmin-dashboard">Dashboard</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-4">
+        <h1 class="mb-4 text-center text-md-start">Superadmin Dashboard</h1>
+        <div class="row g-4">
+            <!-- Add Tokens Section -->
+            <div class="col-12 col-lg-5">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0">Add Tokens to User</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addTokensForm">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">User Email Address</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Select Services</label>
+                                <div class="row g-2">
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="pan" id="pan">
+                                            <label class="form-check-label" for="pan">PAN</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="aadhar" id="aadhar">
+                                            <label class="form-check-label" for="aadhar">Aadhar</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="gst" id="gst">
+                                            <label class="form-check-label" for="gst">GST</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="dl" id="dl">
+                                            <label class="form-check-label" for="dl">DL</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="voter" id="voter">
+                                            <label class="form-check-label" for="voter">Voter ID</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="ccrv" id="ccrv">
+                                            <label class="form-check-label" for="ccrv">CCRV</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="employee" id="employee">
+                                            <label class="form-check-label" for="employee">Employee</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="rc" id="rc">
+                                            <label class="form-check-label" for="rc">RC</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="bank" id="bank">
+                                            <label class="form-check-label" for="bank">Bank</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="passport" id="passport">
+                                            <label class="form-check-label" for="passport">Passport</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="mca" id="mca">
+                                            <label class="form-check-label" for="mca">MCA</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="cowin" id="cowin">
+                                            <label class="form-check-label" for="cowin">CoWIN</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Token Allocation</label>
+                                <div class="row g-2">
+                                    <div class="col-6 col-md-4">
+                                        <label for="panTokens" class="form-label">PAN Tokens</label>
+                                        <input type="number" class="form-control" id="panTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="aadharTokens" class="form-label">Aadhar Tokens</label>
+                                        <input type="number" class="form-control" id="aadharTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="gstTokens" class="form-label">GST Tokens</label>
+                                        <input type="number" class="form-control" id="gstTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="dlTokens" class="form-label">DL Tokens</label>
+                                        <input type="number" class="form-control" id="dlTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="voterTokens" class="form-label">Voter ID Tokens</label>
+                                        <input type="number" class="form-control" id="voterTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="ccrvTokens" class="form-label">CCRV Tokens</label>
+                                        <input type="number" class="form-control" id="ccrvTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="employeeTokens" class="form-label">Employee Tokens</label>
+                                        <input type="number" class="form-control" id="employeeTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="rcTokens" class="form-label">RC Tokens</label>
+                                        <input type="number" class="form-control" id="rcTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="bankTokens" class="form-label">Bank Tokens</label>
+                                        <input type="number" class="form-control" id="bankTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="passportTokens" class="form-label">Passport Tokens</label>
+                                        <input type="number" class="form-control" id="passportTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="mcaTokens" class="form-label">MCA Tokens</label>
+                                        <input type="number" class="form-control" id="mcaTokens" min="0" value="0">
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <label for="cowinTokens" class="form-label">CoWIN Tokens</label>
+                                        <input type="number" class="form-control" id="cowinTokens" min="0" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Add Tokens</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- User Tokens List -->
+            <div class="col-12 col-lg-7">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0">User Tokens</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Usage</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTokensList">
+                                    <!-- Will be populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usage Details Modal -->
+    <div class="modal fade" id="usageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usage Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="usageDetails"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load user tokens
+            loadUserTokens();
+
+            // Handle form submission
+            $('#addTokensForm').on('submit', function(e) {
+                e.preventDefault();
+                addTokens();
+            });
+        });
+
+        function loadUserTokens() {
+            $.get('/superadmin/user-tokens')
+                .done(function(users) {
+                    const tbody = $('#userTokensList');
+                    tbody.empty();
+
+                    if (users.length === 0) {
+                        tbody.append(`
+                            <tr>
+                                <td colspan="3" class="text-center">No users with superadmin-added tokens found</td>
+                            </tr>
+                        `);
+                        return;
+                    }
+
+                    users.forEach(user => {
+                        // Log user data for debugging
+                        console.log('Processing user:', user);
+                        
+                        // Ensure we have a valid user ID
+                        if (!user._id) {
+                            console.error('User ID not found:', user);
+                            return;
+                        }
+
+                        const row = `
+                            <tr>
+                                <td>${user.email || 'No email'}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" onclick="showUsage('${user._id}')">
+                                        View Usage
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteTokens('${user._id}', '${user.email || 'No email'}')">
+                                        Delete Tokens
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.append(row);
+                    });
+                })
+                .fail(function(error) {
+                    console.error('Error loading user tokens:', error);
+                    alert('Error loading user tokens. Please try again.');
+                });
+        }
+
+        function showUsage(userId) {
+            $.get(`/superadmin/user-usage/${userId}`)
+                .done(function(data) {
+                    // Update modal title with email
+                    $('.modal-title').text(`Token Usage - ${data.email}`);
+                    
+                    // Create usage summary
+                    let summaryHtml = '<div class="mb-4">';
+                    summaryHtml += '<div class="table-responsive"><table class="table table-sm">';
+                    summaryHtml += '<thead><tr><th>Service</th><th>Added by Super Admin</th><th>Current Available</th></tr></thead><tbody>';
+                    
+                    // Sort services alphabetically
+                    const services = Object.keys(data.tokenStats).sort();
+                    
+                    services.forEach(service => {
+                        const stats = data.tokenStats[service];
+                        summaryHtml += `
+                            <tr>
+                                <td>${service.toUpperCase()}</td>
+                                <td>${stats.addedBySuperAdmin}</td>
+                                <td>${stats.currentTokens}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    summaryHtml += '</tbody></table></div></div>';
+                    
+                    // Update modal content
+                    $('#usageDetails').html(summaryHtml);
+                    $('#usageModal').modal('show');
+                })
+                .fail(function(error) {
+                    console.error('Error loading usage details:', error);
+                    alert('Error loading usage details. Please try again.');
+                });
+        }
+
+        function deleteTokens(userId, email) {
+            if (confirm(`Are you sure you want to delete all tokens for ${email}?`)) {
+                $.ajax({
+                    url: '/superadmin/delete-tokens',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        userId: userId,
+                        service: 'all'
+                    }),
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            // Remove the user's row from the table
+                            $(`tr:has(button[onclick="deleteTokens('${userId}', '${email}')"])`).remove();
+                            
+                            // If no users left, show the "no users" message
+                            if ($('#userTokensList tr').length === 0) {
+                                $('#userTokensList').html(`
+                                    <tr>
+                                        <td colspan="3" class="text-center">No users with superadmin-added tokens found</td>
+                                    </tr>
+                                `);
+                            }
+                        } else {
+                            alert(response.message || 'Error deleting tokens');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error deleting tokens:', xhr.responseJSON || xhr.statusText);
+                        alert(xhr.responseJSON?.message || 'Error deleting tokens. Please try again.');
+                    }
+                });
+            }
+        }
+
+        function addTokens() {
+            const email = document.getElementById('email').value;
+            const services = [];
+            
+            // Get selected services and their tokens
+            const serviceIds = ['pan', 'aadhar', 'gst', 'dl', 'voter', 'ccrv', 'employee', 'rc', 'bank', 'passport', 'mca', 'cowin'];
+            
+            serviceIds.forEach(serviceId => {
+                if (document.getElementById(serviceId).checked) {
+                    services.push({
+                        name: serviceId,
+                        tokens: parseInt(document.getElementById(`${serviceId}Tokens`).value) || 0
+                    });
+                }
+            });
+
+            // Send request to add tokens
+            fetch('/superadmin/share-dashboard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    services
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Tokens added successfully!');
+                    location.reload();
+                } else {
+                    alert(data.message || 'Error adding tokens');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding tokens');
+            });
+        }
+    </script>
+</body>
+</html> 
