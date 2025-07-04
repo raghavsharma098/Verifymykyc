@@ -1,0 +1,301 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .service-card {
+            transition: transform 0.2s;
+            height: 100%;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body .btn {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Verification Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <% if (user) { %>
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                        <a class="nav-link" href="/cart">Cart</a>
+                        <a class="nav-link" href="/history">View History</a>
+                        <a class="nav-link" href="/logout">Logout</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="/register">Register</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Available Verification Services</h1>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">PAN Card Verification</h5>
+                        <p class="card-text">Verify PAN card details instantly.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹50 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="pan" data-price="50">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Aadhar Card Verification</h5>
+                        <p class="card-text">Verify Aadhar card details with OTP.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹75 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="aadhar" data-price="75">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">GST Verification</h5>
+                        <p class="card-text">Verify GST details instantly.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹100 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="gst" data-price="100">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Driving License Verification</h5>
+                        <p class="card-text">Verify driving license details.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹60 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="dl" data-price="60">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Voter ID Verification</h5>
+                        <p class="card-text">Verify voter ID details.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹40 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="voter" data-price="40">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Criminal & Court Verification</h5>
+                        <p class="card-text">Comprehensive background check.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹200 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="ccrv" data-price="200">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Employee Verification</h5>
+                        <p class="card-text">Verify employee details through EPFO using UAN, PAN, or employer details.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹200 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="employee" data-price="200">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">RC Verification</h5>
+                        <p class="card-text">Verify vehicle registration certificate details including owner name, vehicle details, and validity.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹150 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="rc" data-price="150">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">CoWIN Vaccination</h5>
+                        <p class="card-text">Verify and download COVID-19 vaccination certificates.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹50 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="cowin" data-price="50">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Bank Verification</h5>
+                        <p class="card-text">Verify bank account details or UPI ID for secure transactions.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹150 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="bank" data-price="150">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Passport Verification</h5>
+                        <p class="card-text">Verify Indian passport details, generate and verify MRZ, or fetch passport info.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹100 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="passport" data-price="100">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">MCA Verification</h5>
+                        <p class="card-text">Verify company and director details through MCA. Includes company search, director search, and DIN/PAN verification.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹150 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="mca" data-price="150">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile Lookup</h5>
+                        <p class="card-text">Verify personal profiles, national IDs, addresses, and PAN numbers.</p>
+                        <p class="card-text"><strong>Price:</strong> ₹100 per verification</p>
+                        <% if (user) { %>
+                            <button class="btn btn-primary add-to-cart" data-service="profile" data-price="100">Add to Cart</button>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-primary">Login to Purchase</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', async function() {
+                const service = this.dataset.service;
+                const price = this.dataset.price;
+                
+                try {
+                    const response = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            service,
+                            price,
+                            quantity: 1
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Show success message
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                        alertDiv.style.zIndex = '1050';
+                        alertDiv.innerHTML = `
+                            ${data.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        `;
+                        document.body.appendChild(alertDiv);
+
+                        // Remove alert after 3 seconds
+                        setTimeout(() => {
+                            alertDiv.remove();
+                        }, 3000);
+
+                        // Redirect to cart page
+                        window.location.href = '/cart';
+                    } else {
+                        throw new Error(data.message);
+                    }
+                } catch (error) {
+                    // Show error message
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                    alertDiv.style.zIndex = '1050';
+                    alertDiv.innerHTML = `
+                        ${error.message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    document.body.appendChild(alertDiv);
+
+                    // Remove alert after 3 seconds
+                    setTimeout(() => {
+                        alertDiv.remove();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

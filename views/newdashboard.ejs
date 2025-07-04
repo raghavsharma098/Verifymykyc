@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --admin-accent: #2563eb;
+            --admin-accent-light: #e0e7ff;
+            --admin-danger: #ef4444;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a,
+        .sidebar .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active,
+        .sidebar .sidebar-link.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover,
+        .sidebar .sidebar-link:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            width: 99vw;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .dashboard-header .welcome {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .dashboard-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .service-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 12px rgba(16, 30, 54, 0.07);
+            transition: box-shadow 0.2s;
+            min-height: 120px;
+            gap: 48px;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 8px 32px rgba(16, 30, 54, 0.13);
+        }
+
+        .service-card-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .service-card .icon {
+            font-size: 2.5rem;
+            color: #10c610;
+            margin-right: 18px;
+            min-width: 48px;
+            text-align: center;
+        }
+
+        .service-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        .service-card .card-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            color: #1a2233;
+        }
+
+        .service-card .card-text {
+            color: #444;
+            font-size: 1.04rem;
+            margin-bottom: 8px;
+        }
+
+        .service-card .price {
+            color: #15803d;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .service-card-action {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-shrink: 0;
+            min-width: 180px;
+        }
+
+        .theme-btn {
+            background: #10c610;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 38px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(16, 204, 113, 0.10);
+            transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+            outline: none;
+            white-space: nowrap;
+        }
+
+        .theme-btn:hover,
+        .theme-btn:focus {
+            background: #15803d;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 18px rgba(16, 204, 113, 0.18);
+        }
+
+        @media (max-width: 900px) {
+            .service-card {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 18px 10px;
+                gap: 18px;
+            }
+
+            .service-card-info {
+                flex-direction: row;
+                gap: 18px;
+            }
+
+            .service-card-action {
+                margin-left: 0;
+                margin-top: 18px;
+                justify-content: flex-end;
+                min-width: 0;
+            }
+        }
+
+        .dashboard-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        .api-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(16, 30, 54, 0.04);
+        }
+
+        .api-card img {
+            width: 80px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-right: 24px;
+            background: #f3f4f6;
+        }
+
+        .api-card-content {
+            flex: 1;
+        }
+
+        .api-card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .api-card-desc {
+            color: #4b5563;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .api-card-doc {
+            color: #2563eb;
+            font-size: 0.98rem;
+            text-decoration: underline;
+            margin-bottom: 0;
+            display: inline-block;
+        }
+
+        .api-card-action {
+            display: flex;
+            align-items: center;
+            margin-left: 24px;
+        }
+
+        .btn-activated,
+        .btn-subscribe {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 22px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-activated {
+            background: #e6f6f0;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .btn-subscribe {
+            background: #155e75;
+            color: #fff;
+            border: 1px solid #155e75;
+        }
+
+        .btn-activated i,
+        .btn-subscribe i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+
+            .main {
+                padding: 18px;
+            }
+
+            .dashboard-header {
+                padding: 16px;
+            }
+
+            .dashboard-header .welcome {
+                font-size: 1.5rem;
+            }
+        }
+
+        .cta-section .theme-btn:hover {
+            background: var(--primary-dark);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .service-card .btn {
+            background: var(--primary-green);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 1.1rem;
+        }
+
+        .btn-secondary {
+            background: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-dark);
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            min-width: 340px;
+            padding: 18px 24px 18px 24px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #e6f4ea 60%, #d1fae5 100%);
+            color: #1a7f5a;
+            font-weight: 500;
+            box-shadow: 0 6px 24px rgba(16, 30, 54, 0.13);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.5s ease-out forwards;
+            border: 1px solid #bbf7d0;
+            gap: 18px;
+        }
+
+        .custom-alert .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .custom-alert .alert-icon {
+            font-size: 1.5rem;
+            color: #22c55e;
+        }
+
+        .custom-alert .close-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0 0 0 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-alert .close-btn:hover {
+            opacity: 1;
+        }
+
+        .custom-alert .view-cart-btn {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 18px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+        }
+
+        .custom-alert .view-cart-btn:hover {
+            background: #1746a2;
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+        }
+
+        .theme-btn {
+            background-color: #15803d !important;
+        }
+
+        /* Tablet (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.5rem;
+                margin: 1rem 0;
+                text-align: left;
+            }
+
+            .g-4 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .service-card {
+                flex-direction: column;
+            }
+
+            .service-card-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Mobile (max-width: 768px) */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.25rem;
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .g-4 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            .service-card {
+                padding: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-text {
+                font-size: 0.95rem;
+            }
+
+            .price {
+                font-size: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .service-card-action {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .theme-btn,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .service-card {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+            <main class="main" style="margin-top: 100px;">
+                <div class="dashboard-header">
+                    <div>
+                        <div class="welcome">Welcome, <%= user.name %>
+                        </div>
+                        <div class="subtitle">Access all your verification services and manage your tokens</div>
+                    </div>
+                </div>
+                <div class="dashboard-title">Verification Services</div>
+                <div class="g-4" id="serviceCardsContainer">
+                    <!-- Identity -->
+                    <div class="service-card identity-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-id-card"></i></div>
+                                    <div class="card-title">PAN Card Verification</div>
+                                </div>
+                                <div class="card-text">Verify PAN card details instantly with our secure verification
+                                    service. Get accurate information about PAN card status and ownership.</div>
+                                <div class="price">₹50 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="pan" data-price="50">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card identity-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-address-card"></i></div>
+                                    <div class="card-title">Aadhar Card Verification</div>
+                                </div>
+                                <div class="card-text">Verify Aadhar card details securely with OTP authentication.
+                                    Ensure the authenticity of Aadhar information.</div>
+                                <div class="price">₹75 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="aadhar" data-price="75">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card identity-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-passport"></i></div>
+                                    <div class="card-title">Passport Verification</div>
+                                </div>
+                                <div class="card-text">Comprehensive passport verification service including MRZ
+                                    generation and validation. Verify passport details with confidence.</div>
+                                <div class="price">₹100 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="passport" data-price="100">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card identity-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-gavel"></i></div>
+                                    <div class="card-title">Criminal & Court Verification</div>
+                                </div>
+                                <div class="card-title">Criminal & Court Verification</div>
+                                <div class="card-text">Comprehensive background check including criminal records and
+                                    court cases with the help of AI and OCR.</div>
+                                <div class="price">₹200 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="ccrv" data-price="200">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business -->
+                    <div class="service-card business-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-building-columns"></i></div>
+                                    <div class="card-title">GST Verification</div>
+                                </div>
+                                <div class="card-text">Verify GST details and validate business registration. Ensure
+                                    compliance with tax regulations with the help of OCR.</div>
+                                <div class="price">₹100 per verification</div>
+                            </div>
+
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="gst" data-price="100">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card business-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-briefcase"></i></div>
+
+                                    <div class="card-title">MCA Verification</div>
+                                </div>
+                                <div class="card-text">Comprehensive company and director verification through MCA.
+                                    Includes detailed company and director information.</div>
+                                <div class="price">₹150 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="mca" data-price="150">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employment -->
+                    <div class="service-card employment-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-user-tie"></i></div>
+                                    <div class="card-title">Employee Verification</div>
+                                </div>
+                                <div class="card-text">Verify employee details through EPFO. Comprehensive
+                                    background check for employment verification.</div>
+                                <div class="price">₹200 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="employee" data-price="200">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Asset -->
+                    <div class="service-card asset-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-car"></i></div>
+                                    <div class="card-title">RC Verification</div>
+                                </div>
+                                <div class="card-text">Verify vehicle registration certificate details including
+                                    owner information and vehicle specifications.</div>
+                                <div class="price">₹150 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="rc" data-price="150">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card asset-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-university"></i></div>
+                                    <div class="card-title">Bank Verification</div>
+                                </div>
+                                <div class="card-text">Verify bank account details and UPI IDs for secure financial
+                                    transactions with the help of OCR and AI.</div>
+                                <div class="price">₹150 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="bank" data-price="150">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vaccination -->
+                    <div class="service-card vaccination-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-syringe"></i></div>
+                                    <div class="card-title">CoWIN Vaccination</div>
+                                </div>
+                                <div class="card-text">Verify and download COVID-19 vaccination certificates
+                                    securely using advanced OCR and AI technologies for accuracy.
+                                </div>
+                                <div class="price">₹50 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="cowin" data-price="50">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card vaccination-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                                    <div class="card-title">Driving License Verification</div>
+                                </div>
+                                <div class="card-text">Verify driving license details, validate driving credentials,
+                                    and ensure authenticity for secure identification and legal compliance with the
+                                    help of OCR and AI.</div>
+                                <div class="price">₹60 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="dl" data-price="60">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Income -->
+                    <div class="service-card income-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-id-card"></i></div>
+                                    <div class="card-title">PAN Card Verification</div>
+                                </div>
+                                <div class="card-text">Verify PAN card details instantly with our secure
+                                    verification service. Get accurate information about PAN card status and
+                                    ownership.</div>
+                                <div class="price">₹50 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="pan" data-price="50">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card income-card">
+                        <div class="service-card-info" style="display: flex; justify-content: space-between !important; align-items: center; gap: 10px;">
+                            <div class="service-card-content">
+                                <div style="display: flex; align-items: center; ">
+                                    <div class="icon"><i class="fa-solid fa-university"></i></div>
+                                    <div class="card-title">Bank Verification</div>
+                                </div>
+                                <div class="card-text">Verify bank account details and UPI IDs for secure financial
+                                    transactions with the help of OCR and AI.</div>
+                                <div class="price">₹150 per verification</div>
+                            </div>
+                            <div class="service-card-action">
+                                <% if (user) { %>
+                                    <button class="theme-btn" data-service="bank" data-price="150">
+                                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/login" class="btn btn-secondary">
+                                            <i class="fa-solid fa-right-to-bracket"></i>Login to Purchase
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Verification Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detailsContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="downloadPdf">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to update token counts
+        function updateTokenCounts(tokens) {
+            Object.entries(tokens).forEach(([service, count]) => {
+                const elements = document.querySelectorAll(`.token-count[data-service="${service}"]`);
+                elements.forEach(element => {
+                    element.textContent = count;
+                });
+            });
+        }
+
+        // Listen for token updates
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'lastTokenUpdate') {
+                fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateTokenCounts(data.tokens);
+                        }
+                    })
+                    .catch(error => console.error('Error updating tokens:', error));
+            }
+        });
+
+        // Check for token updates every 5 seconds
+        setInterval(async function () {
+            try {
+                const response = await fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateTokenCounts(data.tokens);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking token updates:', error);
+            }
+        }, 5000);
+
+        // Handle view details button clicks
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', async function () {
+                const type = this.dataset.type;
+                const number = this.dataset.number;
+
+                try {
+                    const response = await fetch(`/verification/details/${type}/${number}`);
+                    const data = await response.json();
+
+                    if (data.success) {
+                        const detailsContent = document.getElementById('detailsContent');
+                        detailsContent.innerHTML = formatDetails(data.details, type);
+
+                        const downloadBtn = document.getElementById('downloadPdf');
+                        downloadBtn.onclick = () => window.location.href = `/download/${type}/${number}`;
+
+                        const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        modal.show();
+                    }
+                } catch (error) {
+                    console.error('Error fetching details:', error);
+                }
+            });
+        });
+
+        function formatDetails(details, type) {
+            let html = '<div class="table-responsive"><table class="table">';
+
+            if (type === 'gst') {
+                html += `
+                <tr><th>GSTIN</th><td>${details.gstin}</td></tr>
+                <tr><th>Legal Name</th><td>${details.legalName}</td></tr>
+                <tr><th>Trade Name</th><td>${details.tradeName}</td></tr>
+                <tr><th>Registration Date</th><td>${details.registrationDate}</td></tr>
+                <tr><th>Status</th><td>${details.status}</td></tr>
+                <tr><th>Business Type</th><td>${details.businessType}</td></tr>
+                <tr><th>Address</th><td>${details.address}</td></tr>
+                <tr><th>State</th><td>${details.state}</td></tr>
+                <tr><th>Pincode</th><td>${details.pincode}</td></tr>
+            `;
+            } else if (type === 'pan') {
+                html += `
+                <tr><th>PAN Number</th><td>${details.panNumber}</td></tr>
+                <tr><th>Name</th><td>${details.name}</td></tr>
+                <tr><th>Status</th><td>${details.status}</td></tr>
+                <tr><th>Type</th><td>${details.type}</td></tr>
+            `;
+            }
+
+            html += '</table></div>';
+            return html;
+        }
+    </script>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/all.min.js"></script>
+    <script>
+        // Handle add to cart buttons
+        document.querySelectorAll('.theme-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const service = this.dataset.service;
+                const price = this.dataset.price;
+                try {
+                    const response = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            service,
+                            price,
+                            quantity: 1
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        // Create and show the enhanced alert with View Cart button
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'custom-alert';
+                        alertDiv.innerHTML = `
+                        <div class="alert-content">
+                            <i class="fas fa-check-circle alert-icon"></i>
+                            <span>${data.message}</span>
+                        </div>
+                        <button class="view-cart-btn" onclick="window.location.href='/cart'">
+                            <i class='fas fa-shopping-cart'></i> View Cart
+                        </button>
+                        <button type="button" class="close-btn" onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                        document.body.appendChild(alertDiv);
+
+                        // Remove the alert after 5 seconds with animation
+                        setTimeout(() => {
+                            alertDiv.style.animation = 'fadeOut 0.5s ease-out forwards';
+                            setTimeout(() => {
+                                alertDiv.remove();
+                            }, 500);
+                        }, 5000);
+                    } else {
+                        throw new Error(data.message);
+                    }
+                } catch (error) {
+                    // Create and show error alert
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'custom-alert';
+                    alertDiv.innerHTML = `
+                    <div class="alert-content">
+                        <i class="fas fa-exclamation-circle alert-icon"></i>
+                        <span>${error.message}</span>
+                    </div>
+                    <button type="button" class="close-btn" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                    document.body.appendChild(alertDiv);
+
+                    // Remove the alert after 4 seconds with animation
+                    setTimeout(() => {
+                        alertDiv.style.animation = 'fadeOut 0.5s ease-out forwards';
+                        setTimeout(() => {
+                            alertDiv.remove();
+                        }, 500);
+                    }, 4000);
+                }
+            });
+        });
+    </script>
+    <script>
+        // Add this script at the end of the file
+        document.addEventListener('DOMContentLoaded', function() {
+            // The category filtering is now handled by the filterCards function in sidenav.ejs
+        });
+    </script>
+</body>
+
+</html>

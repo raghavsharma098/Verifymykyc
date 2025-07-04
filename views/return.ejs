@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Verify My KYC">
+    <meta name="description" content="Verify My KYC">
+    <!-- ======== Page title ============ -->
+    <title>Verify My KYC</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href=images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+
+        .theme-btn {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        /* Buttons */
+        .theme-btn,
+        .theme-btn.style4,
+        .theme-btn.style5 {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-green) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .theme-btn:hover,
+        .theme-btn:focus {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .theme-btn.style2 {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-orange) !important;
+            color: #fff !important;
+        }
+
+        /* Header */
+        .header-section-33,
+        #header-sticky.header-1.header-3 {
+            background: white !important;
+            border-bottom: 3px solid var(--primary-green);
+        }
+
+        .header-logo img {
+            filter: drop-shadow(0 2px 8px rgba(26, 121, 179, 0.08));
+        }
+
+        /* Navigation links */
+        .main-menu ul li a {
+            color: #000 !important;
+            font-weight: 500;
+        }
+
+        .main-menu ul li.active>a,
+        .main-menu ul li a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        /* Section Titles */
+        .section-title .title,
+        .single-section-title {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .section-title .subtitle,
+        .single-section-title .subtitle {
+            color: black !important;
+            font-weight: 600;
+        }
+
+        /* Subtitles with bg2 */
+        .bg2 {
+            background: var(--primary-orange) !important;
+            color: #fff !important;
+            border-radius: 6px;
+            padding: 0.2em 0.8em;
+        }
+
+        /* Pricing Cards */
+        .pricing-card.style1 {
+            border: 2px solid var(--primary-blue) !important;
+            box-shadow: 0 2px 16px 0 rgba(26, 121, 179, 0.08);
+        }
+
+        .pricing-card-header {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .pricing-card .price {
+            color: var(--primary-orange) !important;
+            font-weight: 700;
+        }
+
+        /* Checklist icons */
+        .checklist img,
+        .checklist svg {
+            filter: drop-shadow(0 2px 4px rgba(16, 198, 16, 0.10));
+            color: var(--primary-green) !important;
+            fill: var(--primary-green) !important;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--primary-dark) !important;
+            color: #fff !important;
+        }
+
+        .footer-section a {
+            color: var(--primary-green) !important;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        .footer-bottom.style1 {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        /* Icons */
+        .fa-chevron-up,
+        .fa-arrow-right-long,
+        .fa-search,
+        .fa-bars,
+        .fa-plus,
+        .fa-angle-down {
+            color: var(--primary-green) !important;
+        }
+
+        .fa-facebook-f,
+        .fa-twitter,
+        .fa-linkedin-in,
+        .fa-instagram,
+        .fa-youtube {
+            color: var(--primary-blue) !important;
+        }
+
+        /* Blog Cards */
+        .blog-card.style1 {
+            border-top: 4px solid var(--primary-orange) !important;
+        }
+
+        /* Misc */
+        .back-to-top {
+            color: #fff !important;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-orange) !important;
+        }
+
+        .header-button a {
+            background-color: #1a79b3 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .header-button a:hover {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .subtitle {
+            color: black !important;
+        }
+
+        .wow {
+            color: black !important;
+        }
+
+        .fadeInUp {
+            color: black !important;
+        }
+
+        .hero-image {
+            width: 500px;
+            height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .hero-image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Terms and Conditions Page Styles */
+        .terms-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: #fff;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .terms-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .terms-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .terms-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .terms-content h2 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .terms-content h3 {
+            color: var(--primary-orange);
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+        }
+
+        .terms-content p {
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .terms-content ul li strong {
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .terms-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .terms-content a:hover {
+            color: var(--primary-orange);
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 40px 15px;
+            }
+
+            .terms-header {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+
+            .terms-header h1 {
+                font-size: 2rem;
+            }
+
+            .terms-content {
+                padding: 25px;
+            }
+
+            .terms-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .terms-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .terms-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .terms-content {
+                padding: 20px;
+            }
+
+            .terms-content h2 {
+                font-size: 1.3rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('navbar') %>
+    <!-- Return Policy Section -->
+    <section class="terms-section">
+        <div class="terms-container">
+            <div class="terms-header" style="background: #019022; color: white;">
+                <h1 style="color: white;">Return and Cancellation Policy</h1>
+                <p>Last updated: June 05, 2025</p>
+            </div>
+            
+            <div class="terms-content">
+                <h2>Return Policy</h2>
+                <p>At Verify My KYC, we are committed to providing you with seamless and instant access to our online verification services through redeem codes. These codes allow you to verify anyone's ID and background with ease, using government-approved APIs, directly on platforms such as WhatsApp.</p>
+                
+                <p>Due to the nature of our products' digital services delivered immediately upon purchase, we do not offer any return or refund options. Once a redeem code has been issued, it is considered used and non-returnable for the following reasons:</p>
+                
+                <ul class="checklist">
+                    <li><strong>Instant Service Activation:</strong> Our redeem codes grant immediate access to our verification services. As soon as the code is generated and shared with you, our system considers it activated, and the service becomes available for use.</li>
+                    <li><strong>Digital Product Nature:</strong> Redeem codes are digital products and cannot be "returned" or deactivated once delivered. Unlike physical goods, they cannot be resold or recovered once issued.</li>
+                    <li><strong>Service Integrity:</strong> To maintain the fairness and quality of our services, once a code is issued and available for use, no return or refund can be processed. This ensures that all customers have equal access to our instant services without concerns of misuse or improper returns.</li>
+                </ul>
+
+                <p>We encourage customers to carefully review their purchases and ensure that they select the correct product before completing the transaction. If you have any questions about our products or how they work, please feel free to contact our support team before making a purchase.</p>
+
+                <h2>Cancellation Policy</h2>
+                <p>At Verify My KYC, we strive to provide a quick and efficient experience for all our customers by delivering redeem codes for ID and background verification instantly. As a result, we follow a strict no-cancellation policy once the redeem code has been issued.</p>
+
+                <p>Please consider the following points regarding our cancellation policy:</p>
+
+                <ul class="checklist">
+                    <li><strong>No Cancellations After Purchase:</strong> Once a purchase is completed and the redeem code is delivered to your registered email or phone number, the transaction is final. We do not accept cancellations under any circumstances after the delivery of the redeem code.</li>
+                    <li><strong>Digital Product Delivery:</strong> Our products are digital in nature and are delivered instantly. As soon as the code is generated, it is accessible for immediate use, and thus, cancellations cannot be processed for the following reasons:
+                        <ul>
+                            <li>The redeem code is a digital service that cannot be revoked, returned, or deactivated.</li>
+                            <li>Once a code is provided to the customer, it is considered used, and we cannot reverse the process.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>Before You Buy: We strongly encourage you to review all product details and ensure that you are selecting the correct service prior to completing your purchase. Our support team is available to answer any questions you may have about the product before making a commitment.</p>
+
+                <p>By purchasing our virtual product, you agree to these terms. We aim to provide transparency and clarity regarding our cancellation policy to avoid any confusion.</p>
+
+                <h2>Additional Information</h2>
+                <p>For any questions, concerns, or clarifications regarding our return and cancellation policies, please contact our customer service team. We are happy to assist you in understanding our policies or resolving any issues related to your purchase.</p>
+            </div>
+        </div>
+    </section>
+
+    <%- include('footer') %>
+
+    <!--<< All JS Plugins >>-->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

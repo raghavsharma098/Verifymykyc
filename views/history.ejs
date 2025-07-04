@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --admin-accent: #2563eb;
+            --admin-accent-light: #e0e7ff;
+            --admin-danger: #ef4444;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a,
+        .sidebar .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active,
+        .sidebar .sidebar-link.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover,
+        .sidebar .sidebar-link:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .welcome-section {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .services-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .services-button:hover {
+            background: #166b48;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 127, 90, 0.2);
+            color: white;
+        }
+
+        .services-button i {
+            font-size: 1.2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            height: 100%;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background: white;
+            padding: 8px;
+        }
+
+        .service-card .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-card .token-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+            background: var(--sidebar-active);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .service-card .btn-primary {
+            background: var(--primary);
+            border: none;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 22px;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .service-card .btn-primary:hover {
+            background: #166b48;
+            box-shadow: 0 0 0 3px #e0e7ff, 0 4px 16px rgba(37, 99, 235, 0.18);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .service-card .dropdown-menu {
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            padding: 8px;
+        }
+
+        .service-card .dropdown-item {
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .service-card .dropdown-item:hover {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .service-card .dropdown-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-card .btn-group {
+            width: 100%;
+        }
+
+        .service-card .btn-group .btn {
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .service-card .btn-group .btn::after {
+            margin-left: 8px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--sidebar-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #166b48;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .main {
+                padding: 18px;
+            }
+
+            .welcome-section {
+                padding: 24px;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-section p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Dashboard Content Styles */
+        .main-content {
+            margin-left: 260px;
+            padding: 100px 24px 24px 24px;
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 991px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        .dashboard-welcome {
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dashboard-welcome h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .dashboard-welcome p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #22c55e);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 127, 90, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 127, 90, 0.4);
+            color: white;
+        }
+
+        .feature-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Add these new styles after the existing styles */
+        .verification-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .verification-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .verification-card .card-header {
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+        .verification-card .card-header h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .verification-card .card-header i {
+            font-size: 1.4rem;
+        }
+
+        .verification-card .table {
+            margin: 0;
+        }
+
+        .verification-card .table thead th {
+            background: var(--sidebar-bg);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .verification-card .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .verification-card .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .verification-card .badge {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 6px;
+        }
+
+        .verification-card .badge.bg-success {
+            background: var(--sidebar-active) !important;
+            color: var(--primary);
+        }
+
+        .verification-card .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .verification-card .btn {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .verification-card .btn-info {
+            background: var(--admin-accent-light);
+            color: var(--admin-accent);
+            border: none;
+        }
+
+        .verification-card .btn-info:hover {
+            background: var(--admin-accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .verification-card .btn-secondary {
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            border: none;
+        }
+
+        .verification-card .btn-secondary:hover {
+            background: var(--border);
+            color: var(--sidebar-text);
+            transform: translateY(-2px);
+        }
+
+        .verification-card .alert {
+            margin: 1rem;
+            padding: 1rem;
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-header h1 i {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .verification-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .verification-card .card-header {
+                padding: 1rem;
+            }
+
+            .verification-card .card-header h5 {
+                font-size: 1.1rem;
+            }
+
+            .verification-card .table {
+                display: block;
+                width: 100%;
+            }
+
+            .verification-card .table thead {
+                display: none; /* Hide table headers on mobile */
+            }
+
+            .verification-card .table tbody,
+            .verification-card .table tr,
+            .verification-card .table td {
+                display: block;
+                width: 100%;
+            }
+
+            .verification-card .table tr {
+                margin-bottom: 1rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: white;
+                padding: 0.75rem;
+                position: relative;
+            }
+
+            .verification-card .table td {
+                padding: 0.5rem 0;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+            }
+
+            .verification-card .table td:not(:last-child) {
+                border-bottom: 1px solid var(--border);
+            }
+
+            /* Add labels for each cell */
+            .verification-card .table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--primary);
+                min-width: 120px;
+            }
+
+            /* Style specific columns */
+            .verification-card .table td:nth-child(1)::before {
+                content: "Number";
+            }
+
+            .verification-card .table td:nth-child(2)::before {
+                content: "Name";
+            }
+
+            .verification-card .table td:nth-child(3)::before {
+                content: "State";
+            }
+
+            .verification-card .table td:nth-child(4)::before {
+                content: "Status";
+            }
+
+            .verification-card .table td:nth-child(5)::before {
+                content: "Verified On";
+            }
+
+            .verification-card .table td:nth-child(6)::before {
+                content: "Actions";
+            }
+
+            /* Adjust badge and button styles */
+            .verification-card .badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .verification-card .btn-group {
+                flex-direction: row;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            .verification-card .btn {
+                flex: 1;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            /* Adjust modal for mobile */
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-body .table td {
+                padding: 0.5rem;
+            }
+
+            .modal-body .table td::before {
+                min-width: 100px;
+            }
+        }
+
+        /* Additional breakpoint for very small screens */
+        @media (max-width: 480px) {
+            .verification-card .table td {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .verification-card .table td::before {
+                min-width: auto;
+                margin-bottom: 0.25rem;
+            }
+
+            .verification-card .btn-group {
+                flex-direction: column;
+            }
+
+            .verification-card .btn {
+                width: 100%;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: var(--radius);
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+        }
+
+        .modal .table th {
+            background: var(--sidebar-bg);
+            color: var(--primary);
+            font-weight: 600;
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+        <main class="main" style="margin-top: 100px;">
+            <div class="container py-4">
+                <div class="page-header">
+                    <h1><i class="fa-solid fa-history"></i>Verification History</h1>
+                </div>
+
+                <!-- GST Verifications -->
+                <div class="verification-card">
+                    <div class="card-header">
+                        <h5><i class="fa-solid fa-building"></i> GST Verifications</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if (user.documents.gstHistory && user.documents.gstHistory.length> 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>GSTIN</th>
+                                            <th>Business Name</th>
+                                            <th>Status</th>
+                                            <th>Verified On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% user.documents.gstHistory.forEach(verification => { %>
+                                            <tr>
+                                                <td data-label="GSTIN"><strong><%= verification.number %></strong></td>
+                                                <td data-label="Business Name"><%= verification.businessName %></td>
+                                                <td data-label="Status"><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                                <td data-label="Verified On"><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                                <td data-label="Actions">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-info view-details" data-type="gst" data-number="<%= verification.number %>" data-details='<%= JSON.stringify(verification) %>'>
+                                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                                        </button>
+                                                        <a href="/verification/download/gst/<%= verification.number %>" class="btn btn-sm btn-secondary">
+                                                            <i class="fa-solid fa-download me-1"></i>Download
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <div class="alert">
+                                    <i class="fa-solid fa-info-circle me-2"></i>No GST verifications found.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <!-- PAN Verifications -->
+                <div class="verification-card">
+                    <div class="card-header">
+                        <h5><i class="fa-solid fa-id-card"></i> PAN Verifications</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if (user.documents.panHistory && user.documents.panHistory.length> 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>PAN Number</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Verified On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% user.documents.panHistory.forEach(verification => { %>
+                                            <tr>
+                                                <td data-label="PAN Number"><strong><%= verification.number %></strong></td>
+                                                <td data-label="Name"><%= verification.name %></td>
+                                                <td data-label="Status"><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                                <td data-label="Verified On"><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                                <td data-label="Actions">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-info view-details" data-type="pan" data-number="<%= verification.number %>" data-details='<%= JSON.stringify(verification) %>'>
+                                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                                        </button>
+                                                        <a href="/verification/download/pan/<%= verification.number %>" class="btn btn-sm btn-secondary">
+                                                            <i class="fa-solid fa-download me-1"></i>Download
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <div class="alert">
+                                    <i class="fa-solid fa-info-circle me-2"></i>No PAN verifications found.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <!-- Voter ID Verifications -->
+                <div class="verification-card">
+                    <div class="card-header">
+                        <h5><i class="fa-solid fa-id-card"></i> Voter ID Verifications</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if (user.documents.voterHistory && user.documents.voterHistory.length> 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Voter ID</th>
+                                            <th>Name</th>
+                                            <th>State</th>
+                                            <th>Status</th>
+                                            <th>Verified On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% user.documents.voterHistory.forEach(verification => { %>
+                                            <tr>
+                                                <td data-label="Voter ID"><strong><%= verification.number %></strong></td>
+                                                <td data-label="Name"><%= verification.name %></td>
+                                                <td data-label="State"><%= verification.state %></td>
+                                                <td data-label="Status"><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                                <td data-label="Verified On"><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                                <td data-label="Actions">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-info view-details" data-type="voter" data-number="<%= verification.number %>" data-details='<%= JSON.stringify(verification) %>'>
+                                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                                        </button>
+                                                        <a href="/verification/download/voter/<%= verification.number %>" class="btn btn-sm btn-secondary">
+                                                            <i class="fa-solid fa-download me-1"></i>Download
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <div class="alert">
+                                    <i class="fa-solid fa-info-circle me-2"></i>No Voter ID verifications found.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <!-- Driving License Verifications -->
+                <div class="verification-card">
+                    <div class="card-header">
+                        <h5><i class="fa-solid fa-car"></i> Driving License Verifications</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if (user.documents.dlHistory && user.documents.dlHistory.length> 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>DL Number</th>
+                                            <th>Name</th>
+                                            <th>State</th>
+                                            <th>Status</th>
+                                            <th>Verified On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% user.documents.dlHistory.forEach(verification => { %>
+                                            <tr>
+                                                <td data-label="DL Number"><strong><%= verification.number %></strong></td>
+                                                <td data-label="Name"><%= verification.name %></td>
+                                                <td data-label="State"><%= verification.state %></td>
+                                                <td data-label="Status"><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                                <td data-label="Verified On"><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                                <td data-label="Actions">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-info view-details" data-type="dl" data-number="<%= verification.number %>" data-details='<%= JSON.stringify(verification) %>'>
+                                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                                        </button>
+                                                        <a href="/verification/download/dl/<%= verification.number %>" class="btn btn-sm btn-secondary">
+                                                            <i class="fa-solid fa-download me-1"></i>Download
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <div class="alert">
+                                    <i class="fa-solid fa-info-circle me-2"></i>No Driving License verifications found.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <!-- Aadhar Verifications -->
+                <div class="verification-card">
+                    <div class="card-header">
+                        <h5><i class="fa-solid fa-id-card"></i> Aadhar Verifications</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if (user.documents.aadharHistory && user.documents.aadharHistory.length> 0) { %>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Aadhar Number</th>
+                                            <th>Name</th>
+                                            <th>State</th>
+                                            <th>Status</th>
+                                            <th>Verified On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% user.documents.aadharHistory.forEach(verification => { %>
+                                            <tr>
+                                                <td data-label="Aadhar Number"><strong><%= verification.number || verification.referenceId %></strong></td>
+                                                <td data-label="Name"><%= verification.name %></td>
+                                                <td data-label="State"><%= verification.state %></td>
+                                                <td data-label="Status"><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                                <td data-label="Verified On"><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                                <td data-label="Actions">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-info view-details" data-type="aadhar" data-number="<%= verification.number || verification.referenceId %>" data-details='<%= JSON.stringify(verification) %>'>
+                                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                                        </button>
+                                                        <a href="/verification/download/aadhar/<%= verification.number || verification.referenceId %>" class="btn btn-sm btn-secondary">
+                                                            <i class="fa-solid fa-download me-1"></i>Download
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                                <div class="alert">
+                                    <i class="fa-solid fa-info-circle me-2"></i>No Aadhar verifications found.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </main>
+            </div>
+
+            <!-- Details Modal -->
+            <div class="modal fade" id="detailsModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="detailsContent"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to update token counts
+        function updateTokenCounts(tokens) {
+            Object.entries(tokens).forEach(([service, count]) => {
+                const elements = document.querySelectorAll(`.token-count[data-service="${service}"]`);
+                elements.forEach(element => {
+                    element.textContent = count;
+                });
+            });
+        }
+
+        // Listen for token updates
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'lastTokenUpdate') {
+                fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateTokenCounts(data.tokens);
+                        }
+                    })
+                    .catch(error => console.error('Error updating tokens:', error));
+            }
+        });
+
+        // Check for token updates every 2 seconds
+        setInterval(async function () {
+            try {
+                const response = await fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateTokenCounts(data.tokens);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking token updates:', error);
+            }
+        }, 2000);
+
+        // Add event listener for DL verification response
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'dlVerificationComplete') {
+                // Update DL token count
+                const dlTokenCount = event.data.remainingTokens;
+                updateTokenCounts({ dl: dlTokenCount });
+            }
+        });
+
+        // Handle view details button clicks
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', function () {
+                const type = this.dataset.type;
+                const number = this.dataset.number;
+                const details = JSON.parse(this.dataset.details);
+
+                // Set modal title based on document type
+                const modalTitle = document.querySelector('#detailsModal .modal-title');
+                switch(type) {
+                    case 'gst':
+                        modalTitle.innerHTML = `<i class="fa-solid fa-building me-2"></i>GST Details - ${number}`;
+                        break;
+                    case 'pan':
+                        modalTitle.innerHTML = `<i class="fa-solid fa-id-card me-2"></i>PAN Details - ${number}`;
+                        break;
+                    case 'voter':
+                        modalTitle.innerHTML = `<i class="fa-solid fa-id-card me-2"></i>Voter ID Details - ${number}`;
+                        break;
+                    case 'dl':
+                        modalTitle.innerHTML = `<i class="fa-solid fa-car me-2"></i>Driving License Details - ${number}`;
+                        break;
+                    case 'aadhar':
+                        modalTitle.innerHTML = `<i class="fa-solid fa-id-card me-2"></i>Aadhar Details - ${number}`;
+                        break;
+                }
+
+                        const detailsContent = document.getElementById('detailsContent');
+                detailsContent.innerHTML = formatDetails(details, type);
+
+                        const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        modal.show();
+            });
+        });
+
+        function formatDetails(details, type) {
+            let html = '<div class="table-responsive"><table class="table">';
+
+            switch(type) {
+                case 'gst':
+                    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                    for (const [key, value] of Object.entries(details)) {
+                        // Skip address, state, and pincode fields
+                        if (['address', 'state', 'pincode'].includes(key.toLowerCase())) continue;
+                        
+                        const formattedKey = key
+                            .split(/_|(?=[A-Z])/) // Split by underscore or camelCase
+                            .filter(Boolean) // Remove empty strings from split
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+                        html += `
+                            <tr>
+                                <th>${formattedKey}</th>
+                                <td>${value === null || value === undefined ? '-' : value}</td>
+                            </tr>`;
+                    }
+                    break;
+                case 'pan':
+                    html += `
+                        <tr><th>PAN Number</th><td>${details.number || details.panNumber || '-'}</td></tr>
+                        <tr><th>Name</th><td>${details.name || '-'}</td></tr>
+                        <tr><th>Status</th><td><span class="badge bg-success">${details.status || 'Active'}</span></td></tr>
+                        <tr><th>Document Type</th><td>${details.document_type || '-'}</td></tr>
+                        <tr><th>Aadhaar Linked</th><td>${details.aadhaar_linked ? 'Yes' : 'No'}</td></tr>
+                        <tr><th>Name Match Status</th><td>${details.name_match_status || '-'}</td></tr>
+                        <tr><th>DOB Match Status</th><td>${details.dob_match_status || '-'}</td></tr>
+                    `;
+                    break;
+                case 'voter':
+                    html += `
+                        <tr><th>Voter ID</th><td>${details.number || '-'}</td></tr>
+                        <tr><th>Name</th><td>${details.name || '-'}</td></tr>
+                <tr><th>State</th><td>${details.state || '-'}</td></tr>
+                        <tr><th>Status</th><td><span class="badge bg-success">${details.status || 'Active'}</span></td></tr>
+                        <tr><th>Age</th><td>${details.age || '-'}</td></tr>
+                        <tr><th>Gender</th><td>${details.gender || '-'}</td></tr>
+                        <tr><th>Husband's Name</th><td>${details.husbandName || '-'}</td></tr>
+                        <tr><th>District</th><td>${details.district || '-'}</td></tr>
+                        <tr><th>Assembly Constituency</th><td>${details.assemblyConstituency || '-'}</td></tr>
+                        <tr><th>Parliamentary Constituency</th><td>${details.parliamentaryConstituency || '-'}</td></tr>
+                        <tr><th>Polling Station</th><td>${details.pollingStation || '-'}</td></tr>
+                        <tr><th>Part Name</th><td>${details.partName || '-'}</td></tr>
+            `;
+                    break;
+                case 'dl':
+                html += `
+                        ${details.number ? `<tr><th>DL Number</th><td>${details.number}</td></tr>` : ''}
+                        ${details.name ? `<tr><th>Name</th><td>${details.name}</td></tr>` : ''}
+                        ${details.dateOfBirth || details.dob ? `<tr><th>Date of Birth</th><td>${details.dateOfBirth || details.dob}</td></tr>` : ''}
+                        ${details.validFrom ? `<tr><th>Valid From</th><td>${details.validFrom}</td></tr>` : ''}
+                        ${details.validTo ? `<tr><th>Valid To</th><td>${details.validTo}</td></tr>` : ''}
+                        ${details.status ? `<tr><th>Status</th><td><span class="badge bg-success">${details.status}</span></td></tr>` : ''}
+                        ${details.bloodGroup ? `<tr><th>Blood Group</th><td>${details.bloodGroup}</td></tr>` : ''}
+                        ${Array.isArray(details.vehicleClasses) && details.vehicleClasses.length > 0 ? `<tr><th>Vehicle Classes</th><td>${details.vehicleClasses.join(', ')}</td></tr>` : details.vehicleClasses ? `<tr><th>Vehicle Classes</th><td>${details.vehicleClasses}</td></tr>` : ''}
+                        ${details.address ? `<tr><th>Address</th><td>${details.address}</td></tr>` : ''}
+                        ${details.state ? `<tr><th>State</th><td>${details.state}</td></tr>` : ''}
+                        ${details.pincode ? `<tr><th>Pincode</th><td>${details.pincode}</td></tr>` : ''}
+                    `;
+                    break;
+                case 'aadhar':
+                    // Only show fields that have actual data
+                    const aadharFields = [
+                        { key: 'number', label: 'Aadhar Number' },
+                        { key: 'name', label: 'Name' },
+                        { key: 'dob', label: 'Date of Birth' },
+                        { key: 'gender', label: 'Gender' },
+                        { key: 'state', label: 'State' },
+                        { key: 'status', label: 'Status', format: (value) => `<span class="badge bg-success">${value || 'Active'}</span>` }
+                    ];
+
+                    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                    for (const field of aadharFields) {
+                        const value = details[field.key];
+                        if (value !== undefined && value !== null && value !== '') {
+                            html += `
+                                <tr>
+                                    <th>${field.label}</th>
+                                    <td>${field.format ? field.format(value) : value}</td>
+                                </tr>`;
+                        }
+                    }
+                    break;
+            }
+
+            html += '</table></div>';
+            return html;
+        }
+    </script>
+</body>
+
+</html>
+
+<!-- SHARED DAHSBOARD IN PLACE OF SETTINGS -->

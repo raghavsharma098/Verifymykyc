@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+        }
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+        }
+        .sidebar nav {
+            flex: 1;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0 0 0 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+        .sidebar a, .sidebar .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.15s;
+        }
+        .sidebar a.active, .sidebar .sidebar-link.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+        }
+        .sidebar a:hover, .sidebar .sidebar-link:hover {
+            background: #e9ecef;
+        }
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 40px;
+            min-width: 0;
+        }
+        .dashboard-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+        .dashboard-header .welcome {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .dashboard-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        .dashboard-header .header-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+        .gst-alert {
+            background: #f5f7fa;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .gst-alert img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        .gst-alert .alert-content {
+            flex: 1;
+        }
+        .gst-alert .alert-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+        .gst-alert .alert-desc {
+            color: var(--muted);
+            font-size: 0.98rem;
+        }
+        .gst-alert .alert-action {
+            margin-left: 16px;
+        }
+        .gst-alert .alert-action a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .dashboard-content {
+            display: flex;
+            gap: 32px;
+        }
+        .dashboard-main {
+            flex: 2;
+        }
+        .dashboard-side {
+            flex: 1;
+            min-width: 260px;
+            max-width: 320px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+        .api-stats-chart {
+            width: 100%;
+            height: 220px;
+            background: repeating-linear-gradient(90deg, #f2f4f7 0 1px, transparent 1px 40px), repeating-linear-gradient(0deg, #f2f4f7 0 1px, transparent 1px 40px);
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .api-stats-legend {
+            display: flex;
+            gap: 18px;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+        .api-stats-legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .api-stats-legend .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .api-stats-legend .kyc { background: #1a7f5a; }
+        .api-stats-legend .bank { background: #3bb3c0; }
+        .api-stats-legend .biz { background: #b3b93b; }
+        .api-stats-xaxis {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-top: 4px;
+        }
+        .get-started-card {
+            background: #fff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px 20px 20px 20px;
+            margin-bottom: 24px;
+        }
+        .get-started-card .card-title {
+            margin-bottom: 10px;
+        }
+        .get-started-card .api-docs-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 22px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: background 0.15s;
+        }
+        .get-started-card .api-docs-btn:hover {
+            background: #166b48;
+        }
+        .get-started-card .code-sample {
+            background: #23272f;
+            color: #fff;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 0.98rem;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        @media (max-width: 1100px) {
+            .dashboard-content {
+                flex-direction: column;
+            }
+            .dashboard-side {
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 0 0 0 0;
+                gap: 0;
+            }
+            .sidebar nav, .sidebar .sidebar-section {
+                margin-bottom: 0;
+            }
+            .main {
+                padding: 18px 6vw;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <%- include('sidenav') %>
+    <main class="main">
+        <div class="dashboard-header">
+            <div>
+                <div class="welcome">Welcome, Rohan</div>
+                <div class="subtitle">Build the future of Merchant Businesses & Financial Services with Quick eKYC APIs</div>
+            </div>
+        </div>
+        <div class="gst-alert">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Emblem_of_India.svg/1200px-Emblem_of_India.svg.png" alt="govt emblem">
+            <div class="alert-content">
+                <div class="alert-title">Don't Miss Out on GST Invoices: Submit Details Now</div>
+                <div class="alert-desc">GST details are not submitted in your profile account. Please submit them to receive GST invoices.</div>
+            </div>
+            <div class="alert-action">
+                <a href="#">Add Details <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="dashboard-main">
+                <div class="card">
+                    <div class="card-title">API Statistics</div>
+                    <div class="api-stats-legend">
+                        <span><span class="dot kyc"></span>KYC Verification</span>
+                        <span><span class="dot bank"></span>Banking / Finance</span>
+                        <span><span class="dot biz"></span>Business Verification</span>
+                    </div>
+                    <div class="api-stats-chart"></div>
+                    <div class="api-stats-xaxis">
+                        <span>10 May</span><span>11 May</span><span>12 May</span><span>13 May</span><span>14 May</span><span>15 May</span><span>16 May</span><span>17 May</span><span>18 May</span><span>19 May</span><span>20 May</span><span>21 May</span><span>22 May</span><span>23 May</span><span>24 May</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-side">
+                <div class="get-started-card">
+                    <div class="card-title">Getting Started</div>
+                    <div style="margin-bottom: 12px; color: #666; font-size: 1rem;">A complete guide and documentation to get started with the Quick-eKyc</div>
+                    <a class="api-docs-btn" href="#">API Docs</a>
+                    <div class="code-sample">
+<pre>{
+  "id": "AAK456123VJF1231450",
+  "first_name": "Mona",
+  "last_name": "Lisa",
+  "pan": "ABC12345A",
+  "gender": "female",
+  "residential_status": "Resident",
+  "entity": "individual"
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html> 

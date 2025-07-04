@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Verify My KYC">
+    <meta name="description" content="Verify My KYC">
+    <!-- ======== Page title ============ -->
+    <title>Verify My KYC</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href=images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+        .theme-btn{
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+        /* Buttons */
+        .theme-btn,
+        .theme-btn.style4,
+        .theme-btn.style5 {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-green) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .theme-btn:hover,
+        .theme-btn:focus {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .theme-btn.style2 {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-orange) !important;
+            color: #fff !important;
+        }
+
+        /* Header */
+        .header-section-33,
+        #header-sticky.header-1.header-3 {
+            background: white !important;
+            border-bottom: 3px solid var(--primary-green);
+        }
+
+        .header-logo img {
+            filter: drop-shadow(0 2px 8px rgba(26, 121, 179, 0.08));
+        }
+
+        /* Navigation links */
+        .main-menu ul li a {
+            color: #000 !important;
+            font-weight: 500;
+        }
+
+        .main-menu ul li.active>a,
+        .main-menu ul li a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        /* Section Titles */
+        .section-title .title,
+        .single-section-title {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .section-title .subtitle,
+        .single-section-title .subtitle {
+            color: black !important;
+            font-weight: 600;
+        }
+
+        /* Subtitles with bg2 */
+        .bg2 {
+            background: var(--primary-orange) !important;
+            color: #fff !important;
+            border-radius: 6px;
+            padding: 0.2em 0.8em;
+        }
+
+        /* Pricing Cards */
+        .pricing-card.style1 {
+            border: 2px solid var(--primary-blue) !important;
+            box-shadow: 0 2px 16px 0 rgba(26, 121, 179, 0.08);
+        }
+
+        .pricing-card-header {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .pricing-card .price {
+            color: var(--primary-orange) !important;
+            font-weight: 700;
+        }
+
+        /* Checklist icons */
+        .checklist img,
+        .checklist svg {
+            filter: drop-shadow(0 2px 4px rgba(16, 198, 16, 0.10));
+            color: var(--primary-green) !important;
+            fill: var(--primary-green) !important;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--primary-dark) !important;
+            color: #fff !important;
+        }
+
+        .footer-section a {
+            color: var(--primary-green) !important;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        .footer-bottom.style1 {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        /* Icons */
+        .fa-chevron-up,
+        .fa-arrow-right-long,
+        .fa-search,
+        .fa-bars,
+        .fa-plus,
+        .fa-angle-down {
+            color: var(--primary-green) !important;
+        }
+
+        .fa-facebook-f,
+        .fa-twitter,
+        .fa-linkedin-in,
+        .fa-instagram,
+        .fa-youtube {
+            color: var(--primary-blue) !important;
+        }
+
+        /* Blog Cards */
+        .blog-card.style1 {
+            border-top: 4px solid var(--primary-orange) !important;
+        }
+
+        /* Misc */
+        .back-to-top {
+            color: #fff !important;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-orange) !important;
+        }
+        .header-button a{
+            background-color: #1a79b3 !important;
+            transition: all 0.2s ease-in-out;
+        }
+        .header-button a:hover{
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+        .subtitle {
+            color: black !important;
+        }
+        .wow {
+            color: black !important;
+        }
+        .fadeInUp {
+            color: black !important;
+        }
+        .hero-image{
+            width: 500px;
+            height: 500px;
+        }
+        @media (max-width: 768px) {
+            .hero-image{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        @media (max-width: 1200px) {
+            .hero-image{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Privacy Policy Page Styles */
+        .privacy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: #fff;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .privacy-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+            color: white;
+        }
+
+        .privacy-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .privacy-content h2 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .privacy-content h3 {
+            color: var(--primary-orange);
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+        }
+
+        .privacy-content h4 {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin: 25px 0 15px;
+        }
+
+        .privacy-content p {
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .privacy-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 30px;
+        }
+
+        .privacy-content ul li {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            transition: transform 0.2s ease;
+        }
+
+        .privacy-content ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .privacy-content ul li p {
+            margin: 0;
+        }
+
+        .privacy-content ul li strong {
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .privacy-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .privacy-content a:hover {
+            color: var(--primary-orange);
+            text-decoration: underline;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #e9ecef;
+        }
+
+        .contact-info ul {
+            margin: 0;
+        }
+
+        .contact-info ul li {
+            border-left: none;
+            background: none;
+            padding: 10px 0;
+        }
+
+        .contact-info ul li:hover {
+            transform: none;
+        }
+
+        /* Cookie Types Styling */
+        .cookie-type {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .cookie-type strong {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .cookie-type p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .privacy-container {
+                padding: 40px 15px;
+            }
+
+            .privacy-header {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+
+            .privacy-header h1 {
+                font-size: 2rem;
+            }
+
+            .privacy-content {
+                padding: 25px;
+            }
+
+            .privacy-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .privacy-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .privacy-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .privacy-content p {
+                font-size: 1rem;
+            }
+
+            .privacy-content ul li {
+                padding: 12px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .privacy-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .privacy-content {
+                padding: 20px;
+            }
+
+            .privacy-content h2 {
+                font-size: 1.3rem;
+            }
+
+            .privacy-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .privacy-content h4 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <!-- <div id="preloader" class="preloader">
+        <div class="animation-preloader">
+            <div class="spinner">
+            </div>
+            <div class="txt-loading">
+                <span data-text-preloader="N" class="letters-loading">
+                    N
+                </span>
+                <span data-text-preloader="E" class="letters-loading">
+                    i
+                </span>
+                <span data-text-preloader="O" class="letters-loading">
+                    O
+                </span>
+                <span data-text-preloader="T" class="letters-loading">
+                    T
+                </span>
+                <span data-text-preloader="E" class="letters-loading">
+                    E
+                </span>
+                <span data-text-preloader="C" class="letters-loading">
+                    C
+                </span>
+                <span data-text-preloader="H" class="letters-loading">
+                    H
+                </span>
+            </div>
+            <p class="text-center">Loading</p>
+        </div>
+        <div class="loader">
+            <div class="row">
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Mouse Cursor Start -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+
+    <!-- Back To Top Start -->
+    <button id="back-top" class="back-to-top">
+        <i class="fa-solid fa-chevron-up" style="color: white !important;"></i>
+    </button>
+
+    <!-- Offcanvas Area Start -->
+    <div class="fix-area">
+        <div class="offcanvas__info">
+            <div class="offcanvas__wrapper">
+                <div class="offcanvas__content">
+                    <div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
+                        <div class="offcanvas__logo">
+                            <a href="index.html">
+                                <img style="width: 150px;" src="/images/logo2.png" alt="logo-img">
+                            </a>
+                        </div>
+                        <div class="offcanvas__close">
+                            <button>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text d-none d-xl-block">
+                        Nullam dignissim, ante scelerisque the is euismod fermentum odio sem semper the is erat, a
+                        feugiat leo urna eget eros. Duis Aenean a imperdiet risus.
+                    </p>
+                    <div class="mobile-menu fix mb-3"></div>
+                    <div class="offcanvas__contact">
+                        <h4>Contact Info</h4>
+                        <ul>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">Main Street, Melbourne, Australia</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-envelope"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="mailto:info@example.com"><span
+                                            class="mailto:info@example.com">info@example.com</span></a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-clock"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">Mod-friday, 09am -05pm</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="far fa-phone"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="tel:+11002345909">+11002345909</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="header-button mt-4">
+                            <a href="contact.html" class="theme-btn text-center">
+                                <span>Get A Quote<i class="fa-solid fa-arrow-right-long"></i></span>
+                            </a>
+                        </div>
+                        <div class="social-icon d-flex align-items-center">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="offcanvas__overlay"></div>
+
+    <%- include('navbar') %>
+    <!-- Privacy Policy Section -->
+    <section class="privacy-section">
+        <div class="privacy-container">
+            <div class="privacy-header" style="background: #019022; color: white;">
+                <h1 style="color: white;">Privacy Policy</h1>
+                <p>Last updated: June 05, 2025</p>
+            </div>
+            
+            <div class="privacy-content">
+                <p class="lead">At Verify My KYC, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.</p>
+
+                <p>By using Verify My KYC, you agree to the terms of this Privacy Policy.</p>
+
+                <h2>1. Information We Collect</h2>
+                <p>We may collect the following types of information:</p>
+                <ul>
+                    <li>
+                        <strong>Personal Information:</strong>
+                        <p>Name, contact details, identification numbers (like Aadhaar, PAN, Driving Licence, etc.) provided for verification purposes.</p>
+                    </li>
+                    <li>
+                        <strong>Usage Data:</strong>
+                        <p>Information about how you interact with our website, such as IP address, browser type, access times, and pages visited.</p>
+                    </li>
+                    <li>
+                        <strong>Documents:</strong>
+                        <p>Scanned copies or uploads of identity documents required for verification.</p>
+                    </li>
+                </ul>
+
+                <h2>2. How We Use Your Information</h2>
+                <p>We use your information to:</p>
+                <ul>
+                    <li>Provide and manage verification services</li>
+                    <li>Improve our website and services</li>
+                    <li>Communicate with you regarding updates or support</li>
+                    <li>Ensure compliance with legal and regulatory requirements</li>
+                    <li>Detect and prevent fraud or misuse of our services</li>
+                </ul>
+
+                <h2>3. Data Security</h2>
+                <p>We implement strong technical and organizational security measures to protect your personal information.</p>
+                <p>All data transmission is encrypted, and access is limited to authorized personnel only.</p>
+                <p>However, please note that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.</p>
+
+                <h2>4. Sharing of Information</h2>
+                <p>We do not sell, rent, or trade your personal information.</p>
+                <p>We may share your information with:</p>
+                <ul>
+                    <li>Authorized third-party service providers assisting in verification</li>
+                    <li>Legal authorities if required by law, regulation, or court order</li>
+                </ul>
+
+                <h2>5. Retention of Data</h2>
+                <p>We retain your personal information only for as long as necessary to provide services and comply with legal obligations.</p>
+                <p>After that, data is securely deleted or anonymized.</p>
+
+                <h2>6. Your Rights</h2>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access the personal information we hold about you</li>
+                    <li>Correct inaccuracies in your information</li>
+                    <li>Request deletion of your information</li>
+                </ul>
+                <p>To exercise these rights, please contact us at <a href="mailto:verifymykyc@navigantinc.com">verifymykyc@navigantinc.com</a>.</p>
+
+                <h2>7. Cookies</h2>
+                <p>Our website may use cookies to enhance user experience and collect usage data.</p>
+                <p>You can choose to disable cookies through your browser settings, but this may affect your experience with certain features of the site.</p>
+
+                <h2>8. Third-Party Links</h2>
+                <p>Our website may contain links to third-party websites.</p>
+                <p>We are not responsible for the privacy practices or content of such external sites. Please review their privacy policies independently.</p>
+
+                <h2>9. Changes to This Privacy Policy</h2>
+                <p>We may update this Privacy Policy periodically.</p>
+                <p>Changes will be posted on this page, and the updated policy will be effective as of the date posted.</p>
+
+                <div class="contact-info">
+                    <h2>Contact Us</h2>
+                    <p>If you have any questions about this Privacy Policy, You can contact us:</p>
+                    <ul>
+                        <li>
+                            <strong>Email:</strong>
+                            <a href="mailto:verifymykyc@navigantinc.com">verifymykyc@navigantinc.com</a>
+                        </li>
+                        <li>
+                            <strong>Phone:</strong>
+                            <a href="tel:9355093937">9355093937</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('footer') %>
+
+    <!--<< All JS Plugins >>-->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

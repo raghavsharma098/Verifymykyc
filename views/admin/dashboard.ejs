@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | VerifyMyKYC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1a7f5a;
+      --sidebar-bg: #f7f8fa;
+      --sidebar-active: #e6f4ea;
+      --sidebar-text: #222;
+      --sidebar-icon: #4caf50;
+      --main-bg: #fff;
+      --border: #e0e0e0;
+      --muted: #888;
+      --radius: 12px;
+    }
+    body {
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+    }
+    .admin-navbar {
+      background: var(--primary);
+      color: #fff;
+    }
+    .sidebar {
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      width: 260px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1040;
+      transition: transform 0.3s ease;
+    }
+    .sidebar .logo {
+      text-align: center;
+      padding: 32px 0 24px 0;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 32px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      border-radius: var(--radius);
+      font-weight: 500;
+    }
+    .sidebar nav a.active,
+    .sidebar nav a:hover {
+      background: var(--sidebar-active);
+      color: var(--primary);
+    }
+    .main {
+      margin-left: 260px;
+      padding: 36px 24px;
+      background: var(--main-bg);
+      min-height: 100vh;
+      width: calc(100% - 260px);
+    }
+    @media (max-width: 991px) {
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        width: 280px;
+      }
+
+      .sidebar.show {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .sidebar-overlay.show {
+        display: block;
+      }
+
+      .card, .page-header, .content-container {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .table-responsive {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    @media (max-width: 768px) {
+      .main {
+        padding: 16px;
+      }
+
+      .page-header {
+        padding: 20px;
+      }
+
+      .content-container {
+        padding: 20px;
+      }
+
+      .table-responsive {
+        margin: 0 -16px;
+        width: calc(100% + 32px);
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 1039;
+    }
+    .sidebar-overlay.active {
+      display: block;
+    }
+    .d-none {
+      display: none !important;
+    }
+    .card-title {
+  font-size: 1.5rem;
+}
+
+.page-header {
+  background: white;
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 36px;
+}
+
+.page-header h2 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.page-header .subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+.content-container {
+  background: white;
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: #166b48;
+  border-color: #166b48;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 107, 72, 0.15);
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  background-color: var(--sidebar-bg);
+  color: var(--primary);
+  font-weight: 600;
+  padding: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+.table td {
+  padding: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+
+.table tbody tr:hover {
+  background-color: var(--card-bg);
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-published {
+  background: #e6f4ea;
+  color: #15803d;
+}
+
+.status-draft {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.btn-group .btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .dashboard-container {
+      flex-direction: column;
+  }
+  .main {
+      padding: 18px;
+  }
+  .page-header {
+      padding: 24px;
+  }
+  .page-header h2 {
+      font-size: 1.8rem;
+  }
+  .content-container {
+      padding: 24px;
+  }
+  .table-responsive {
+      margin: 0 -24px;
+  }
+}
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 32px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+  padding: 0 24px;
+}
+
+.sidebar nav {
+  flex: 1;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 8px;
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 32px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+  margin: 0 12px;
+}
+
+.sidebar .nav-link.active {
+  background: var(--sidebar-active);
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar .nav-link:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+.sidebar i {
+  font-size: 1.2rem;
+  color: var(--sidebar-icon);
+  min-width: 22px;
+  text-align: center;
+}
+
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1002;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+  background: #156b4a;
+}
+.margin-top{
+  margin-top: 0px;
+}
+
+@media (max-width: 991px) {
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .margin-top{
+    margin-top: 80px;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .sidebar-overlay.show {
+    display: block;
+  }
+}
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn d-lg-none" id="mobileMenuBtn">
+    <i class="fas fa-bars"></i>
+    <span>Menu</span>
+  </button>
+
+  <div class="dashboard-container margin-top">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="adminDashboardSidebar">
+      <div class="logo">
+        <a href="/admin/dashboard">
+          <img src="/logo.png" width="200px" alt="Logo" />
+        </a>
+      </div>
+      <nav>
+        <ul class="list-unstyled">
+          <li><a class="nav-link active" href="#" onclick="showPage('dashboard')"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+          <li><a class="nav-link" href="#" onclick="showPage('user')"><i class="fa-solid fa-users"></i> User</a></li>
+          <li><a class="nav-link" href="#" onclick="showPage('payments')"><i class="fa-solid fa-money-bill-wave"></i> Payments</a></li>
+          <li><a class="nav-link" href="#" onclick="showPage('blog')"><i class="fa-solid fa-blog"></i> Blog</a></li>
+          <li><a class="nav-link" href="/logout" ><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+     <div id="dashboard" class="page-section">
+    <div class="card shadow-sm p-4 border-0" style="border-radius: 16px; background: linear-gradient(135deg, #e0f2f1, #f1f8e9);">
+      <div class="card-body text-center">
+      <h3 class="card-title">
+    <i class="fa-solid fa-gauge-high me-2"></i>Welcome to the Admin Dashboard
+  </h3>
+
+      </div>
+    </div>
+    
+    <!-- New Cards Section -->
+    <div class="row mt-3 g-3">
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm p-3 border-0" style="border-radius: 16px; background: linear-gradient(135deg, #e6ffe6, #e0ffe6);">
+                <div class="card-body text-center d-flex flex-column justify-content-between align-items-center">
+                    <i class="fas fa-users fa-3x text-success mb-3"></i>
+                    <h5 class="card-title mb-1">Total Users</h5>
+                    <p class="card-text fs-3 fw-bold text-success"><%= totalUsers %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm p-3 border-0" style="border-radius: 16px; background: linear-gradient(135deg, #e6f7ff, #e0f0ff);">
+                <div class="card-body text-center d-flex flex-column justify-content-between align-items-center">
+                    <i class="fas fa-dollar-sign fa-3x text-info mb-3"></i>
+                    <h5 class="card-title mb-1">Total Payments</h5>
+                    <p class="card-text fs-3 fw-bold text-info"><%= totalPayments %></p>
+                </div>
+            </div>
+        </div>
+      
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm p-3 border-0" style="border-radius: 16px; background: linear-gradient(135deg, #ffe6e6, #ffe0e0);">
+                <div class="card-body text-center d-flex flex-column justify-content-between align-items-center">
+                    <i class="fas fa-blog fa-3x text-danger mb-3"></i>
+                    <h5 class="card-title mb-1">Total Blogs</h5>
+                    <p class="card-text fs-3 fw-bold text-danger"><%= totalBlogs %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </div>
+
+
+      <div id="user" class="page-section d-none">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">User Management</div>
+            <div class="table-responsive">
+      
+               <table class="table table-striped align-middle">
+                <thead>
+                  <tr>
+                    <th>Email</th><th>Registration Date</th><th>PAN</th><th>Aadhar</th><th>GST</th><th>DL</th><th>Voter</th><th>CCRV</th><th>Employee</th><th>RC</th><th>Bank</th><th>Passport</th><th>MCA</th><th>CoWIN</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (users && users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                      <tr>
+                        <td>
+                          <% if (user.email) { %>
+                            <div><%= user.email %></div>
+                            <% if (user.phone) { %>
+                              <small class="text-muted">Phone: <%= user.phone %></small>
+                            <% } %>
+                          <% } else if (user.phone) { %>
+                            <div>Phone: <%= user.phone %></div>
+                          <% } else { %>
+                            <div>User ID: <%= user._id %></div>
+                          <% } %>
+                        </td>
+                        <td><%= new Date(user.createdAt).toLocaleDateString() %></td>
+                        <td><%= user.tokens?.pan || 0 %></td>
+                        <td><%= user.tokens?.aadhar || 0 %></td>
+                        <td><%= user.tokens?.gst || 0 %></td>
+                        <td><%= user.tokens?.dl || 0 %></td>
+                        <td><%= user.tokens?.voter || 0 %></td>
+                        <td><%= user.tokens?.ccrv || 0 %></td>
+                        <td><%= user.tokens?.employee || 0 %></td>
+                        <td><%= user.tokens?.rc || 0 %></td>
+                        <td><%= user.tokens?.bank || 0 %></td>
+                        <td><%= user.tokens?.passport || 0 %></td>
+                        <td><%= user.tokens?.mca || 0 %></td>
+                        <td><%= user.tokens?.cowin || 0 %></td>
+                        <td>
+                          <button class="btn btn-primary btn-sm" onclick="showAddTokensModal('<%= user._id %>', '<%= user.email || user.phone || user._id %>')">Add Tokens</button>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  <% } else { %>
+                    <tr><td colspan="15" class="text-center text-muted">No users found.</td></tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="payments" class="page-section d-none">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Payment History</div>
+            <div class="table-responsive">
+             
+               <table class="table table-striped align-middle">
+                <thead>
+                  <tr>
+                    <th>User</th><th>Date</th><th>Order ID</th><th>Items</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (payments && payments.length > 0) { %>
+                    <% payments.forEach(payment => { %>
+                      <tr>
+                        <td>
+                          <% if (payment.user) { %>
+                            <%= payment.user.name || payment.user.email || payment.user.phone || 'User ID: ' + payment.user._id %>
+                          <% } else { %>
+                            <small class="text-muted">Unknown User</small>
+                          <% } %>
+                        </td>
+                        <td><%= new Date(payment.createdAt).toLocaleString() %></td>
+                        <td><%= payment.orderId %></td>
+                        <td>
+                          <% payment.items.forEach(item => { %>
+                            <div><%= item.service %> x <%= item.quantity %></div>
+                          <% }); %>
+                        </td>
+                        <td>₹<%= payment.amount.toFixed(2) %></td>
+                        <td>₹<%= payment.gst.toFixed(2) %></td>
+                        <td>₹<%= payment.totalAmount.toFixed(2) %></td>
+                        <td>
+                          <span class="badge bg-<%= payment.status === 'completed' ? 'success' : payment.status === 'pending' ? 'warning' : 'danger' %>">
+                            <%= payment.status %>
+                          </span>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  <% } else { %>
+                    <tr><td colspan="8" class="text-center text-muted">No payment history available.</td></tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="blog" class="page-section d-none">
+          <div class="page-header">
+              <h2>Manage Blogs</h2>
+              <p class="subtitle">Create, edit, and manage your blog posts</p>
+              <button class="btn btn-primary" style="margin-top: 10px;" onclick="window.location.href='/admin/blogs/create'">Create New Blog</button>
+          </div>
+
+          <div class="content-container">
+              
+
+              <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Title</th>
+                              <th>Category</th>
+                              <th>Author</th>
+                              <th>Status</th>
+                              <th>Created</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% if (blogs && blogs.length > 0) { %>
+                              <% blogs.forEach(blog => { %>
+                                  <tr>
+                                      <td><%= blog.title %></td>
+                                      <td><%= blog.category %></td>
+                                      <td><%= blog.author ? blog.author.name : 'Unknown' %></td>
+                                      <td>
+                                          <span class="status-badge <%= blog.status === 'published' ? 'status-published' : 'status-draft' %>">
+                                              <%= blog.status %>
+                                          </span>
+                                      </td>
+                                      <td><%= new Date(blog.createdAt).toLocaleDateString() %></td>
+                                      <td>
+                                          <div class="btn-group">
+                                              <a href="/admin/blogs/edit/<%= blog._id %>" class="btn btn-outline-primary" title="Edit">
+                                                  <i class="fas fa-edit"></i>
+                                              </a>
+                                              <button class="btn btn-outline-danger" onclick="deleteBlog('<%= blog._id %>')" title="Delete">
+                                                  <i class="fas fa-trash"></i>
+                                              </button>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              <% }); %>
+                          <% } else { %>
+                              <tr>
+                                  <td colspan="6" class="text-center py-4">No blogs found</td>
+                              </tr>
+                          <% } %>
+                      </tbody>
+                  </table>
+      </div>
+
+      <div id="logout" class="page-section d-none">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Are you sure you want to logout?</h5>
+            <a href="/logout" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Add Tokens Modal -->
+    <div class="modal fade" id="addTokensModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-coins me-2"></i>Add Tokens</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addTokensForm">
+              <input type="hidden" id="userId" />
+              <div class="mb-3">
+                <label class="form-label">User Email</label>
+                <input type="text" class="form-control" id="userEmail" readonly />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Service</label>
+                <select class="form-select" id="service" required>
+                  <option value="">Select Service</option>
+                  <option value="pan">PAN</option>
+                  <option value="aadhar">Aadhar</option>
+                  <option value="gst">GST</option>
+                  <option value="dl">Driving License</option>
+                  <option value="voter">Voter ID</option>
+                  <option value="ccrv">CCRV</option>
+                  <option value="employee">Employee</option>
+                  <option value="rc">RC</option>
+                  <option value="bank">Bank</option>
+                  <option value="passport">Passport</option>
+                  <option value="mca">MCA</option>
+                  <option value="cowin">CoWIN</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amount</label>
+                <input type="number" class="form-control" id="amount" min="1" required />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-1"></i>Close</button>
+            <button class="btn btn-primary" onclick="addTokens()"><i class="fa-solid fa-plus me-1"></i>Add Tokens</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const sidebar = document.getElementById('adminDashboardSidebar');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const overlay = document.getElementById('sidebarOverlay');
+
+      function toggleSidebar() {
+        sidebar.classList.toggle('show');
+        overlay.classList.toggle('show');
+        document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+      }
+
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleSidebar);
+      }
+
+      if (overlay) {
+        overlay.addEventListener('click', toggleSidebar);
+      }
+
+      const navLinks = sidebar.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 991) {
+            toggleSidebar();
+          }
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 991) {
+          sidebar.classList.remove('show');
+          overlay.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      });
+
+      let addTokensModal;
+      document.addEventListener('DOMContentLoaded', () => {
+        const modalElement = document.getElementById('addTokensModal');
+        if (modalElement) {
+          addTokensModal = new bootstrap.Modal(modalElement);
+        }
+      });
+
+      function showAddTokensModal(userId, userEmail) {
+        document.getElementById('userId').value = userId;
+        document.getElementById('userEmail').value = userEmail;
+        addTokensModal.show();
+      }
+
+      async function addTokens() {
+        const userId = document.getElementById('userId').value;
+        const service = document.getElementById('service').value;
+        const amount = parseInt(document.getElementById('amount').value);
+
+        if (!userId || !service || !amount) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        try {
+          const response = await fetch('/admin/update-tokens', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, service, amount })
+          });
+          const data = await response.json();
+          if (data.success) {
+            alert(data.message);
+            addTokensModal.hide();
+            location.reload();
+          } else {
+            alert(data.message || 'Error adding tokens');
+          }
+        } catch (error) {
+          alert('Server error. Please try again.');
+        }
+      }
+
+      function showPage(pageId) {
+        document.querySelectorAll('.page-section').forEach(section => {
+          section.classList.add('d-none');
+        });
+        document.getElementById(pageId).classList.remove('d-none');
+
+        document.querySelectorAll('.sidebar nav a').forEach(link => {
+          link.classList.remove('active');
+        });
+        event.target.closest('a').classList.add('active');
+      }
+      
+    </script>
+  </div>
+</body>
+</html>

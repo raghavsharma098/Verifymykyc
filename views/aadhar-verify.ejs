@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhar Verification</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+ <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--sidebar-text);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.15);
+        }
+
+        .form-check-input {
+            border: 2px solid var(--border);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #166b48;
+            border-color: #166b48;
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Modern Card-Style Table */
+        .table-responsive {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid #e8ecf0;
+        }
+
+        .table {
+            margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            font-size: 1rem;
+            padding: 20px;
+        }
+
+        .table th {
+            background: #2563eb;
+            color: white;
+            font-weight: 700;
+            padding: 20px 24px;
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+            font-size: 1rem;
+            border: none;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            position: relative;
+        }
+
+        .table th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .table th:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .table td {
+            padding: 20px 24px;
+            vertical-align: middle;
+            border: none;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .table tbody tr {
+            background: transparent;
+        }
+
+        .table tbody tr td:first-child {
+            border-radius: 12px 0 0 12px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            font-weight: 700;
+            color: #1e293b;
+            border-left: 4px solid #2563eb;
+            min-width: 200px;
+        }
+
+        .table tbody tr td:last-child {
+            border-radius: 0 12px 12px 0;
+            word-break: break-word;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #374151;
+            background: #fefefe;
+        }
+
+        .table tbody tr:hover td {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .table tbody tr:hover td:first-child {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left-color: #1d4ed8;
+        }
+
+        .table tbody tr:hover td:last-child {
+            background: #f8fafc;
+        }
+
+        /* Special styling for data formatting */
+        .table td:last-child br {
+            margin-bottom: 6px;
+        }
+
+        /* Add subtle animation delay for staggered effect */
+        .table tbody tr:nth-child(1) td { transition-delay: 0.05s; }
+        .table tbody tr:nth-child(2) td { transition-delay: 0.1s; }
+        .table tbody tr:nth-child(3) td { transition-delay: 0.15s; }
+        .table tbody tr:nth-child(4) td { transition-delay: 0.2s; }
+        .table tbody tr:nth-child(5) td { transition-delay: 0.25s; }
+
+        .info-card {
+            background: #e6f4ea;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .otp-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .otp-section.show {
+            display: block;
+        }
+
+        .otp-input {
+            letter-spacing: 8px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .timer {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--muted);
+        }
+
+        .resend-otp {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .resend-otp button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .resend-otp button:disabled {
+            color: var(--muted);
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+            .sidebar {
+                width: 80px;
+                padding: 32px 0;
+            }
+            .sidebar .logo {
+                font-size: 1.2rem;
+                padding: 0 12px;
+            }
+            .sidebar a span, .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 12px;
+                justify-content: center;
+            }
+            .sidebar a i {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 12px;
+            }
+            .sidebar .logo {
+                margin-bottom: 0;
+            }
+            .sidebar nav {
+                display: flex;
+                gap: 12px;
+            }
+            .sidebar ul {
+                display: flex;
+                gap: 8px;
+            }
+            .sidebar li {
+                margin-bottom: 0;
+            }
+            .sidebar .sidebar-section {
+                margin-bottom: 0;
+            }
+            .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 8px 16px;
+                white-space: nowrap;
+            }
+            .main {
+                padding: 18px;
+            }
+            .page-header {
+                padding: 16px;
+            }
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            /* Mobile table adjustments */
+            .table th:first-child,
+            .table td:first-child {
+                min-width: 120px;
+            }
+            
+            .table td:last-child {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+
+        <main class="main">
+            <div class="page-header">
+                <h1>Aadhar Card Verification</h1>
+                <p class="subtitle">Verify your Aadhar details using OTP verification</p>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> About Aadhar Verification</h3>
+                <p>This service allows you to verify your Aadhar details using OTP verification. The process includes:</p>
+                <ul>
+                    <li>Entering your 12-digit Aadhar number</li>
+                    <li>Receiving an OTP on your registered mobile number</li>
+                    <li>Verifying your identity with the OTP</li>
+                    <li>Viewing your verified Aadhar details</li>
+                </ul>
+                <p><strong>Note:</strong> This service requires explicit consent from the Aadhar holder for verification.</p>
+            </div>
+
+            <div class="form-card">
+                <form id="aadharForm">
+                    <div class="form-group mb-3">
+                        <label for="aadharNumber" class="form-label">Aadhar Number</label>
+                        <input type="text" class="form-control" id="aadharNumber" 
+                               pattern="[0-9]{12}" 
+                               placeholder="Enter 12-digit Aadhar number"
+                               required>
+                        <div class="form-text">Enter your 12-digit Aadhar number</div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="consent" required>
+                            <label class="form-check-label" for="consent">
+                                I consent to verify my Aadhar details
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="sendOtpBtn">Send OTP</button>
+                </form>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Processing your request...</p>
+                </div>
+
+                <div class="otp-section" id="otpSection">
+                    <div class="form-group mb-3">
+                        <label for="otpInput" class="form-label">Enter OTP</label>
+                        <input type="text" class="form-control otp-input" id="otpInput" 
+                               pattern="[0-9]{6}" 
+                               placeholder="Enter 6-digit OTP"
+                               required>
+                    </div>
+                    <div class="timer" id="timer">Time remaining: 30s</div>
+                    <div class="resend-otp">
+                        <button type="button" id="resendOtpBtn" disabled>Resend OTP</button>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="verifyOtpBtn">Verify OTP</button>
+                </div>
+
+                <div id="result" class="mt-4"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // --- Aadhar Verification Logic ---
+        const aadharForm = document.getElementById('aadharForm');
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const otpSection = document.getElementById('otpSection');
+        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+        const resendOtpBtn = document.getElementById('resendOtpBtn');
+        const timerDiv = document.getElementById('timer');
+        const resultDiv = document.getElementById('result');
+        let timerInterval;
+        let timeLeft = 30;
+
+        function showLoading(show) {
+            loadingSpinner.style.display = show ? 'block' : 'none';
+        }
+
+        function showOtpSection(show) {
+            otpSection.classList.toggle('show', show);
+        }
+
+        function startTimer() {
+            timeLeft = 30;
+            resendOtpBtn.disabled = true;
+            timerDiv.textContent = `Time remaining: ${timeLeft}s`;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDiv.textContent = `Time remaining: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendOtpBtn.disabled = false;
+                    timerDiv.textContent = 'Didn\'t receive OTP?';
+                }
+            }, 1000);
+        }
+
+        function formatAadharData(data) {
+            if (!data || !data.data) return '<div class="alert alert-warning">No data found.</div>';
+
+            // Extract aadhaar data from the response
+            let aadhaar = null;
+            if (data.data && data.data.data && data.data.data.aadhaar_data) {
+                aadhaar = data.data.data.aadhaar_data;
+            } else if (data.data && data.data.aadhaar_data) {
+                aadhaar = data.data.aadhaar_data;
+            }
+
+            if (!aadhaar) return '<div class="alert alert-warning">No Aadhar data found.</div>';
+
+            // Mask mobile number
+            let maskedMobile = '-';
+            if (aadhaar.mobile && aadhaar.mobile.length >= 4) {
+                maskedMobile = 'XXXXXX' + aadhaar.mobile.slice(-4);
+            }
+
+            let html = `
+                <div class="card shadow-lg border-0" style="max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden;">
+                    <div class="card-header bg-primary text-white py-4" style="background: linear-gradient(135deg, #1a7f5a 0%, #166b48 100%) !important;">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3" style="font-size: 2rem;">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-0 fw-bold">Aadhar Verification Result</h4>
+                                <p class="mb-0 opacity-75">Verified Successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-file me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Document Type</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.document_type || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-hashtag me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Reference ID</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.reference_id || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-user me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Name</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.name || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-calendar me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Date of Birth</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.date_of_birth || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-venus-mars me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Gender</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.gender || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-mobile me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Mobile</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${maskedMobile}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-user-friends me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Care Of</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.care_of || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-location-dot me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">District</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.district || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-location-arrow me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Locality</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.locality || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-map me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">State</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.state || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-barcode me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Pincode</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.pincode || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-flag me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">Country</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.country || '-'}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item p-3 rounded" style="background: #f8f9fa; border: 1px solid #e9ecef; transition: all 0.3s ease;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-city me-2" style="color: #1a7f5a; font-size: 1.1rem;"></i>
+                                        <span class="text-muted fw-semibold" style="font-size: 0.9rem;">VTC Name</span>
+                                    </div>
+                                    <div class="value" style="font-size: 1.1rem; color: #2c3e50; font-weight: 500;">${aadhaar.vtc_name || '-'}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${data.data.remainingTokens !== undefined ? `
+                    <div class="card-footer bg-light py-3">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <span class="text-muted me-2">Remaining Tokens:</span>
+                            <span class="badge bg-success">${data.data.remainingTokens}</span>
+                        </div>
+                    </div>` : ''}
+                </div>`;
+
+            return html;
+        }
+
+        aadharForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const aadharNumber = document.getElementById('aadharNumber').value.trim();
+            const consent = document.getElementById('consent').checked ? 'Y' : 'N';
+
+            if (!/^[0-9]{12}$/.test(aadharNumber)) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        Please enter a valid 12-digit Aadhar number.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                return;
+            }
+
+            if (consent !== 'Y') {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        You must provide consent to proceed.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                return;
+            }
+
+            showLoading(true);
+            sendOtpBtn.disabled = true;
+
+            try {
+                const response = await fetch('/verification/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        aadharNumber: aadharNumber,
+                        consent: "Y"
+                    })
+                });
+                const data = await response.json();
+                showLoading(false);
+                sendOtpBtn.disabled = false;
+
+                if (data.success) {
+                    showOtpSection(true);
+                    startTimer();
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fa-solid fa-exclamation-circle me-2"></i>
+                            ${data.message || 'Failed to send OTP. Please try again.'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                }
+            } catch (err) {
+                showLoading(false);
+                sendOtpBtn.disabled = false;
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        An error occurred. Please try again.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+            }
+        });
+
+        resendOtpBtn.addEventListener('click', async function() {
+            resendOtpBtn.disabled = true;
+            document.getElementById('otpInput').value = '';
+            const aadharNumber = document.getElementById('aadharNumber').value.trim();
+            showLoading(true);
+
+            try {
+                const response = await fetch('/verification/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        aadharNumber: aadharNumber,
+                        consent: "Y"
+                    })
+                });
+                const data = await response.json();
+                showLoading(false);
+
+                if (data.success) {
+                    startTimer();
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fa-solid fa-exclamation-circle me-2"></i>
+                            ${data.message || 'Failed to resend OTP. Please try again.'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                }
+            } catch (err) {
+                showLoading(false);
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        An error occurred. Please try again.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+            }
+        });
+
+        verifyOtpBtn.addEventListener('click', async function() {
+            verifyOtpBtn.disabled = true;
+            verifyOtpBtn.textContent = 'Verifying...';
+            const otp = document.getElementById('otpInput').value.trim();
+
+            if (!/^[0-9]{6}$/.test(otp)) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        Please enter a valid 6-digit OTP.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                verifyOtpBtn.disabled = false;
+                verifyOtpBtn.textContent = 'Verify OTP';
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch('/verification/verify-aadhar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        otp: otp,
+                        shareCode: '1234'
+                    })
+                });
+                const result = await response.json();
+                showLoading(false);
+                verifyOtpBtn.disabled = false;
+                verifyOtpBtn.textContent = 'Verify OTP';
+
+                if (result.success) {
+                    showOtpSection(false);
+                    resultDiv.innerHTML = formatAadharData(result);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fa-solid fa-exclamation-circle me-2"></i>
+                            ${result.message || 'Invalid OTP or verification failed.'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                }
+            } catch (err) {
+                showLoading(false);
+                verifyOtpBtn.disabled = false;
+                verifyOtpBtn.textContent = 'Verify OTP';
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        An error occurred. Please try again.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+            }
+        });
+    </script>
+</body>
+</html> 

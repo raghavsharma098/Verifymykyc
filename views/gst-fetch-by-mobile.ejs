@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Fetch By Mobile</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .result-table {
+            font-size: 0.9rem;
+        }
+        .result-table th {
+            background-color: #f8f9fa;
+        }
+        .pagination {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <%- include('sidenav') %>
+    <div class="container mt-5">
+
+        <h1>GST Fetch By Mobile</h1>
+        <div id="tokenError" class="alert alert-danger d-none"></div>
+        <form id="gstFetchByMobileForm">
+            <div class="form-group mb-3">
+                <label for="mobile">Mobile Number</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="consent">Consent</label>
+                <input type="checkbox" class="form-check-input" id="consent" name="consent" value="Y" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Fetch GST Details</button>
+        </form>
+        <div id="result" class="mt-4"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check for token error in URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenError = urlParams.get('error');
+            if (tokenError) {
+                $('#tokenError').removeClass('d-none').text(tokenError);
+            }
+
+            function formatGSTData(data) {
+                if (!data || !data.data) return '<div class="alert alert-warning">No data found.</div>';
+
+                let html = '<div class="table-responsive">';
+                
+                // Handle array of results
+                if (data.data.results && Array.isArray(data.data.results)) {
+                    html += `<div class="alert alert-info mb-3">Found ${data.data.results.length} records</div>`;
+                    
+                    // Create a table for each result
+                    data.data.results.forEach((result, index) => {
+                        html += `<h4 class="mt-4">Record ${index + 1}</h4>`;
+                        html += '<table class="table table-bordered table-striped result-table">';
+                        html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                        
+                        // Format each field in the result
+                        for (const [key, value] of Object.entries(result)) {
+                            if (value !== null && value !== undefined) {
+                                html += `<tr>
+                                    <td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td>
+                                    <td>${value}</td>
+                                </tr>`;
+                            }
+                        }
+                        
+                        html += '</tbody></table>';
+                    });
+                } else {
+                    // Handle single result
+                    html += '<table class="table table-bordered table-striped result-table">';
+                    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                    
+                    // Format each field in the response
+                    for (const [key, value] of Object.entries(data.data)) {
+                        if (value !== null && value !== undefined) {
+                            html += `<tr>
+                                <td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td>
+                                <td>${value}</td>
+                            </tr>`;
+                        }
+                    }
+                    
+                    html += '</tbody></table>';
+                }
+
+                html += '</div>';
+                return html;
+            }
+
+            $('#gstFetchByMobileForm').on('submit', function(e) {
+                e.preventDefault();
+                const mobile = $('#mobile').val();
+                const consent = $('#consent').is(':checked') ? 'Y' : 'N';
+
+                const options = {
+                    method: 'POST',
+                    url: 'https://api.gridlines.io/gstin-api/fetch-by-mobile',
+                    headers: {
+                        'X-Auth-Type': 'API-Key',
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                    },
+                    data: { mobile: mobile, consent: consent }
+                };
+
+                // First make a request to our backend to handle token deduction
+                axios.post('/verification/fetch-gst-by-mobile', {
+                    mobile: mobile,
+                    consent: consent
+                })
+                .then(function() {
+                    // After successful token deduction, make the API request
+                    return axios.request(options);
+                })
+                    .then(function(response) {
+                        let resultDiv = $('#result');
+                        if (response.data) {
+                            resultDiv.html(formatGSTData(response.data));
+                            
+                            // Update token count in dashboard
+                            if (response.data.tokens) {
+                                localStorage.setItem('lastTokenUpdate', Date.now());
+                            }
+                        } else {
+                            resultDiv.html('<div class="alert alert-warning">No data found.</div>');
+                        }
+                    })
+                    .catch(function(error) {
+                        let errorMessage = 'An error occurred. Please try again.';
+                        if (error.response && error.response.data && error.response.data.message) {
+                            errorMessage = error.response.data.message;
+                        }
+                        $('#result').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                        console.error(error);
+                    });
+            });
+        });
+    </script>
+</body>
+</html> 

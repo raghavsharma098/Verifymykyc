@@ -1,0 +1,287 @@
+[
+  {
+    "title": "PAN Card Verification",
+    "slug": "pan-card-verification",
+    "serviceKey": "pan",
+    "shortDescription": "Whether you're onboarding new employees, verifying vendors, or streamlining KYC for customers, accurate identity verification is key to building trust and reducing risk. Our PAN Card Verification service enables fast and reliable validation of an individual's Permanent Account Number, helping you ensure regulatory compliance and minimize fraud.",
+    "detailedDescription": "Our PAN Card Verification service allows you to instantly verify the authenticity of any PAN card. This is essential for employers, financial institutions, and anyone needing to confirm identity for compliance or security.",
+    "price": 50,
+    "image": "/service/pan.png",
+    "features": [
+      { "title": "Instant Results", "desc": "Verification completed within seconds" },
+      { "title": "High Accuracy", "desc": "Cross-checked with official PAN database" },
+      { "title": "Fully Secure", "desc": "Data is encrypted and handled with care" },
+      { "title": "Trusted by Industry Regulations", "desc": "Built to meet compliance standards for secure identity checks" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Enter PAN Details", "desc": "Provide the PAN number or upload a scanned copy of the PAN card." },
+      { "step": 2, "title": "Real-time Validation", "desc": "Our system verifies the information against the official PAN database." },
+      { "step": 3, "title": "Get Instant Report", "desc": "Receive a detailed report with the verification status and essential details." }
+    ],
+    "related": ["aadhar-card-verification", "pan-card-verification", "driving-license-verification"]
+  },
+  {
+    "title": "Aadhar Card Verification",
+    "slug": "aadhar-card-verification",
+    "serviceKey": "aadhar",
+    "shortDescription": "Verify Aadhar card details securely with OTP authentication. Ensure the authenticity of Aadhar information.",
+    "detailedDescription": "Aadhar Card Verification ensures the identity of individuals is authenticated directly through their Aadhar details, giving you peace of mind with a secure and trustworthy hiring process.",
+    "price": 75,
+    "image": "https://akm-img-a-in.tosshub.com/businesstoday/images/story/202304/untitled_design_90-sixteen_nine.jpg",
+    "features": [
+      { "title": "OTP-Based Authentication", "desc": "Secure verification via registered mobile" },
+      { "title": "Complete Identity Check", "desc": "Validates name, DOB, gender and address" },
+      { "title": "100% UIDAI Compliant", "desc": "Follows all government regulations" },
+      { "title": "Encrypted Processing", "desc": "Ensures data privacy" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Aadhaar Number", "desc": "With user consent" },
+      { "step": 2, "title": "OTP Verification", "desc": "Authenticate via registered mobile" },
+      { "step": 3, "title": "UIDAI Validation", "desc": "System checks official records" },
+      { "step": 4, "title": "Instant Report", "desc": "Generates verification certificate" }
+    ],
+    "related": ["pan-card-verification", "driving-license-verification", "mca-verification"]
+  },
+  {
+    "title": "Driving License Verification",
+    "slug": "driving-license-verification",
+    "serviceKey": "dl",
+    "shortDescription": "Streamline your KYC process with our Driving License Verification service. Instantly validate the authenticity of driver details, reduce fraud risks, and ensure compliance with regulatory requirements. Ideal for banks, employers, and onboarding processes.",
+    "detailedDescription": "Driving License Verification helps you confirm the validity and authenticity of a driving license, ensuring the driver is legally permitted to drive.",
+    "price": 60,
+    "image": "/images/products/driving-license.png",
+    "features": [
+      { "title": "Real-Time Verification", "desc": "Validate driving license details instantly against official databases." },
+      { "title": "Accurate & Reliable", "desc": "Cross-checked with Regional Transport Office (RTO) records for precision." },
+      { "title": "Secure & Encrypted", "desc": "Data privacy ensured with bank-grade security protocols." },
+      { "title": "Regulatory Compliance", "desc": "Meets KYC, AML, and RBI guidelines for identity verification." }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit DL Details", "desc": "Enter the driving license number or upload a scanned copy." },
+      { "step": 2, "title": "Automated Validation", "desc": "Our system verifies against RTO databases in real time." },
+      { "step": 3, "title": "Receive Results", "desc": "Get confirmation of authenticity, including name, DOB, and validity status." },
+      { "step": 4, "title": "Download Report", "desc": "Obtain a detailed verification report for audit and compliance records." }
+    ],
+    "related": ["aadhar-card-verification", "pan-card-verification", "gst-verification"]
+  },
+  {
+    "title": "GST Verification",
+    "slug": "gst-verification",
+    "serviceKey": "gst",
+    "shortDescription": "Our GST Verification service authenticates business GST details against official government records, ensuring legitimate vendor onboarding and financial compliance.",
+    "detailedDescription": "GST Verification allows you to instantly verify GSTIN and business registration details for compliance and due diligence.",
+    "price": 100,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAvkur9xXwn9YSWKjePWupEJ9_GwbaXXA1dQ&s",
+    "features": [
+      { "title": "GSTIN Validation", "desc": "Verifies registration status and business details" },
+      { "title": "Tax Compliance Check", "desc": "Confirms filing history and active status" },
+      { "title": "Regulatory Ready", "desc": "Meets RBI and financial institution requirements" },
+      { "title": "Instant Report", "desc": "Provides GST verification certificate" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Enter GSTIN", "desc": "Provide GST number and business name" },
+      { "step": 2, "title": "Government Database Check", "desc": "Manual verification via official portals" },
+      { "step": 3, "title": "Document Cross-Verification", "desc": "Validates supporting documents" },
+      { "step": 4, "title": "Get Results", "desc": "Receive instant verification report" }
+    ],
+    "related": ["pan-card-verification", "voter-id-verification", "aadhar-card-verification"]
+  },
+  {
+    "title": "Voter ID Verification",
+    "slug": "voter-id-verification",
+    "serviceKey": "voter",
+    "shortDescription": "Ensure seamless KYC compliance with our Voter ID Verification service. Instantly authenticate voter ID details against the Election Commission database, reducing fraud risks and simplifying identity validation for businesses, banks, and financial institutions.",
+    "detailedDescription": "Voter ID Verification helps you confirm the authenticity of a Voter ID card for compliance and onboarding.",
+    "price": 40,
+    "image": "https://wpblogassets.paytm.com/paytmblog/uploads/2023/05/Blog_Paytm_What-is-EPIC-Number-in-Voter-ID-Card.jpg",
+    "features": [
+      { "title": "Instant Verification", "desc": "Real-time validation of voter ID details." },
+      { "title": "Government Database Check", "desc": "Cross-verified with official Election Commission records." },
+      { "title": "Secure & Confidential", "desc": "Encrypted data handling for maximum privacy." },
+      { "title": "Regulatory Compliance", "desc": "Meets KYC, AML, and RBI guidelines for identity proof." }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Enter Voter ID Details", "desc": "Provide the EPIC number or upload a scanned copy." },
+      { "step": 2, "title": "Automated Verification", "desc": "Our system checks against the Election Commission's database." },
+      { "step": 3, "title": "Get Results Instantly", "desc": "Receive confirmation of name, age, and address validity." },
+      { "step": 4, "title": "Download Report", "desc": "Obtain a verified document for compliance and audit purposes." }
+    ],
+    "related": ["aadhar-card-verification", "pan-card-verification", "criminal-court-verification"]
+  },
+  {
+    "title": "Criminal & Court Verification",
+    "slug": "criminal-court-verification",
+    "serviceKey": "ccrv",
+    "shortDescription": "Our Criminal & Court Verification service helps organizations screen individuals by checking their criminal records and litigation history across police databases and court records. This verification is essential for risk mitigation during hiring, partnerships, or compliance requirements.",
+    "detailedDescription": "Criminal & Court Verification provides a thorough check for criminal records and court cases for individuals.",
+    "price": 200,
+    "image": "https://gridlines.io/_next/static/media/ccrvThirdColumnImage.77217fe5.svg",
+    "features": [
+      { "title": "Manual Court Record Check", "desc": "Validates criminal cases, warrants, and litigation history" },
+      { "title": "Multi-Level Verification", "desc": "Covers district courts, high courts, and supreme court records" },
+      { "title": "Regulatory Compliance", "desc": "Adheres to DPDP Act and privacy regulations" },
+      { "title": "Detailed Reporting", "desc": "Provides a certified report with findings" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide applicant details and signed consent" },
+      { "step": 2, "title": "Database Screening", "desc": "Our team manually checks court and police records" },
+      { "step": 3, "title": "Data Authentication", "desc": "Verifies findings through official sources" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive comprehensive verification report" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "voter-id-verification"]
+  },
+  {
+    "title": "Employee Verification",
+    "slug": "employee-verification",
+    "serviceKey": "employee",
+    "shortDescription": "Our Employment Verification service helps businesses and organizations authenticate an individual's employment history, including current/past employment status, designation, and tenure. This manual verification process ensures reliable background checks for hiring, loans, and compliance purposes.",
+    "detailedDescription": "Employee Verification helps you confirm employment history and credentials using EPFO and other databases.",
+    "price": 200,
+    "image": "https://www.vinmaya.com/wp-content/uploads/2023/04/Employee-Verification-Company-in-Bangalore-7.png",
+    "features": [
+      { "title": "Manual Verification Process", "desc": "Thorough validation through direct employer contact" },
+      { "title": "Comprehensive Coverage", "desc": "Verifies employment dates, position, salary (if authorized), and employer details" },
+      { "title": "Regulatory Compliance", "desc": "Meets data privacy standards, including GDPR and local regulations" },
+      { "title": "Detailed Reporting", "desc": "Provides formal verification certificates for audit trails" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide candidate details and signed consent form" },
+      { "step": 2, "title": "Employer Contact", "desc": "Our verification team directly contacts the employer/HR department" },
+      { "step": 3, "title": "Data Validation", "desc": "Authenticates employment details through official channel" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive certified verification report instantly upon completion" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "mca-verification"]
+  },
+  {
+    "title": "RC Verification",
+    "slug": "rc-verification",
+    "serviceKey": "rc",
+    "shortDescription": "Our RC Verification service enables businesses, financial institutions, and vehicle-related service providers to authenticate vehicle registration details issued by the Regional Transport Office (RTO). This manual verification ensures accurate vehicle ownership, fitness status, and compliance with transport regulations.",
+    "detailedDescription": "RC Verification helps you confirm the authenticity of a vehicle's registration certificate.",
+    "price": 150,
+    "image": "https://www.cashfree.com/static/50d21a873ddd513e2c6adff722674d4c/Fold-3.png",
+    "features": [
+      { "title": "Manual RTO Database Check", "desc": "Verifies vehicle registration number, owner details, and registration date" },
+      { "title": "Comprehensive Vehicle Check", "desc": "Validates engine/chassis number, vehicle class, and insurance status" },
+      { "title": "Regulatory Compliance", "desc": "Meets KYC, AML, and RBI guidelines for vehicle financing" },
+      { "title": "Certified Report", "desc": "Provides an official verification document for audit and legal purposes" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide the vehicle registration number (e.g., DL01AB1234)" },
+      { "step": 2, "title": "RTO Record Validation", "desc": "Our team manually verifies details against the RTO's official records" },
+      { "step": 3, "title": "Data Authentication", "desc": "Confirms owner name, registration expiry, and vehicle model" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive an instant RC verification report with authenticated details" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "cowin-vaccination"]
+  },
+  {
+    "title": "CoWIN Vaccination",
+    "slug": "cowin-vaccination",
+    "serviceKey": "cowin",
+    "shortDescription": "Verify vaccination credentials securely with our Co-WIN Verification service, designed for employers, healthcare, and travel sectors.",
+    "detailedDescription": "CoWIN Vaccination Verification allows you to check and download COVID-19 vaccination certificates using mobile number and OTP.",
+    "price": 50,
+    "image": "https://th-i.thgim.com/public/incoming/7sgcrk/article68129159.ece/alternates/FREE_1200/WhatsApp%20Image%202024-05-01%20at%2020.18.54.jpeg",
+    "features": [
+      { "title": "Certificate Authentication", "desc": "Validates beneficiary ID and vaccine details" },
+      { "title": "Dose Verification", "desc": "Checks vaccination dates and type" },
+      { "title": "Health Data Privacy", "desc": "Maintains confidentiality" },
+      { "title": "Official Validation", "desc": "Cross-checks with Co-WIN database" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Details", "desc": "Provide certificate information" },
+      { "step": 2, "title": "Database Check", "desc": "Manual verification via official channel" },
+      { "step": 3, "title": "Data Validation", "desc": "Confirms dosage details" },
+      { "step": 4, "title": "Report Delivery", "desc": "Provides validation report" }
+    ],
+    "related": ["aadhar-card-verification", "pan-card-verification", "bank-verification"]
+  },
+  {
+    "title": "Bank Account Verification",
+    "slug": "bank-verification",
+    "serviceKey": "bank",
+    "shortDescription": "Our Bank Account Verification service enables businesses, financial institutions, and employers to authenticate an individual's or company's bank account details securely. This manual verification process helps prevent fraud, ensure smooth transactions, and comply with KYC/AML regulations.",
+    "detailedDescription": "Bank Verification helps you confirm the authenticity of a bank account or UPI ID for secure payments.",
+    "price": 150,
+    "image": "https://www.cashfree.com/static/suite1-38436e5839038d2dafd42273281046aa.webp",
+    "features": [
+      { "title": "Manual Account Validation", "desc": "Verifies account holder name, account number, and bank branch details" },
+      { "title": "IFSC Code Check", "desc": "Confirms bank branch authenticity and routing information" },
+      { "title": "Regulatory Compliance", "desc": "Meets RBI guidelines, KYC norms, and anti-fraud requirements" },
+      { "title": "Instant Verification Report", "desc": "Provides a certified confirmation of account validity" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide the account number, IFSC code, and account holder name" },
+      { "step": 2, "title": "Bank Verification", "desc": "Our team manually validates details with the respective bank" },
+      { "step": 3, "title": "Account Authentication", "desc": "Confirms active status and matching account holder information" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive an instant verification report with bank-confirmed details" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "voter-id-verification"]
+  },
+  {
+    "title": "Passport Verification",
+    "slug": "passport-verification",
+    "serviceKey": "passport",
+    "shortDescription": "Our Passport Verification service enables businesses and organizations to authenticate an individual's passport details, ensuring the document's validity and accuracy. This manual verification process helps in KYC compliance, visa processing, and identity validation for secure onboarding and background checks.",
+    "detailedDescription": "Passport Verification allows you to check the validity and details of an Indian passport, generate/verify MRZ, and more.",
+    "price": 100,
+    "image": "https://wpblogassets.paytm.com/paytmblog/uploads/2023/08/Blog_Paytm_How-Police-Verification-for-Passport-is-Done-in-India.jpg",
+    "features": [
+      { "title": "Manual Verification Process", "desc": "Direct validation through authorized sources" },
+      { "title": "Comprehensive Check", "desc": "Verifies passport number, name, date of birth, nationality, and expiry date" },
+      { "title": "Regulatory Compliance", "desc": "Meets international data privacy and KYC/AML standards" },
+      { "title": "Detailed Reporting", "desc": "Provides a verified passport authentication certificate" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide the passport number and applicant details" },
+      { "step": 2, "title": "Document Validation", "desc": "Our team verifies the passport against official records" },
+      { "step": 3, "title": "Data Confirmation", "desc": "Authenticates all key passport details for accuracy" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive an instant verification report upon completion" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "mca-verification"]
+  },
+  {
+    "title": "Profile Lookup",
+    "slug": "profile-lookup",
+    "serviceKey": "profile",
+    "shortDescription": "Our Profile Lookup service enables businesses and organizations to conduct comprehensive background checks by verifying an individual's digital and professional footprint. This manual verification process helps authenticate social media profiles, professional networks, and other publicly available information for enhanced due diligence.",
+    "detailedDescription": "Profile Lookup allows you to search and verify individual profiles for background checks and due diligence.",
+    "price": 100,
+    "image": "https://cdn1.iconfinder.com/data/icons/people-62/32/21-_search-_profile-_friend-_contact-_user-512.png",
+    "features": [
+      { "title": "Manual Profile Verification", "desc": "Authenticates social media, professional, and public profiles" },
+      { "title": "Cross-Platform Check", "desc": "Verifies LinkedIn, Facebook, Twitter, and other relevant platforms" },
+      { "title": "Regulatory Compliance", "desc": "Adheres to data privacy laws (GDPR, DPDP Act)" },
+      { "title": "Detailed Reporting", "desc": "Provides a consolidated profile verification report" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide the individual's name, contact details, and profile links (if available)" },
+      { "step": 2, "title": "Profile Authentication", "desc": "Our team manually verifies profiles across platforms" },
+      { "step": 3, "title": "Data Validation", "desc": "Confirms profile authenticity, activity, and consistency" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive an instant verification report with findings" }
+    ],
+    "related": ["pan-card-verification", "aadhar-card-verification", "driving-license-verification"]
+  },
+  {
+    "title": "MCA Verification",
+    "slug": "mca-verification",
+    "serviceKey": "mca",
+    "shortDescription": "Our MCA Verification service enables businesses, financial institutions, and legal entities to authenticate company details registered with the Ministry of Corporate Affairs (MCA). This manual verification ensures accurate corporate data for due diligence, compliance, and risk assessment.",
+    "detailedDescription": "MCA Verification allows you to check company and director details, search by DIN/PAN, and more using the Ministry of Corporate Affairs database.",
+    "price": 150,
+    "image": "https://www.idfy.com/wp-content/uploads/2021/09/MCA-Corporate-Verification.png",
+    "features": [
+      { "title": "Manual MCA Database Check", "desc": "Verifies company registration, CIN, directors, and legal status" },
+      { "title": "Comprehensive Corporate Search", "desc": "Validates incorporation date, authorized capital, and active charges" },
+      { "title": "Regulatory Compliance", "desc": "Meets KYC, AML, and RBI guidelines for corporate verification" },
+      { "title": "Certified Report", "desc": "Provides an official verification document for audit trails" }
+    ],
+    "howItWorks": [
+      { "step": 1, "title": "Submit Request", "desc": "Provide the company name or Corporate Identification Number (CIN)" },
+      { "step": 2, "title": "MCA Record Validation", "desc": "Our team manually verifies details against MCA's official registry" },
+      { "step": 3, "title": "Data Authentication", "desc": "Confirms director names, registered address, and compliance status" },
+      { "step": 4, "title": "Report Delivery", "desc": "Receive an instant MCA verification report with authenticated details" }
+    ],
+    "related": ["pan-card-verification", "gst-verification", "aadhar-card-verification"]
+  }
+] 

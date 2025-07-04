@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= blog.metaDescription || 'VerifyMyKYC Blog - Stay updated with the latest verification news and insights' %>">
+    <title><%= blog.title %> - VerifyMyKYC Blog</title>
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; color: #1e293b; line-height: 1.6; margin: 0; padding: 0;">
+
+
+    <!-- Hero Section -->
+    <section style="position: relative; min-height: 70vh; background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('<%= blog.image %>') center/cover no-repeat fixed; display: flex; align-items: center; margin-bottom: 4rem;">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to top, #f8fafc, transparent);"></div>
+        <div style="position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 2rem; text-align: center; color: white;">
+            <div style="display: inline-block; background: #3b82f6; color: white; padding: 0.5rem 1.5rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                <%= blog.category %>
+            </div>
+            <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                <%= blog.title %>
+            </h1>
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; font-size: 0.95rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-calendar" style="color: #60a5fa;"></i>
+                    <span><%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-user" style="color: #60a5fa;"></i>
+                    <span><%= blog.author %></span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-clock" style="color: #60a5fa;"></i>
+                    <span><%= Math.ceil(blog.content.split(' ').length / 200) %> min read</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div>
+        <div>
+            <!-- Main Content -->
+            <main style="
+                background: white;
+                border-radius: 1rem;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                padding: 3rem;
+                position: relative;
+            ">
+                <!-- Featured Image -->
+                <% if (blog.image) { %>
+                    <div style="
+                        margin: -3rem -3rem 2rem -3rem;
+                        position: relative;
+                        overflow: hidden;
+                        border-radius: 1rem 1rem 0 0;
+                    ">
+                        <img 
+                            src="<%= blog.image %>" 
+                            alt="<%= blog.title %>" 
+                            style="
+                                width: 100%;
+                                max-width: 500px;
+                                height: 500px;
+                                object-fit: cover;
+                                transition: transform 0.5s ease;
+                                display: block;
+                                margin: 0 auto;
+                            "
+                        >
+                    </div>
+                <% } %>
+        
+                <!-- Blog Content -->
+                <article style="
+                    font-size: 1.125rem;
+                    line-height: 1.8;
+                    color: #4b5563;
+                ">
+                    <%- blog.content %>
+                </article>
+        
+                <!-- Tags -->
+                <% if (blog.metaKeywords) { %>
+                    <div style="
+                        margin-top: 3rem;
+                        padding-top: 2rem;
+                        border-top: 1px solid #e5e7eb;
+                    ">
+                        <h3 style="
+                            font-size: 1.25rem;
+                            font-weight: 600;
+                            color: #1e293b;
+                            margin-bottom: 1rem;
+                        ">
+                            Tags
+                        </h3>
+                        <div style="
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 0.75rem;
+                        ">
+                            <% blog.metaKeywords.split(',').forEach(tag => { %>
+                                <span style="
+                                    display: inline-flex;
+                                    align-items: center;
+                                    padding: 0.5rem 1.25rem;
+                                    background: #f1f5f9;
+                                    color: #475569;
+                                    border-radius: 2rem;
+                                    font-size: 0.875rem;
+                                    font-weight: 500;
+                                    transition: all 0.3s ease;
+                                    border: 1px solid #e2e8f0;
+                                    cursor: pointer;
+                                "
+                                onmouseover="
+                                    this.style.background='#3b82f6';
+                                    this.style.color='white';
+                                    this.style.borderColor='#3b82f6';
+                                    this.style.transform='translateY(-2px)';
+                                "
+                                onmouseout="
+                                    this.style.background='#f1f5f9';
+                                    this.style.color='#475569';
+                                    this.style.borderColor='#e2e8f0';
+                                    this.style.transform='translateY(0)';
+                                ">
+                                    <%= tag.trim() %>
+                                </span>
+                            <% }); %>
+                        </div>
+                    </div>
+                <% } %>
+            </main>
+        </div>
+        
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Image zoom effect
+        document.querySelectorAll('.blog-content img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.cursor = 'zoom-in';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.cursor = 'zoom-out';
+                }
+            });
+        });
+
+        // Newsletter form handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            // Add your newsletter subscription logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

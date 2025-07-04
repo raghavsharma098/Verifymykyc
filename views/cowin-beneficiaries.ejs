@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoWIN Beneficiaries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a7f5a;
+            --secondary-color: #166b48;
+            --accent-color: #e6f4ea;
+            --text-color: #333;
+            --light-gray: #f8f9fa;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .container {
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            background: white;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.15);
+        }
+
+        .form-check-input {
+            border: 2px solid var(--border-color);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .result-table {
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .result-table th {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .result-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .result-table td:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .table-responsive {
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            background: white;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <%- include('sidenav') %>
+    <div class="container mt-5">
+        <h1>CoWIN Beneficiaries</h1>
+        <div id="tokenError" class="alert alert-danger d-none"></div>
+        <div id="result" class="mt-4"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenError = urlParams.get('error');
+            if (tokenError) {
+                $('#tokenError').removeClass('d-none').text(tokenError);
+            }
+
+            function formatBeneficiariesData(data) {
+                if (!data || !data.data || !data.data.beneficiaries) {
+                    return '<div class="alert alert-warning">No beneficiaries found.</div>';
+                }
+
+                let html = '<div class="table-responsive">';
+                html += '<table class="table table-bordered table-striped result-table">';
+                html += '<thead><tr><th>Name</th><th>Age</th><th>Gender</th><th>Vaccination Status</th><th>Actions</th></tr></thead><tbody>';
+
+                data.data.beneficiaries.forEach(beneficiary => {
+                    html += `<tr>
+                        <td>${beneficiary.name || 'N/A'}</td>
+                        <td>${beneficiary.age || 'N/A'}</td>
+                        <td>${beneficiary.gender || 'N/A'}</td>
+                        <td>${beneficiary.vaccination_status || 'N/A'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary download-certificate" 
+                                    data-beneficiary-id="${beneficiary.beneficiary_id}">
+                                Download Certificate
+                            </button>
+                        </td>
+                    </tr>`;
+                });
+
+                html += '</tbody></table></div>';
+                return html;
+            }
+
+            // Load beneficiaries on page load
+            const transactionId = localStorage.getItem('cowinTransactionId');
+            if (!transactionId) {
+                $('#result').html('<div style="width: 300px; align-items: center; margin: 0 auto;" class="alert alert-danger">Please complete OTP validation first.</div>');
+                return;
+            }
+
+            const options = {
+                method: 'POST',
+                url: 'https://api.gridlines.io/cowin-api/meson/beneficiaries',
+                headers: {
+                    'X-Auth-Type': 'API-Key',
+                    'X-Transaction-ID': transactionId,
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                },
+                data: {}
+            };
+
+            // First make a request to our backend to handle token deduction
+            axios.post('/cowin-beneficiaries')
+                .then(function() {
+                    // After successful token deduction, make the API request
+                    return axios.request(options);
+                })
+                .then(function(response) {
+                    let resultDiv = $('#result');
+                    if (response.data) {
+                        resultDiv.html(formatBeneficiariesData(response.data));
+                        
+                        // Add click handlers for download buttons
+                        $('.download-certificate').on('click', function() {
+                            const beneficiaryId = $(this).data('beneficiary-id');
+                            downloadCertificate(beneficiaryId);
+                        });
+                        
+                        if (response.data.tokens) {
+                            localStorage.setItem('lastTokenUpdate', Date.now());
+                        }
+                    } else {
+                        resultDiv.html('<div class="alert alert-warning">No data found.</div>');
+                    }
+                })
+                .catch(function(error) {
+                    let errorMessage = 'An error occurred. Please try again.';
+                    if (error.response && error.response.data && error.response.data.message) {
+                        errorMessage = error.response.data.message;
+                    }
+                    $('#result').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    console.error(error);
+                });
+
+            function downloadCertificate(beneficiaryId) {
+                const options = {
+                    method: 'POST',
+                    url: 'https://api.gridlines.io/cowin-api/meson/certificate',
+                    headers: {
+                        'X-Auth-Type': 'API-Key',
+                        'X-Transaction-ID': transactionId,
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                    },
+                    data: {
+                        beneficiary_id: beneficiaryId
+                    }
+                };
+
+                // First make a request to our backend to handle token deduction
+                axios.post('/cowin-beneficiaries')
+                    .then(function() {
+                        // After successful token deduction, make the API request
+                        return axios.request(options);
+                    })
+                    .then(function(response) {
+                        if (response.data && response.data.data && response.data.data.certificate_url) {
+                            window.open(response.data.data.certificate_url, '_blank');
+                        } else {
+                            alert('Certificate URL not found in response.');
+                        }
+                    })
+                    .catch(function(error) {
+                        let errorMessage = 'Failed to download certificate. Please try again.';
+                        if (error.response && error.response.data && error.response.data.message) {
+                            errorMessage = error.response.data.message;
+                        }
+                        alert(errorMessage);
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
+</body>
+</html> 

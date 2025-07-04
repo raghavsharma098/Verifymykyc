@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Verify My KYC">
+    <meta name="description" content="Verify My KYC">
+    <!-- ======== Page title ============ -->
+    <title>Verify My KYC</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href=images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+        .header-button a{
+            background-color: #1a79b3 !important;
+            transition: all 0.2s ease-in-out;
+        }
+        .header-button a:hover{
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+        /* Buttons */
+        .theme-btn,
+        .theme-btn.style4,
+        .theme-btn.style5 {
+            background: var(--primary-green) !important;
+            border-color: var(--primary-green) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px 0 rgba(16, 198, 16, 0.15);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .theme-btn:hover,
+        .theme-btn:focus {
+            background: var(--primary-blue) !important;
+            border-color: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        .theme-btn.style2 {
+            background: var(--primary-orange) !important;
+            border-color: var(--primary-orange) !important;
+            color: #fff !important;
+        }
+
+        /* Header */
+        .header-section-33,
+        #header-sticky.header-1.header-3 {
+            background: white !important;
+            border-bottom: 3px solid #10c610 !important;
+        }
+
+        .header-logo img {
+            filter: drop-shadow(0 2px 8px rgba(26, 121, 179, 0.08));
+        }
+
+        /* Navigation links */
+        .main-menu ul li a {
+            color: #000 !important;
+            font-weight: 500;
+        }
+
+        .main-menu ul li.active>a,
+        .main-menu ul li a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        /* Section Titles */
+        .section-title .title,
+        .single-section-title {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+        }
+
+        .section-title .subtitle,
+        .single-section-title .subtitle {
+            color: var(--primary-green) !important;
+            font-weight: 600;
+        }
+
+        /* Subtitles with bg2 */
+        .bg2 {
+            background: var(--primary-orange) !important;
+            color: #fff !important;
+            border-radius: 6px;
+            padding: 0.2em 0.8em;
+        }
+
+        /* Pricing Cards */
+        .pricing-card.style1 {
+            border: 2px solid var(--primary-blue) !important;
+            box-shadow: 0 2px 16px 0 rgba(26, 121, 179, 0.08);
+        }
+
+        .pricing-card-header {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .pricing-card .price {
+            color: var(--primary-orange) !important;
+            font-weight: 700;
+        }
+
+        /* Checklist icons */
+        .checklist img,
+        .checklist svg {
+            filter: drop-shadow(0 2px 4px rgba(16, 198, 16, 0.10));
+            color: var(--primary-green) !important;
+            fill: var(--primary-green) !important;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--primary-dark) !important;
+            color: #fff !important;
+        }
+
+        .footer-section a {
+            color: var(--primary-green) !important;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange) !important;
+        }
+
+        .footer-bottom.style1 {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        /* Icons */
+        .fa-chevron-up,
+        .fa-arrow-right-long,
+        .fa-search,
+        .fa-bars,
+        .fa-plus,
+        .fa-angle-down {
+            color: var(--primary-green) !important;
+        }
+
+        .fa-facebook-f,
+        .fa-twitter,
+        .fa-linkedin-in,
+        .fa-instagram,
+        .fa-youtube {
+            color: var(--primary-blue) !important;
+        }
+
+        /* Blog Cards */
+        .blog-card.style1 {
+            border-top: 4px solid var(--primary-orange) !important;
+        }
+
+        /* Misc */
+        .back-to-top {
+            color: #fff !important;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-orange) !important;
+        }
+
+        .submenu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(160px, 1fr));
+            gap: 0.5rem 1.5rem;
+            padding: 18px 24px;
+        }
+        .submenu-grid li {
+            padding: 0;
+            margin: 0;
+        }
+        .submenu-grid span {
+            display: block;
+            color: #222;
+            font-weight: 500;
+            padding: 7px 0;
+        }
+        .dropdown-toggle::after{
+            display: none !important;
+        }
+
+        /* User Dropdown Styles */
+        .user-dropdown-container {
+            position: relative;
+        }
+
+        .user-dropdown {
+            background: transparent;
+            border: none;
+            color: var(--primary-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown:hover,
+        .user-dropdown:focus {
+            color: var(--primary-green);
+            background: transparent;
+        }
+
+        .user-dropdown::after {
+            color: var(--primary-green);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 0.5rem;
+            min-width: 200px;
+            margin-top: 0.5rem;
+        }
+
+        /* Desktop hover behavior */
+        @media (min-width: 992px) {
+            .user-dropdown-container:hover .dropdown-menu {
+                display: block;
+            }
+        }
+
+        /* Mobile styles */
+        @media (max-width: 991px) {
+            .dropdown-menu {
+                position: absolute;
+                right: 0;
+                top: 100%;
+                background: white;
+                z-index: 1000;
+                display: none;
+            }
+
+            .dropdown-menu.show {
+                display: block;
+                animation: fadeInDown 0.2s ease-out;
+            }
+
+            .user-dropdown {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .user-dropdown::after {
+                content: '\f107';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                transition: transform 0.2s;
+            }
+
+            .user-dropdown.show::after {
+                transform: rotate(180deg);
+            }
+
+            .dropdown-item {
+                padding: 0.75rem 1rem;
+                white-space: nowrap;
+            }
+            .hide-btn{
+                display: none;
+            }
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary-green);
+        }
+
+        .dropdown-item.text-danger:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border-color: #e5e7eb;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu Styles */
+        @media (max-width: 991px) {
+            .header-middle {
+                display: none !important;
+            }
+            .header-middle.active {
+                display: none !important;
+            }
+            .header-right {
+                z-index: 1001;
+            }
+            .menu-open {
+                overflow: hidden;
+            }
+
+            .menu-open .offcanvas__overlay {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .offcanvas__overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.3s;
+            }
+
+            .sidebar__toggle {
+                cursor: pointer;
+                padding: 10px;
+            }
+
+            .sidebar__toggle i {
+                font-size: 24px;
+                color: var(--primary-green);
+            }
+            .dropdown-toggle {
+                font-size: 0.45rem !important;
+            }
+            .hide-btn{
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-main {
+                padding: 8px 0;
+            }
+
+            .logo img {
+                width: 150px !important;
+            }
+
+            .header-right {
+                gap: 8px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.5rem !important;
+            }
+
+            .user-dropdown {
+                font-size: 0.45rem;
+            }
+            .dropdown-toggle {
+                font-size: 1.17rem !important;
+            }
+            .hide-btn{
+                display: none;
+            }
+            .user-dropdown-hidden{
+                display: none;
+             }
+        }
+
+        @media (max-width: 575px) {
+            .logo img {
+                width: 130px !important;
+            }
+
+            .header-right {
+                gap: 5px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.4rem !important;
+            }
+
+            .user-dropdown {
+                font-size: 1rem !important;
+            }
+            .user-dropdown {
+                font-size: 0.4rem;
+            }
+            .hide-btn{
+                display: none;
+            }
+            .user-dropdown-hidden{
+                display: none;
+             }
+        }
+
+        /* --- Custom Mobile Nav Styles --- */
+        .mobile-nav {
+            margin: 0 0 2rem 0;
+        }
+        .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .mobile-nav-list > li {
+            border-bottom: 1px solid #333;
+            padding: 0.7em 0.5em;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            background: transparent;
+            position: relative;
+        }
+        .mobile-nav-list > li:last-child {
+            border-bottom: none;
+        }
+        .mobile-nav-list a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s;
+        }
+        .mobile-nav-list a:hover {
+            color: var(--primary-green);
+        }
+        .mobile-dropdown .dropdown-toggle {
+            cursor: pointer;
+        }
+        .mobile-dropdown-menu {
+            display: none;
+            background: #181b22;
+            border-radius: 0 0 10px 10px;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            padding: 0.5em 0.5em 0.5em 1.5em;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+        .mobile-dropdown.open .mobile-dropdown-menu {
+            display: block;
+            animation: fadeInDown 0.3s;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .mobile-dropdown-menu li {
+            border: none;
+            padding: 0.4em 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .mobile-dropdown-menu a {
+            color: #b2f5ea;
+            font-weight: 500;
+            padding-left: 0;
+        }
+        .mobile-dropdown-menu a:hover {
+            color: var(--primary-orange);
+        }
+        .mobile-dropdown .fa-chevron-down {
+            transition: transform 0.2s;
+        }
+        .mobile-dropdown.open .fa-chevron-down {
+            transform: rotate(-180deg);
+        }
+        .mobile-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+        .mobile-auth-link {
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.5em 0;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .mobile-auth-link:hover {
+            background: var(--primary-green);
+            color: #fff;
+        }
+        .mobile-auth-link.text-danger {
+            color: #ff5c16;
+        }
+        .mobile-auth-link.text-danger:hover {
+            background: #fff0e6;
+            color: #ff5c16;
+        }
+        @media (min-width: 992px) {
+            .mobile-nav { display: none !important;
+             }
+             
+        }
+        .offcanvas__wrapper .offcanvas__content .offcanvas__contact .social-icon a{
+            background-color: #000;
+            color: #fff !important;
+        }
+        .hide-btn{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <!-- <div id="preloader" class="preloader">
+        <div class="animation-preloader">
+            <div class="spinner">
+            </div>
+            <div class="txt-loading">
+                <span data-text-preloader="N" class="letters-loading">
+                    N
+                </span>
+                <span data-text-preloader="E" class="letters-loading">
+                    i
+                </span>
+                <span data-text-preloader="O" class="letters-loading">
+                    O
+                </span>
+                <span data-text-preloader="T" class="letters-loading">
+                    T
+                </span>
+                <span data-text-preloader="E" class="letters-loading">
+                    E
+                </span>
+                <span data-text-preloader="C" class="letters-loading">
+                    C
+                </span>
+                <span data-text-preloader="H" class="letters-loading">
+                    H
+                </span>
+            </div>
+            <p class="text-center">Loading</p>
+        </div>
+        <div class="loader">
+            <div class="row">
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Mouse Cursor Start -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+
+    <!-- Back To Top Start -->
+    <button id="back-top" class="back-to-top">
+        <i class="fa-solid fa-chevron-up" style="color: white !important;"></i>
+    </button>
+
+    <!-- Offcanvas Area Start -->
+    <div class="fix-area">
+        <div class="offcanvas__info">
+            <div class="offcanvas__wrapper">
+                <div class="offcanvas__content">
+                    <div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
+                        <div class="offcanvas__logo">
+                            <a href="/">
+                                <img style="width: 180px;" src="" alt="logo-img">
+                            </a>
+                        </div>
+                        <div class="offcanvas__close">
+                            <button>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text d-none d-xl-block">
+                        Nullam dignissim, ante scelerisque the is euismod fermentum odio sem semper the is erat, a
+                        feugiat leo urna eget eros. Duis Aenean a imperdiet risus.
+                    </p>
+                    <!-- Custom Mobile Nav -->
+                    <nav class="mobile-nav">
+                        <ul class="mobile-nav-list">
+                            <li><a href="/about">About Us</a></li>
+                            <li class="mobile-dropdown">
+                                <a href="#" class="dropdown-toggle" id="mobileServicesToggle">
+                                    Services <i class="fa fa-chevron-down ms-2"></i>
+                                </a>
+                                <ul class="mobile-dropdown-menu" id="mobileServicesMenu">
+                                    <li><a href="/service/pan-card-verification">PAN Card Verification</a></li>
+                                    <li><a href="/service/aadhar-card-verification">Aadhar Card Verification</a></li>
+                                    <li><a href="/service/driving-license-verification">Driving License Verification</a></li>
+                                    <li><a href="/service/gst-verification">GST Verification</a></li>
+                                    <li><a href="/service/voter-id-verification">Voter ID Verification</a></li>
+                                    <li><a href="/service/criminal-court-verification">Criminal & Court Verification</a></li>
+                                    <li><a href="/service/employee-verification">Employee Verification</a></li>
+                                    <li><a href="/service/rc-verification">RC Verification</a></li>
+                                    <li><a href="/service/cowin-vaccination">CoWIN Vaccination</a></li>
+                                    <li><a href="/service/bank-verification">Bank Verification</a></li>
+                                    <li><a href="/service/passport-verification">Passport Verification</a></li>
+                                    <li><a href="/service/mca-verification">MCA Verification</a></li>
+                                    <li><a href="/service/profile-lookup">Profile Lookup</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/blog">Blogs</a></li>
+                            <li><a href="/contact">Contact Us</a></li>
+                        </ul>
+                        <div class="mobile-auth mt-4">
+                            <% if (user) { %>
+                                <a href="/dashboard" class="mobile-auth-link"><i class="fa fa-gauge me-2"></i>Dashboard</a>
+                                <a href="/cart" class="mobile-auth-link"><i class="fa fa-cart-shopping me-2"></i>Cart</a>
+                                <a href="/logout" class="mobile-auth-link text-danger"><i class="fa fa-right-from-bracket me-2"></i>Logout</a>
+                            <% } else { %>
+                                <a href="/login" class="mobile-auth-link">Login</a>
+                                <a href="/register"  class=" mobile-auth-link ">Register</a>
+                            <% } %>
+                        </div>
+                    </nav>
+                    <!-- End Custom Mobile Nav -->
+                    <div class="offcanvas__contact">
+                        <h4>Contact Info</h4>
+                        <ul>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">A 24/5, Mohan Cooperative Industrial Area, Badarpur, Secound Floor, New Delhi 110044</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-envelope"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="mailto:info@example.com"><span
+                                            class="mailto:verifymykyc@navigantinc.com">verifymykyc@navigantinc.com</span></a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-clock"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">Mod-friday, 09am -05pm</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="far fa-phone"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="tel:+919355093937">+919355093937</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="header-button mt-4">
+                            <a href="/contact" class="theme-btn text-center">
+                                <span>Get A Quote<i class="fa-solid fa-arrow-right-long"></i></span>
+                            </a>
+                        </div>
+                        <div class="social-icon d-flex align-items-center">
+                            <a href="https://www.facebook.com/profile.php?id=61576760613090"><i  style="color: #fff !important;" class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/verifymykyc/"><i  style="color: #fff !important;" class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas__overlay"></div>
+
+    <!-- Header Section Start -->
+    <header class="header-section-33">
+        <div id="header-sticky" class="header-1 header-3">
+            <div class="container-fluid">
+                <div class="mega-menu-wrapper">
+                    <div class="header-main">
+                        <div class="header-left">
+                            <div class="logo">
+                                <a href="/" class="header-logo">
+                                    <img style="width: 190px;" src="" alt="logo-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="header-middle">
+                            <div class="mean__menu-wrapper">
+                                <div class="main-menu">
+                                    <nav id="mobile-menu">
+                                        <ul>
+                                            <li class="has-dropdown  menu-thumb">
+                                                <a href="/">
+                                                    Home
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/about">About Us</a>
+                                            </li>
+                                            <li>
+                                                <a href="/services">
+                                                    Services
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu submenu-grid">
+                                                    <li><a href="/service/pan-card-verification">PAN Card Verification</a></li>
+                                                    <li><a href="/service/aadhar-card-verification">Aadhar Card Verification</a></li>
+                                                    <li><a href="/service/driving-license-verification">Driving License Verification</a></li>
+                                                    <li><a href="/service/gst-verification">GST Verification</a></li>
+                                                    <li><a href="/service/voter-id-verification">Voter ID Verification</a></li>
+                                                    <li><a href="/service/criminal-court-verification">Criminal & Court Verification</a></li>
+                                                    <li><a href="/service/employee-verification">Employee Verification</a></li>
+                                                    <li><a href="/service/rc-verification">RC Verification</a></li>
+                                                    <li><a href="/service/cowin-vaccination">CoWIN Vaccination</a></li>
+                                                    <li><a href="/service/bank-verification">Bank Verification</a></li>
+                                                    <li><a href="/service/passport-verification">Passport Verification</a></li>
+                                                    <li><a href="/service/mca-verification">MCA Verification</a></li>
+                                                    <li><a href="/service/profile-lookup">Profile Lookup</a></li>
+                                                </ul>
+                                            </li>
+                                            <!-- <li>
+                                                <a href="pricing.html">
+                                                    Pricing
+                                                </a>
+                                            </li> -->
+                                            
+                                            <li>
+                                                <a href="/blog">
+                                                    Blogs
+                                                </a>
+                                                <!-- <ul class="submenu">
+                                                    <li><a href="blog.html">Blog</a></li>
+                                                    <li><a href="blog-standard.html">Blog Standard</a></li>
+                                                    <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                                </ul> -->
+                                            </li>
+                                            <li>
+                                                <a href="/contact">Contact Us</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-right d-flex justify-content-end align-items-center">
+                            <!-- <a href="#0" class="search-trigger search-icon"><i class="fal fa-search"></i></a> -->
+
+                            <div class="user-dropdown-hidden">
+                            <% if (user) { %>
+                                <div class="dropdown user-dropdown-container">
+                                    <button class="btn dropdown-toggle user-dropdown"  type="button" id="userDropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-user-circle me-2"></i>
+                                        <%= user.name %>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="/dashboard">
+                                                <i class="fa-solid fa-gauge me-2"></i>Dashboard
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/cart">
+                                                <i class="fa-solid fa-cart-shopping me-2"></i>Cart
+                                            </a>
+                                        </li>
+                                     
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="/logout">
+                                                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <% } else { %>
+                                <a class="nav-link ms-3" href="/login">Login</a>
+                                <a class=" ms-3 hide-btn" href="/register">Register</a>
+                            <% } %>
+                        </div>
+
+                            <div class="header-button ms-4" >
+                               
+                                <a href="https://calendly.com/searchai-support/30min" target="_blank" class="theme-btn">
+                                    <span>
+                                        Book a Demo
+                                        <i class="fa-solid fa-arrow-right-long" style="color: #fff !important;"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="header__hamburger d-block d-xl-none my-auto">
+                                <div class="sidebar__toggle">
+                                    <i class="fas fa-bars"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Area Start -->
+    <div class="search-wrap">
+        <div class="search-inner">
+            <i class="fas fa-times search-close" id="search-close"></i>
+            <div class="search-cell">
+                <form method="get">
+                    <div class="search-field-holder">
+                        <input type="search" class="main-search-input" placeholder="Search...">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--<< All JS Plugins >>-->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="js/main.js"></script>
+
+    <!-- Remove the previous dropdown initialization script and replace with this -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const sidebarToggle = document.querySelector('.sidebar__toggle');
+            const headerMiddle = document.querySelector('.header-middle');
+            const offcanvasOverlay = document.querySelector('.offcanvas__overlay');
+            const body = document.body;
+
+            function toggleMenu() {
+                headerMiddle.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            }
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+            }
+
+            if (offcanvasOverlay) {
+                offcanvasOverlay.addEventListener('click', function() {
+                    toggleMenu();
+                });
+            }
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 991) {
+                    if (!e.target.closest('.header-middle') && 
+                        !e.target.closest('.sidebar__toggle') && 
+                        headerMiddle.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+
+            // Handle dropdown menus
+            const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 991) {
+                        e.preventDefault();
+                        const parent = this.parentElement;
+                        const submenu = parent.querySelector('.submenu');
+                        if (submenu) {
+                            const isOpen = submenu.style.display === 'block';
+                            submenu.style.display = isOpen ? 'none' : 'block';
+                        }
+                    }
+                });
+            });
+
+            // Handle user dropdown for mobile
+            const userDropdown = document.getElementById('userDropdown');
+            const dropdownMenu = userDropdown?.nextElementSibling;
+            
+            if (userDropdown && dropdownMenu) {
+                // Toggle dropdown on click for mobile
+                userDropdown.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 991) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.classList.toggle('show');
+                        dropdownMenu.classList.toggle('show');
+                    }
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 991) {
+                        if (!userDropdown.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                            userDropdown.classList.remove('show');
+                            dropdownMenu.classList.remove('show');
+                        }
+                    }
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 991) {
+                        userDropdown.classList.remove('show');
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+
+                // Close dropdown when clicking menu items
+                dropdownMenu.querySelectorAll('.dropdown-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        if (window.innerWidth <= 991) {
+                            userDropdown.classList.remove('show');
+                            dropdownMenu.classList.remove('show');
+                        }
+                    });
+                });
+            }
+
+            // Close all dropdowns when window is resized
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 991) {
+                    const submenus = document.querySelectorAll('.submenu');
+                    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                    
+                    submenus.forEach(menu => {
+                        menu.style.display = '';
+                    });
+                    
+                    dropdownMenus.forEach(menu => {
+                        menu.style.display = '';
+                    });
+                    
+                    if (headerMiddle.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- Mobile nav dropdown toggle -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mobileDropdown = document.querySelector('.mobile-dropdown');
+        var dropdownToggle = document.getElementById('mobileServicesToggle');
+        var dropdownMenu = document.getElementById('mobileServicesMenu');
+        if (mobileDropdown && dropdownToggle && dropdownMenu) {
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                mobileDropdown.classList.toggle('open');
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Address</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--sidebar-text);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(26, 127, 90, 0.15);
+        }
+
+        .form-check-input {
+            border: 2px solid var(--border);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #166b48;
+            border-color: #166b48;
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 32px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background-color: var(--sidebar-bg);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        .table td {
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+            .sidebar {
+                width: 80px;
+                padding: 32px 0;
+            }
+            .sidebar .logo {
+                font-size: 1.2rem;
+                padding: 0 12px;
+            }
+            .sidebar a span, .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 12px;
+                justify-content: center;
+            }
+            .sidebar a i {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 12px;
+            }
+            .sidebar .logo {
+                margin-bottom: 0;
+            }
+            .sidebar nav {
+                display: flex;
+                gap: 12px;
+            }
+            .sidebar ul {
+                display: flex;
+                gap: 8px;
+            }
+            .sidebar li {
+                margin-bottom: 0;
+            }
+            .sidebar .sidebar-section {
+                margin-bottom: 0;
+            }
+            .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 8px 16px;
+                white-space: nowrap;
+            }
+            .main {
+                padding: 18px;
+            }
+            .page-header {
+                padding: 16px;
+            }
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+
+        <main class="main">
+            <div class="page-header">
+                <h1>Fetch Address</h1>
+                <p class="subtitle">Verify and fetch address information</p>
+                    </div>
+
+            <div class="form-card">
+                        <form id="profileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                                <label for="phone" class="form-label"><i class="fa-solid fa-phone me-2"></i>Phone Number</label>
+                                <input type="text" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        <div class="col-md-6 mb-4">
+                                <label for="first_name" class="form-label"><i class="fa-solid fa-user me-2"></i>First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                                <label for="full_name" class="form-label"><i class="fa-solid fa-user me-2"></i>Full Name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                            </div>
+                        <div class="col-md-6 mb-4">
+                                <label for="date_of_birth" class="form-label"><i class="fa-solid fa-calendar me-2"></i>Date of Birth</label>
+                                <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="YYYY-XX-XX" required>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                                <label for="pan" class="form-label"><i class="fa-solid fa-id-card me-2"></i>PAN Number</label>
+                                <input type="text" class="form-control" id="pan" name="pan" required>
+                            </div>
+                        <div class="col-md-6 mb-4">
+                                <label for="address" class="form-label"><i class="fa-solid fa-location-dot me-2"></i>Address</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                                <label for="state" class="form-label"><i class="fa-solid fa-map me-2"></i>State</label>
+                                <input type="text" class="form-control" id="state" name="state" required>
+                            </div>
+                        <div class="col-md-6 mb-4">
+                                <label for="pincode" class="form-label"><i class="fa-solid fa-map-pin me-2"></i>Pincode</label>
+                                <input type="text" class="form-control" id="pincode" name="pincode" required>
+                            </div>
+                    </div>
+
+                    <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                                    <label class="form-check-label" for="consent">
+                                        <i class="fa-solid fa-check-circle me-2"></i>I provide consent to fetch information
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-download me-2"></i>Fetch Address
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Results Section -->
+                <div id="results" class="results-card" style="display: none;">
+                    <h4 class="mb-4"><i class="fa-solid fa-list me-2"></i>Address Results</h4>
+                                    <div id="resultsContent"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                phone: document.getElementById('phone').value,
+                first_name: document.getElementById('first_name').value,
+                full_name: document.getElementById('full_name').value,
+                date_of_birth: document.getElementById('date_of_birth').value,
+                pan: document.getElementById('pan').value,
+                address: document.getElementById('address').value,
+                state: document.getElementById('state').value,
+                pincode: document.getElementById('pincode').value,
+                consent: 'Y',
+                consent_text: 'I hereby provide my consent to fetch my address information.'
+            };
+
+            try {
+                console.log('Sending request with data:', formData);
+                const response = await fetch('/profile/fetch-address', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Full response data:', JSON.stringify(data, null, 2));
+
+                if (response.ok) {
+                    // Show results section
+                    document.getElementById('results').style.display = 'block';
+                    
+                    // Format and display the results
+                    const resultsContent = document.getElementById('resultsContent');
+                    let html = '<div class="table-responsive"><table class="table table-bordered">';
+                    
+                    // Format the data in a more readable way
+                    const formatValue = (value) => {
+                        if (value === null || value === undefined) return 'N/A';
+                        if (typeof value === 'object') {
+                            return JSON.stringify(value, null, 2)
+                                .replace(/[{}"]/g, '')
+                                .replace(/,/g, '<br>')
+                                .replace(/:/g, ': ');
+                        }
+                        return value;
+                    };
+
+                    // Add each field from the response with better formatting
+                    for (const [key, value] of Object.entries(data.data)) {
+                        const formattedKey = key
+                            .split('_')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+                        
+                        html += `
+                            <tr>
+                                <th style="width: 30%; background-color: #f8f9fa;">${formattedKey}</th>
+                                <td style="width: 70%;">${formatValue(value)}</td>
+                            </tr>`;
+                    }
+                    
+                    html += '</table></div>';
+                    resultsContent.innerHTML = html;
+                    
+                    // Show success message in a more elegant way
+                    const successAlert = document.createElement('div');
+                    successAlert.className = 'alert alert-success alert-dismissible fade show mt-3';
+                    successAlert.innerHTML = `
+                        <i class="fa-solid fa-check-circle me-2"></i>
+                        Address fetched successfully!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
+                    resultsContent.insertBefore(successAlert, resultsContent.firstChild);
+                } else {
+                    const errorMessage = data.message || 'Error fetching address';
+                    console.error('API Error:', data);
+                    
+                    // Show error message in a more elegant way
+                    const errorAlert = document.createElement('div');
+                    errorAlert.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                    errorAlert.innerHTML = `
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>
+                        ${errorMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
+                    document.getElementById('resultsContent').innerHTML = '';
+                    document.getElementById('resultsContent').appendChild(errorAlert);
+                }
+            } catch (error) {
+                console.error('Detailed error:', error);
+                alert('Error fetching address. Check console for details.');
+            }
+        });
+    </script>
+</body>
+</html> 

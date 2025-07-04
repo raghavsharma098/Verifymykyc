@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Gramentheme">
+    <meta name="description" content="Niotech - App Landing HTML Template">
+    <!-- ======== Page title ============ -->
+    <title>Niotech - App Landing HTML Template</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="/css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="/css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="/css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <!-- Mouse Cursor Start -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+
+    <!-- Back To Top Start -->
+    <button id="back-top" class="back-to-top">
+        <i class="fa-solid fa-chevron-up" style="color: white !important;"></i>
+    </button>
+    <%- include('navbar') %>
+    <!-- Breadcumb Section S T A R T -->
+    <div class="breadcumb-section" style="height: 100% !important; border-bottom: 5px solid #7444FD" >
+        <div class="breadcumb-container-wrapper" style="height: 300px !important;" data-bg-src="images/bg/breadcumgBg.png">
+            <div class="container" style="height: 300px !important;">
+                <div class="breadcumb-wrapper">
+                    <div class="page-heading">
+                        <h1>Blog Details</h1>
+                        <div class="links">
+                            <a href="/">Home<span class="slash">/</span></a> Blog Details
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Details Section S T A R T -->
+    <section class="news-standard section-padding fix">
+        <div class="container">
+            <div class="news-details-area">
+                <div class="row g-5">
+                    <div class="col-12 col-lg-8">
+                        <div class="blog-post-details">
+                            <div class="single-blog-post">
+                                <div class="post-featured-thumb" data-bg-src="<%= blog.image %>">
+                                </div>
+                                <div class="post-content">
+                                    <ul class="post-list d-flex align-items-center wow fadeInUp" data-wow-delay=".2s">
+                                        <li>
+                                            <i class="fa-light fa-user"></i>
+                                            By <%= blog.author %>
+                                        </li>
+                                        <li>
+                                            <i class="fa-light fa-comments"></i>
+                                            <%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                        </li>
+                                        <li>
+                                            <img src="/images/icon/tagIcon.png" alt="icon">
+                                            IT Services
+                                        </li>
+                                    </ul>
+                                    <h3 class="wow fadeInUp" data-wow-delay=".4s"><%= blog.title %></h3>
+                                    <p class="mb-3 wow fadeInUp" data-wow-delay=".6s">
+                                        <%= Math.ceil(blog.content.split(' ').length / 200) %> min read
+                                    </p>
+                                    <p class="mb-3 wow fadeInUp" data-wow-delay=".8s">
+                                        <%- blog.content %>
+                                    </p>
+                                    
+                                </div>
+                            </div>
+                            <% if (blog.metaKeywords) { %>
+                                <div style="
+                                    margin-top: 3rem;
+                                    padding-top: 2rem;
+                                    border-top: 1px solid #e5e7eb;
+                                ">
+                                    <h3 style="
+                                        font-size: 1.25rem;
+                                        font-weight: 600;
+                                        color: #1e293b;
+                                        margin-bottom: 1rem;
+                                    ">
+                                        Tags
+                                    </h3>
+                                    <div style="
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        gap: 0.75rem;
+                                    ">
+                                        <% blog.metaKeywords.split(',').forEach(tag => { %>
+                                            <span style="
+                                                display: inline-flex;
+                                                align-items: center;
+                                                padding: 0.5rem 1.25rem;
+                                                background: #f1f5f9;
+                                                color: #475569;
+                                                border-radius: 2rem;
+                                                font-size: 0.875rem;
+                                                font-weight: 500;
+                                                transition: all 0.3s ease;
+                                                border: 1px solid #e2e8f0;
+                                                cursor: pointer;
+                                            "
+                                            onmouseover="
+                                                this.style.background='#3b82f6';
+                                                this.style.color='white';
+                                                this.style.borderColor='#3b82f6';
+                                                this.style.transform='translateY(-2px)';
+                                            "
+                                            onmouseout="
+                                                this.style.background='#f1f5f9';
+                                                this.style.color='#475569';
+                                                this.style.borderColor='#e2e8f0';
+                                                this.style.transform='translateY(0)';
+                                            ">
+                                                <%= tag.trim() %>
+                                            </span>
+                                        <% }); %>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="main-sidebar">
+                            <!-- Related Blogs in Sidebar -->
+                            <div class="sidebar-blogs-widget wow fadeInUp" data-wow-delay=".2s">
+                                <div class="wid-title">
+                                    <h3>Related Articles</h3>
+                                </div>
+                                <div class="sidebar-blogs">
+                                    <% if (relatedBlogs && relatedBlogs.length > 0) { %>
+                                        <% relatedBlogs.slice(0, 3).forEach(blog => { %>
+                                            <div class="sidebar-blog-card">
+                                                <a href="/blog/<%= blog.slug %>" class="blog-thumb">
+                                                    <img src="<%= blog.image || 'images/blog/blogThumb3_1.jpg' %>" 
+                                                         alt="<%= blog.title %>"
+                                                         onerror="this.onerror=null; this.src='images/blog/blogThumb3_1.jpg';">
+                                                </a>
+                                                <div class="blog-content">
+                                                    <div class="blog-meta">
+                                                        <% if (blog.category) { %>
+                                                            <span class="category"><%= blog.category %></span>
+                                                        <% } %>
+                                                        <span class="date"><i class="far fa-calendar-alt"></i> <%= new Date(blog.createdAt).toLocaleDateString() %></span>
+                                                    </div>
+                                                    <h4 class="blog-title">
+                                                        <a href="/blog/<%= blog.slug %>"><%= blog.title %></a>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <div class="no-blogs">
+                                            <p>No related articles found.</p>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <!-- Existing Pages Widget -->
+                            <div class="single-sidebar-widget wow fadeInUp" data-wow-delay=".4s">
+                                <div class="wid-title">
+                                    <h3>Pages</h3>
+                                </div>
+                                <div class="news-widget-categories">
+                                    <ul>
+                                        <li><a href="/about">About Us</a></li>
+                                        <li><a href="/services">Services</a></li>
+                                        <li><a href="/blog">Blogs</a></li>
+                                        <li><a href="/contact">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this after the blog content and before the sidebar -->
+    
+
+    <style>
+        .related-blogs-section {
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+        }
+
+        .related-blogs-section .section-title h2 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-blogs-section .blog-card {
+            height: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .related-blogs-section .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-blogs-section .blog-card-thumb {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .related-blogs-section .blog-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .related-blogs-section .blog-card:hover .blog-card-thumb img {
+            transform: scale(1.05);
+        }
+
+        .related-blogs-section .blog-card-body {
+            padding: 1.5rem;
+        }
+
+        .related-blogs-section .tag-cloud a {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .related-blogs-section .tag-cloud a:hover {
+            background: #166b48;
+        }
+
+        .related-blogs-section .blog-card-title {
+            margin: 1rem 0;
+            line-height: 1.4;
+        }
+
+        .related-blogs-section .blog-card-title a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .related-blogs-section .blog-card-title a:hover {
+            color: #166b48;
+        }
+
+        .related-blogs-section .blog-card-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .related-blogs-section .btn-wrapper {
+            margin-top: auto;
+        }
+
+        .related-blogs-section .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .related-blogs-section .btn-primary:hover {
+            background: #166b48;
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .related-blogs-section {
+                padding: 2rem 0;
+            }
+
+            .related-blogs-section .blog-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .related-blogs-section .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Sidebar Blog Cards Styles */
+        .main-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-blogs-widget {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-blogs-widget .wid-title {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-blogs-widget .wid-title h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(26, 121, 179, 0.1);
+        }
+
+        .sidebar-blog-card {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sidebar-blog-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-blog-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar-blog-card .blog-thumb {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .sidebar-blog-card .blog-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-blog-card:hover .blog-thumb img {
+            transform: scale(1.05);
+        }
+
+        .sidebar-blog-card .blog-content {
+            padding: 15px;
+        }
+
+        .sidebar-blog-card .blog-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .sidebar-blog-card .blog-meta .category {
+            background: var(--primary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .sidebar-blog-card .blog-meta .date {
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sidebar-blog-card .blog-title {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .sidebar-blog-card .blog-title a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .sidebar-blog-card .blog-title a:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-blog-card .no-blogs {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            .main-sidebar {
+                position: static;
+                margin-top: 40px;
+            }
+
+            .sidebar-blog-card .blog-thumb {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-blogs-widget {
+                padding: 20px;
+            }
+
+            .sidebar-blog-card .blog-thumb {
+                height: 180px;
+            }
+
+            .sidebar-blog-card .blog-content {
+                padding: 12px;
+            }
+
+            .sidebar-blog-card .blog-title {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+    <%- include('footer') %>
+
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Image zoom effect
+        document.querySelectorAll('.blog-content img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.cursor = 'zoom-in';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.cursor = 'zoom-out';
+                }
+            });
+        });
+
+        // Newsletter form handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            // Add your newsletter subscription logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+    <!--<< All JS Plugins >>-->
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="/js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="/js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="/js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="/js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="/js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="/js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="/js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="/js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="/js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

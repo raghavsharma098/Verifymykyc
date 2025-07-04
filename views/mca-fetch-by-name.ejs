@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Fetch By Name</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .result-table {
+            font-size: 0.9rem;
+        }
+        .result-table th {
+            background-color: #f8f9fa;
+        }
+        .pagination {
+            margin-top: 1rem;
+        }
+        .mca-fetch-container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(30, 64, 175, 0.10);
+            max-width: 420px;
+            width: 100%;
+            margin: 48px auto 0 auto;
+            padding: 36px 32px 28px 32px;
+        }
+        .mca-fetch-container h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a7f5a;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .mca-fetch-container .form-label, .mca-fetch-container label {
+            color: #0a2233;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .mca-fetch-container .form-control {
+            border-radius: 8px;
+            border: 1.5px solid #e0e0e0;
+            padding: 12px 15px;
+            font-size: 1.08rem;
+            transition: border-color 0.2s;
+        }
+        .mca-fetch-container .form-control:focus {
+            border-color: #1a7f5a;
+            box-shadow: 0 0 0 0.15rem rgba(26,127,90,0.10);
+        }
+        .mca-fetch-container .form-check-input {
+            margin-right: 8px;
+            accent-color: #1a7f5a;
+        }
+        .mca-fetch-container .btn-primary {
+            background: #1a7f5a;
+            color: #fff;
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .mca-fetch-container .btn-primary:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+        .mca-fetch-container #result {
+            margin-top: 24px;
+        }
+        @media (max-width: 575px) {
+            .mca-fetch-container {
+                border-radius: 12px;
+                box-shadow: 0 4px 16px rgba(30,64,175,0.10);
+                max-width: 98vw;
+                padding: 18px 8px 18px 8px;
+            }
+            .mca-fetch-container h1 {
+                font-size: 1.18rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('sidenav') %>
+    <div class="mca-fetch-container">
+        <h1>MCA Fetch By Name</h1>
+        <div id="tokenError" class="alert alert-danger d-none"></div>
+        <form id="mcaFetchByNameForm">
+            <div class="form-group mb-3">
+                <label for="name">Company Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="consent">Consent</label>
+                <input type="checkbox" class="form-check-input" id="consent" name="consent" value="Y" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Fetch Company Details</button>
+        </form>
+        <div id="result" class="mt-4"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check for token error in URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenError = urlParams.get('error');
+            if (tokenError) {
+                $('#tokenError').removeClass('d-none').text(tokenError);
+            }
+
+            function formatMCAData(data) {
+                if (!data || !data.data) return '<div class="alert alert-warning">No data found.</div>';
+
+                let html = '<div class="table-responsive">';
+                
+                // Handle array of results
+                if (data.data.results && Array.isArray(data.data.results)) {
+                    html += `<div class="alert alert-info mb-3">Found ${data.data.results.length} records</div>`;
+                    
+                    // Create a table for each result
+                    data.data.results.forEach((result, index) => {
+                        html += `<h4 class="mt-4">Record ${index + 1}</h4>`;
+                        html += '<table class="table table-bordered table-striped result-table">';
+                        html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                        
+                        // Format each field in the result
+                        for (const [key, value] of Object.entries(result)) {
+                            if (value !== null && value !== undefined) {
+                                html += `<tr>
+                                    <td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td>
+                                    <td>${value}</td>
+                                </tr>`;
+                            }
+                        }
+                        
+                        html += '</tbody></table>';
+                    });
+                } else {
+                    // Handle single result
+                    html += '<table class="table table-bordered table-striped result-table">';
+                    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                    
+                    // Format each field in the response
+                    for (const [key, value] of Object.entries(data.data)) {
+                        if (value !== null && value !== undefined) {
+                            html += `<tr>
+                                <td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td>
+                                <td>${value}</td>
+                            </tr>`;
+                        }
+                    }
+                    
+                    html += '</tbody></table>';
+                }
+
+                html += '</div>';
+                return html;
+            }
+
+            $('#mcaFetchByNameForm').on('submit', function(e) {
+                e.preventDefault();
+                const name = $('#name').val();
+                const consent = $('#consent').is(':checked') ? 'Y' : 'N';
+
+                // First check if user has enough tokens
+                $.ajax({
+                    url: '/verification/check-tokens',
+                    method: 'POST',
+                    data: { service: 'mca' },
+                    success: function(response) {
+                        if (response.success) {
+                            // If user has tokens, proceed with API request
+                            const options = {
+                                method: 'POST',
+                                url: 'https://api.gridlines.io/mca-api/fetch-by-name',
+                                headers: {
+                                    'X-Auth-Type': 'API-Key',
+                                    'Content-Type': 'application/json',
+                                    Accept: 'application/json',
+                                    'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                                },
+                                data: { 
+                                    name: name, 
+                                    consent: consent
+                                }
+                            };
+
+                            axios.request(options)
+                                .then(function(response) {
+                                    let resultDiv = $('#result');
+                                    if (response.data) {
+                                        resultDiv.html(formatMCAData(response.data));
+                                        
+                                        // Save verification history
+                                        $.ajax({
+                                            url: '/verification/save-mca-history',
+                                            method: 'POST',
+                                            contentType: 'application/json',
+                                            data: JSON.stringify({
+                                                type: 'by-name',
+                                                name: name,
+                                                data: response.data.data,
+                                                verified: true,
+                                                verificationDate: new Date()
+                                            })
+                                        });
+                                    } else {
+                                        resultDiv.html('<div class="alert alert-warning">No data found.</div>');
+                                    }
+                                })
+                                .catch(function(error) {
+                                    $('#result').html('<div class="alert alert-danger">Error fetching company details. Please try again.</div>');
+                                });
+                        } else {
+                            $('#result').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        $('#result').html('<div class="alert alert-danger">Error checking tokens. Please try again.</div>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

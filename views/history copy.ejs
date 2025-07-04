@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification History</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            padding: 2rem 0;
+            margin: -1.5rem -1.5rem 2rem -1.5rem;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .page-header h1 {
+            font-weight: 600;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .verification-card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            background: white;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1.25rem;
+        }
+
+        .card-header h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-header h5 i {
+            color: var(--secondary-color);
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .badge.bg-success {
+            background-color: var(--success-color) !important;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-info {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            border-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+            border-color: #7f8c8d;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin: 0;
+            background-color: #e8f4fd;
+            color: #2980b9;
+        }
+
+        .alert i {
+            color: #3498db;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #bdc3c7;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 1rem 1rem 0 0;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 200px;
+            margin-right: 1rem;
+        }
+
+        .detail-value {
+            color: #555;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <%- include('sidenav') %>
+
+    <div class="continer py-4">
+        <div class="page-header">
+            <div class="container">
+                <h1><i class="fa-solid fa-history me-2"></i>Verification History</h1>
+            </div>
+        </div>
+
+        <!-- GST Verifications -->
+        <div class="verification-card">
+            <div class="card-header">
+                <h5><i class="fa-solid fa-building"></i> GST Verifications</h5>
+            </div>
+            <div class="card-body p-0">
+                <% if (user.documents.gstHistory && user.documents.gstHistory.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>GSTIN</th>
+                                    <th>Business Name</th>
+                                    <th>Status</th>
+                                    <th>Verified On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.documents.gstHistory.forEach(verification => { %>
+                                    <tr>
+                                        <td><strong><%= verification.number %></strong></td>
+                                        <td><%= verification.businessName %></td>
+                                        <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                        <td><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info view-details" 
+                                                        data-type="gst" 
+                                                        data-number="<%= verification.number %>"
+                                                        data-details='<%= JSON.stringify(verification) %>'>
+                                                    <i class="fa-solid fa-eye me-1"></i>View Details
+                                                </button>
+                                                <a href="/verification/download/gst/<%= verification.number %>" 
+                                                   class="btn btn-sm btn-secondary">
+                                                    <i class="fa-solid fa-download me-1"></i>Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="alert">
+                        <i class="fa-solid fa-info-circle me-2"></i>No GST verifications found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- PAN Verifications -->
+        <div class="verification-card">
+            <div class="card-header">
+                <h5><i class="fa-solid fa-id-card"></i> PAN Verifications</h5>
+            </div>
+            <div class="card-body p-0">
+                <% if (user.documents.panHistory && user.documents.panHistory.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>PAN Number</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Verified On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.documents.panHistory.forEach(verification => { %>
+                                    <tr>
+                                        <td><strong><%= verification.number %></strong></td>
+                                        <td><%= verification.name %></td>
+                                        <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                        <td><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info view-details" 
+                                                        data-type="pan" 
+                                                        data-number="<%= verification.number %>"
+                                                        data-details='<%= JSON.stringify(verification) %>'>
+                                                    <i class="fa-solid fa-eye me-1"></i>View Details
+                                                </button>
+                                                <a href="/verification/download/pan/<%= verification.number %>" 
+                                                   class="btn btn-sm btn-secondary">
+                                                    <i class="fa-solid fa-download me-1"></i>Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="alert">
+                        <i class="fa-solid fa-info-circle me-2"></i>No PAN verifications found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Voter ID Verifications -->
+        <div class="verification-card">
+            <div class="card-header">
+                <h5><i class="fa-solid fa-id-card"></i> Voter ID Verifications</h5>
+            </div>
+            <div class="card-body p-0">
+                <% if (user.documents.voterHistory && user.documents.voterHistory.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Voter ID</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Verified On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.documents.voterHistory.forEach(verification => { %>
+                                    <tr>
+                                        <td><strong><%= verification.number %></strong></td>
+                                        <td><%= verification.name %></td>
+                                        <td><%= verification.state %></td>
+                                        <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                        <td><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info view-details" 
+                                                        data-type="voter" 
+                                                        data-number="<%= verification.number %>"
+                                                        data-details='<%= JSON.stringify(verification) %>'>
+                                                    <i class="fa-solid fa-eye me-1"></i>View Details
+                                                </button>
+                                                <a href="/verification/download/voter/<%= verification.number %>" 
+                                                   class="btn btn-sm btn-secondary">
+                                                    <i class="fa-solid fa-download me-1"></i>Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="alert">
+                        <i class="fa-solid fa-info-circle me-2"></i>No Voter ID verifications found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Driving License Verifications -->
+        <div class="verification-card">
+            <div class="card-header">
+                <h5><i class="fa-solid fa-car"></i> Driving License Verifications</h5>
+            </div>
+            <div class="card-body p-0">
+                <% if (user.documents.dlHistory && user.documents.dlHistory.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>DL Number</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Verified On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.documents.dlHistory.forEach(verification => { %>
+                                    <tr>
+                                        <td><strong><%= verification.number %></strong></td>
+                                        <td><%= verification.name %></td>
+                                        <td><%= verification.state %></td>
+                                        <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                        <td><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info view-details" 
+                                                        data-type="dl" 
+                                                        data-number="<%= verification.number %>"
+                                                        data-details='<%= JSON.stringify(verification) %>'>
+                                                    <i class="fa-solid fa-eye me-1"></i>View Details
+                                                </button>
+                                                <a href="/verification/download/dl/<%= verification.number %>" 
+                                                   class="btn btn-sm btn-secondary">
+                                                    <i class="fa-solid fa-download me-1"></i>Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="alert">
+                        <i class="fa-solid fa-info-circle me-2"></i>No Driving License verifications found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Aadhar Verifications -->
+        <div class="verification-card">
+            <div class="card-header">
+                <h5><i class="fa-solid fa-id-card"></i> Aadhar Verifications</h5>
+            </div>
+            <div class="card-body p-0">
+                <% if (user.documents.aadharHistory && user.documents.aadharHistory.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Aadhar Number</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Verified On</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.documents.aadharHistory.forEach(verification => { %>
+                                    <tr>
+                                        <td><strong><%= verification.number || verification.referenceId %></strong></td>
+                                        <td><%= verification.name %></td>
+                                        <td><%= verification.state %></td>
+                                        <td><span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>Verified</span></td>
+                                        <td><%= new Date(verification.verificationDate).toLocaleDateString() %></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-info view-details" 
+                                                        data-type="aadhar" 
+                                                        data-number="<%= verification.number || verification.referenceId %>"
+                                                        data-details='<%= JSON.stringify(verification) %>'>
+                                                    <i class="fa-solid fa-eye me-1"></i>View Details
+                                                </button>
+                                                <a href="/verification/download/aadhar/<%= verification.number || verification.referenceId %>" 
+                                                   class="btn btn-sm btn-secondary">
+                                                    <i class="fa-solid fa-download me-1"></i>Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="alert">
+                        <i class="fa-solid fa-info-circle me-2"></i>No Aadhar verifications found.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detailsContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            const modalTitle = document.querySelector('.modal-title');
+            const detailsContent = document.getElementById('detailsContent');
+
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    const number = this.dataset.number;
+                    const details = JSON.parse(this.dataset.details);
+
+                    // Set modal title
+                    let title = '';
+                    switch(type) {
+                        case 'gst':
+                            title = `GST Verification Details - ${number}`;
+                            break;
+                        case 'pan':
+                            title = `PAN Verification Details - ${number}`;
+                            break;
+                        case 'voter':
+                            title = `Voter ID Verification Details - ${number}`;
+                            break;
+                        case 'dl':
+                            title = `Driving License Verification Details - ${number}`;
+                            break;
+                        case 'aadhar':
+                            title = `Aadhar Verification Details - ${number}`;
+                            break;
+                    }
+                    modalTitle.textContent = title;
+
+                    // Clear previous content
+                    detailsContent.innerHTML = '';
+
+                    // Add details
+                    for (const [key, value] of Object.entries(details)) {
+                        if (key !== 'number' && key !== 'verificationDate') {
+                            const row = document.createElement('div');
+                            row.className = 'detail-row';
+                            
+                            const label = document.createElement('div');
+                            label.className = 'detail-label';
+                            label.textContent = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                            
+                            const val = document.createElement('div');
+                            val.className = 'detail-value';
+                            val.textContent = value;
+                            
+                            row.appendChild(label);
+                            row.appendChild(val);
+                            detailsContent.appendChild(row);
+                        }
+                    }
+
+                    // Show modal
+                    detailsModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

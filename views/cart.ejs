@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --admin-accent: #2563eb;
+            --admin-accent-light: #e0e7ff;
+            --admin-danger: #ef4444;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .services-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .services-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            height: 100%;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background: white;
+            padding: 8px;
+        }
+
+        .service-card .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-card .token-count {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+            background: var(--sidebar-active);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .token-count.no-tokens {
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .token-count.no-tokens::before {
+            content: '⚠️ ';
+        }
+
+        .service-card.disabled {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .service-card.disabled .btn-primary {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .service-card.disabled .token-count {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .service-card .btn-primary {
+            background: var(--primary);
+            border: none;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 22px;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .service-card .btn-primary:hover {
+            background: #166b48;
+            box-shadow: 0 0 0 3px #e0e7ff, 0 4px 16px rgba(37,99,235,0.18);
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .service-card .dropdown-menu {
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            padding: 8px;
+        }
+
+        .service-card .dropdown-item {
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .service-card .dropdown-item:hover {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .service-card .dropdown-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-card .btn-group {
+            width: 100%;
+        }
+
+        .service-card .btn-group .btn {
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .service-card .btn-group .btn::after {
+            margin-left: 8px;
+        }
+
+        .table-row{
+            width: 200px !important;
+        }
+        @media (max-width: 768px) {
+            .main {
+                padding: 20px;
+            }
+            .services-header {
+                padding: 20px;
+            }
+            .services-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+   <%- include('sidenav') %>
+    <main class="main" style="padding-top: 150px;"   >
+        <h2 class="mb-4"></i>Cart</h2>
+        
+        <% if (!user) { %>
+            <div class="alert alert-warning">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>Please <a href="/login">login</a> to view your cart.
+            </div>
+        <% } else if (!cart || cart.items.length === 0) { %>
+            <div class="alert alert-info" style="width: 60%; align-items: center; margin: 0 auto; ">
+                <i class="fa-solid fa-info-circle me-2"></i>Your cart is empty. <a href="/">Browse services</a> to add items.
+            </div>
+        <% } else { %>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive" style="width: 100% !important;">
+                        <table class="table" style="width: 100% !important;">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <!-- <th><i class="fa-solid fa-calculator me-2"></i>Total</th> -->
+                                    <!-- <th><i class="fa-solid fa-gear me-2"></i>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% cart.items.forEach(item => { %>
+                                    <tr >
+                                        
+                                        <td style="display: flex; align-items: center; gap: 10px;"><%= item.service %>
+                                            <button class="btn btn-danger btn-sm flex" onclick="removeItem('<%= item.service %>')">
+                                               </i>Remove
+                                            </button></td>
+                                        
+                                        
+                                        <td>
+                                            <div class="input-group" style="width: 120px;">
+                                                <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity('<%= item.service %>', -1)">
+                                                    <i class="fa-solid fa-minus"></i>
+                                                       
+                                                </button>
+                                                <input type="number" class="form-control form-control-sm text-center" value="<%= item.quantity %>" readonly>
+                                                <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity('<%= item.service %>', 1)">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>₹<%= item.price %></td>
+                                    </tr>
+                                <% }); %>
+                                
+                            </tbody>
+                            <tfoot >
+                                <tr >
+                                    <td colspan="3" class="text-end"><strong>Subtotal: ₹<%= cart.total %></strong></td>
+                                    <td></td>
+                                </tr>
+                                <tr >
+                                    <td colspan="3" class="text-end"><strong>Price + Tax: ₹<%= (cart.total * 0.18).toFixed(2) %></strong></td>
+                                    <td></td>
+                                </tr>
+                                <tr >
+                                    <td colspan="3" class="text-end"><strong>Total Amount: ₹<%= (cart.total * 1.18).toFixed(2) %></strong></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                            
+                        </table>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4 gap-3">
+                        <a href="/" class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-left me-2"></i>Continue Shopping
+                        </a>
+                        <a href="/checkout" class="btn btn-primary" style="background: #0a6b1b !important; ; border-color: var(--primary-blue) !important; color: #fff !important;">
+                            <i class="fa-solid fa-credit-card me-2"></i>Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function updateQuantity(service, change) {
+            try {
+                const response = await fetch('/cart/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        service,
+                        change
+                    })
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error updating cart');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating cart');
+            }
+        }
+
+        async function removeItem(service) {
+            if (!confirm('Are you sure you want to remove this item?')) return;
+
+            try {
+                const response = await fetch('/cart/remove', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ service })
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error removing item');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error removing item');
+            }
+        }
+
+        async function proceedToCheckout() {
+            try {
+                const response = await fetch('/cart/checkout', {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.razorpayOrderId) {
+                        // Initialize Razorpay
+                        const options = {
+                            key: data.razorpayKey,
+                            amount: data.amount,
+                            currency: "INR",
+                            name: "Verification Services",
+                            description: "Payment for verification services",
+                            order_id: data.razorpayOrderId,
+                            handler: function (response) {
+                                // Handle successful payment
+                                fetch('/cart/payment-success', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        razorpay_payment_id: response.razorpay_payment_id,
+                                        razorpay_order_id: response.razorpay_order_id,
+                                        razorpay_signature: response.razorpay_signature
+                                    })
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        alert('Payment successful! Your tokens have been updated.');
+                                        window.location.href = '/dashboard';
+                                    } else {
+                                        alert('Error updating tokens. Please contact support.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('Error processing payment. Please contact support.');
+                                });
+                            },
+                            prefill: {
+                                name: "<%= user.name %>",
+                                email: "<%= user.email %>",
+                                contact: "<%= user.phone %>"
+                            },
+                            theme: {
+                                color: "#3399cc"
+                            }
+                        };
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    }
+                } else {
+                    alert('Error proceeding to checkout');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error proceeding to checkout');
+            }
+        }
+    </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html> 

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Verification Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 12px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 32px 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            padding: 0 24px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar .section-title {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin: 18px 0 8px 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 0 12px;
+        }
+
+        .sidebar a.active {
+            background: var(--sidebar-active);
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar i {
+            font-size: 1.2rem;
+            color: var(--sidebar-icon);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+        }
+
+        .page-header {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .info-card {
+            background: #e6f4ea;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            background: var(--card-bg);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-text {
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #166b48;
+            border-color: #166b48;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 40px;
+            }
+            .sidebar {
+                width: 80px;
+                padding: 32px 0;
+            }
+            .sidebar .logo {
+                font-size: 1.2rem;
+                padding: 0 12px;
+            }
+            .sidebar a span, .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 12px;
+                justify-content: center;
+            }
+            .sidebar a i {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 12px;
+            }
+            .sidebar .logo {
+                margin-bottom: 0;
+            }
+            .sidebar nav {
+                display: flex;
+                gap: 12px;
+            }
+            .sidebar ul {
+                display: flex;
+                gap: 8px;
+            }
+            .sidebar li {
+                margin-bottom: 0;
+            }
+            .sidebar .sidebar-section {
+                margin-bottom: 0;
+            }
+            .sidebar .section-title {
+                display: none;
+            }
+            .sidebar a {
+                padding: 8px 16px;
+                white-space: nowrap;
+            }
+            .main {
+                padding: 18px;
+            }
+            .page-header {
+                padding: 16px;
+            }
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+        <main class="main">
+            <div class="page-header">
+                <h1>Bank Verification Services</h1>
+                <p class="subtitle">Choose from our range of bank account verification methods</p>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> About Bank Verification</h3>
+                <p>Our bank verification services provide multiple methods to verify bank account details:</p>
+                <ul>
+                    <li>Standard Verification: Quick and reliable verification using standard banking protocols</li>
+                    <li>Penniless Verification: Cost-effective verification method without actual fund transfer</li>
+                    <li>Hybrid Verification: Comprehensive verification combining multiple methods</li>
+                </ul>
+                <p><strong>Note:</strong> All verification methods require explicit consent and follow strict security protocols.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-university"></i>
+                                Standard Verification
+                            </h5>
+                            <img src="https://tiimg.tistatic.com/fp/1/006/334/background-verification-service-436.jpg" alt="bank-verification" style="width: 100%; height: 190px; object-fit: cover; border-radius: 12px; padding: 10px;">
+                            <p class="card-text">Verify bank account details using our standard verification method for quick and reliable results.</p>
+                            <a href="/bank-verify" class="btn btn-primary">Verify Account</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Penniless Verification
+                            </h5>
+                            <img src="https://cdn.prod.website-files.com/6509f53e6496821672d95223/66717659a26c318a06896dfb_Blog%20Thumbnails%20(28).webp" alt="bank-verification" style="width: 100%; height: 190px; object-fit: cover; border-radius: 12px; padding: 10px;">
+                            <p class="card-text">Verify bank account details using our penniless verification method for cost-effective solutions.</p>
+                            <a href="/bank-verify-penniless" class="btn btn-primary">Verify Account</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-random"></i>
+                                Hybrid Verification
+                            </h5>
+                            <img src="https://media.istockphoto.com/id/1409346938/vector/mobile-registration-profile-verification-login-password-concept-vector-flat-graphic-design.jpg?s=612x612&w=0&k=20&c=8cVc1-mq6ZA26RHbQCma8gaN-TBGD_uGZpxDOeh5gFU=" alt="bank-verification" style="width: 100%; height: 190px; object-fit: cover; border-radius: 12px; padding: 10px;">
+                            <p class="card-text">Verify bank account details using our hybrid verification method for comprehensive results with a standard and penniless verification.</p>
+                            <a href="/bank-verify-hybrid" class="btn btn-primary">Verify Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

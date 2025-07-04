@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Verification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        h1 {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-top: 0.2rem;
+        }
+        .form-check-label {
+            margin-left: 0.5rem;
+            color: #666;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #result {
+            margin-top: 2rem;
+        }
+        .alert {
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bank Account Verification</h1>
+        <div class="form-container">
+            <div id="tokenError" class="alert alert-danger d-none"></div>
+            <form id="bankVerifyForm">
+                <div class="form-group">
+                    <label for="account_number"><i class="fas fa-credit-card me-2"></i>Account Number</label>
+                    <input type="text" class="form-control" id="account_number" name="account_number" required pattern="[0-9]{10,12}" placeholder="Enter account number">
+                </div>
+                <div class="form-group">
+                    <label for="ifsc"><i class="fas fa-university me-2"></i>IFSC Code</label>
+                    <input type="text" class="form-control" id="ifsc" name="ifsc" required pattern="^[A-Z]{4}0[A-Z0-9]{6}$" placeholder="Enter IFSC code">
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="consent" name="consent" value="Y" required>
+                        <label class="form-check-label" for="consent">I consent to verify my bank account details</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check-circle me-2"></i>Verify Account
+                </button>
+            </form>
+            <div id="result" class="mt-4"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenError = urlParams.get('error');
+            if (tokenError) {
+                $('#tokenError').removeClass('d-none').text(tokenError);
+            }
+
+            $('#bankVerifyForm').on('submit', function(e) {
+                e.preventDefault();
+                const account_number = $('#account_number').val();
+                const ifsc = $('#ifsc').val();
+                const consent = $('#consent').is(':checked') ? 'Y' : 'N';
+
+                const options = {
+                    method: 'POST',
+                    url: 'https://api.gridlines.io/bank-api/v2/verify',
+                    headers: {
+                        'X-Auth-Type': 'API-Key',
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                    },
+                    data: {
+                        account_number: account_number,
+                        ifsc: ifsc,
+                        consent: consent
+                    }
+                };
+
+                // Make the API request first
+                axios.request(options)
+                    .then(function(response) {
+                        let resultDiv = $('#result');
+                        if (response.data && response.data.data) {
+                            // Send the verification data to the backend with token deduction
+                            axios.post('/verification/verify-bank', {
+                                account_number: account_number,
+                                ifsc_code: ifsc,
+                                response: response.data.data
+                            })
+                            .then(function(saveResponse) {
+                                if (saveResponse.data.success) {
+                                    resultDiv.html(`
+                                        <div class="alert alert-success">
+                                            Account verification successful!
+                                        </div>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Account Number</th>
+                                                        <td>${account_number}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>IFSC Code</th>
+                                                        <td>${ifsc}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Account Holder Name</th>
+                                                        <td>${response.data.data.bank_account_verification_data.name}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Bank Name</th>
+                                                        <td>State Bank of India</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Status</th>
+                                                        <td><span class="badge bg-success">Verified</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    `);
+                                    
+                                    if (saveResponse.data.remainingTokens !== undefined) {
+                                        localStorage.setItem('lastTokenUpdate', Date.now());
+                                    }
+                                } else {
+                                    resultDiv.html(`<div class="alert alert-danger">${saveResponse.data.message}</div>`);
+                                }
+                            })
+                            .catch(function(error) {
+                                console.error('Error saving verification:', error.response ? error.response.data : error);
+                                resultDiv.html(`<div class="alert alert-danger">Failed to save verification data: ${error.response ? error.response.data.message : error.message}</div>`);
+                            });
+                        } else {
+                            resultDiv.html('<div class="alert alert-warning">No data found.</div>');
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error verifying account:', error.response ? error.response.data : error);
+                        let errorMessage = 'An error occurred. Please try again.';
+                        if (error.response && error.response.data && error.response.data.message) {
+                            errorMessage = error.response.data.message;
+                        }
+                        $('#result').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    });
+            });
+        });
+    </script>
+</body>
+</html> 

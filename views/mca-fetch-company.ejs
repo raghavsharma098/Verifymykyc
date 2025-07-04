@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Fetch Company | VerifyMyKYC</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: #f7f8fa;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #222;
+        }
+        .info-section {
+            background: #f9fafb;
+            border-radius: 14px;
+            box-shadow: 0 8px 32px rgba(16,30,54,0.13);
+            padding: 28px 32px 20px 32px;
+            margin-bottom: 32px;
+            border: 1px solid #e0e0e0;
+        }
+        .info-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a7f5a;
+            margin-bottom: 10px;
+        }
+        .info-section p {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        .card-form {
+            background: linear-gradient(135deg, #e6f4ea 0%, #f9fafb 100%);
+            border-radius: 14px;
+            box-shadow: 0 8px 32px rgba(16,30,54,0.13);
+            padding: 40px 38px 32px 38px;
+            border: 1px solid #e0e0e0;
+            max-width: 600px;
+            margin: 0 auto 32px auto;
+            position: relative;
+        }
+        .card-form .form-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .card-form .form-header i {
+            font-size: 1.6rem;
+            color: #1a7f5a;
+        }
+        .card-form .form-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a7f5a;
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #222;
+            margin-bottom: 6px;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 1rem;
+            padding: 10px 14px;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: #1a7f5a;
+            box-shadow: 0 0 0 2px #e0e7ff;
+        }
+        .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            margin-top: 0.2em;
+        }
+        .form-check-label {
+            margin-left: 8px;
+            color: #222;
+        }
+        .btn-primary {
+            background: #1a7f5a;
+            border: none;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 14px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+            margin-top: 10px;
+        }
+        .btn-primary:hover {
+            background: #166b48;
+            box-shadow: 0 0 0 3px #e0e7ff, 0 4px 16px rgba(37,99,235,0.18);
+            transform: translateY(-2px) scale(1.04);
+        }
+        #result {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .result-table {
+            font-size: 0.97rem;
+        }
+        .result-table th {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 900px) {
+            .card-form {
+                padding: 24px 8px 18px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('sidenav') %>
+    <div class="container py-5">
+        <div class="info-section mb-4" style="width: 600px; margin: 0 auto;">
+            <h2><i class="fa-solid fa-building-columns me-2"></i>MCA Fetch Company</h2>
+            <p>
+                Instantly fetch company details from the Ministry of Corporate Affairs (MCA) database. Enter the company ID and provide consent to retrieve official company information securely.
+            </p>
+        </div>
+        <div class="card-form mb-4">
+            <div class="form-header">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <h3>Fetch Company Details</h3>
+            </div>
+        <div id="tokenError" class="alert alert-danger d-none"></div>
+        <form id="mcaFetchCompanyForm">
+                <div class="form-group">
+                    <label for="company_id" class="form-label">Company ID</label>
+                <input type="text" class="form-control" id="company_id" name="company_id" required>
+            </div>
+                <div class="form-group d-flex align-items-center">
+                <input type="checkbox" class="form-check-input" id="consent" name="consent" value="Y" required>
+                    <label class="form-check-label" for="consent">I consent to fetch company details</label>
+            </div>
+                <button type="submit" class="btn btn-primary w-100 mt-2">Fetch Company Details</button>
+        </form>
+        </div>
+        <div id="result" class="mt-4"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check for token error in URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenError = urlParams.get('error');
+            if (tokenError) {
+                $('#tokenError').removeClass('d-none').text(tokenError);
+            }
+            function formatMCAData(data) {
+                if (!data || !data.data) return '<div class="alert alert-warning">No data found.</div>';
+                let html = '<div class="table-responsive">';
+                if (data.data.results && Array.isArray(data.data.results)) {
+                    html += `<div class="alert alert-info mb-3">Found ${data.data.results.length} records</div>`;
+                    data.data.results.forEach((result, index) => {
+                        html += `<h4 class="mt-4">Record ${index + 1}</h4>`;
+                        html += '<table class="table table-bordered table-striped result-table">';
+                        html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                        for (const [key, value] of Object.entries(result)) {
+                            if (value !== null && value !== undefined) {
+                                html += `<tr><td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td><td>${value}</td></tr>`;
+                            }
+                        }
+                        html += '</tbody></table>';
+                    });
+                } else {
+                    html += '<table class="table table-bordered table-striped result-table">';
+                    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+                    for (const [key, value] of Object.entries(data.data)) {
+                        if (value !== null && value !== undefined) {
+                            html += `<tr><td><strong>${key.replace(/([A-Z])/g, ' $1').trim()}</strong></td><td>${value}</td></tr>`;
+                        }
+                    }
+                    html += '</tbody></table>';
+                }
+                html += '</div>';
+                return html;
+            }
+            $('#mcaFetchCompanyForm').on('submit', function(e) {
+                e.preventDefault();
+                const company_id = $('#company_id').val();
+                const consent = $('#consent').is(':checked') ? 'Y' : 'N';
+
+                // First check if user has enough tokens
+                $.ajax({
+                    url: '/verification/check-tokens',
+                    method: 'POST',
+                    data: { service: 'mca' },
+                    success: function(response) {
+                        if (response.success) {
+                            // If user has tokens, proceed with API request
+                            const options = {
+                                method: 'POST',
+                                url: 'https://api.gridlines.io/mca-api/fetch-company',
+                                headers: {
+                                    'X-Auth-Type': 'API-Key',
+                                    'Content-Type': 'application/json',
+                                    Accept: 'application/json',
+                                    'X-API-Key': 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28'
+                                },
+                                data: { 
+                                    company_id: company_id, 
+                                    consent: consent,
+                                    page: 1,
+                                    limit: 10
+                                }
+                            };
+
+                            axios.request(options)
+                                .then(function(response) {
+                                    let resultDiv = $('#result');
+                                    if (response.data) {
+                                        resultDiv.html(formatMCAData(response.data));
+                                        
+                                        // Save verification history
+                                        $.ajax({
+                                            url: '/verification/save-mca-history',
+                                            method: 'POST',
+                                            contentType: 'application/json',
+                                            data: JSON.stringify({
+                                                type: 'company',
+                                                companyId: company_id,
+                                                data: response.data.data || { message: response.data.message, code: response.data.code },
+                                                verified: response.data.code !== 1007,
+                                                verificationDate: new Date()
+                                            }),
+                                            success: function(saveResponse) {
+                                                if (!saveResponse.success) {
+                                                    console.error('Error saving verification history:', saveResponse.message);
+                                                }
+                                            },
+                                            error: function(saveError) {
+                                                console.error('Error saving verification history:', saveError);
+                                            }
+                                        });
+                                    } else {
+                                        resultDiv.html('<div class="alert alert-warning">No data found.</div>');
+                                    }
+                                })
+                                .catch(function(error) {
+                                    let errorMessage = 'An error occurred while fetching company details.';
+                                    if (error.response) {
+                                        // The request was made and the server responded with a status code
+                                        // that falls out of the range of 2xx
+                                        if (error.response.data && error.response.data.message) {
+                                            errorMessage = error.response.data.message;
+                                        } else if (error.response.status === 400) {
+                                            errorMessage = 'Invalid company ID format or missing required fields.';
+                                        } else if (error.response.status === 500) {
+                                            errorMessage = 'Server error occurred. Please try again later.';
+                                        }
+                                    } else if (error.request) {
+                                        // The request was made but no response was received
+                                        errorMessage = 'No response received from server. Please check your internet connection.';
+                                    }
+                                    
+                                    $('#result').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                                    console.error('API Error:', error);
+
+                                    // Save failed verification attempt
+                                    $.ajax({
+                                        url: '/verification/save-mca-history',
+                                        method: 'POST',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            type: 'company',
+                                            companyId: company_id,
+                                            data: { 
+                                                error: errorMessage,
+                                                status: error.response ? error.response.status : 'no-response'
+                                            },
+                                            verified: false,
+                                            verificationDate: new Date()
+                                        }),
+                                        success: function(saveResponse) {
+                                            if (!saveResponse.success) {
+                                                console.error('Error saving verification history:', saveResponse.message);
+                                            }
+                                        },
+                                        error: function(saveError) {
+                                            console.error('Error saving verification history:', saveError);
+                                        }
+                                    });
+                                });
+                        } else {
+                            $('#result').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function() {
+                        $('#result').html('<div class="alert alert-danger">Error checking tokens. Please try again.</div>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

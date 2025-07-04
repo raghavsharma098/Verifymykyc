@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!--<< Header Area >>-->
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Gramentheme">
+    <link rel="icon" href="/favicon.png">
+    <!-- ======== Page title ============ -->
+    <title>VerifyMyKYC - Blog</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href="images/favicon.png">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="css/animate.css">
+    <!--<< Magnific popup.css >>-->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="css/meanmenu.css">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <!--<< NiceSelect.css >>-->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .breadcumb-container-wrapper{
+            z-index: 0 !important;
+        }
+
+        /* Blog Card Styles */
+        .blog-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-color: rgba(26, 121, 179, 0.1);
+        }
+
+        /* Image Container */
+        .blog-card-thumb {
+            position: relative;
+            width: 100%;
+            height: 250px; /* Fixed height for all images */
+            overflow: hidden;
+            background: #f5f5f5; /* Placeholder background */
+        }
+
+        .blog-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio while covering container */
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-thumb img {
+            transform: scale(1.05);
+        }
+
+        /* Card Body */
+        .blog-card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 250px; /* Reduced height since we removed calendar */
+            background: #fff;
+        }
+
+        /* Title Styles */
+        .blog-title {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            margin: 15px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
+            font-weight: 700;
+        }
+
+        .blog-title a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .blog-title a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Meta Tags */
+        .tag-cloud {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #666;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .meta:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .meta .icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+        }
+
+        /* Read More Button */
+        .btn-wrapper {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-wrapper a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 25px;
+            background: rgba(26, 121, 179, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-wrapper a:hover {
+            background: var(--primary-blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-wrapper a svg {
+            transition: transform 0.3s ease;
+            width: 20px;
+            height: 20px;
+        }
+        .btn-wrapper a:hover{
+            color: white;
+        }
+
+        .btn-wrapper a:hover svg {
+            transform: translateX(5px);
+        }
+
+        .btn-wrapper a:hover svg path {
+            fill: #fff;
+        }
+
+        /* Grid Layout */
+        .blog-card-wrap {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .blog-card-wrap {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+
+            .blog-card-thumb {
+                height: 200px;
+            }
+
+            .blog-card-body {
+                min-height: 220px;
+                padding: 20px;
+            }
+
+            .blog-title {
+                font-size: 1.3rem;
+            }
+
+            .btn-wrapper a {
+                padding: 10px 20px;
+                font-size: 1rem;
+                color: black !important;
+            }
+            .btn-a{
+                color: black !important;
+            }
+            .btn-a:hover{
+                color: white !important;
+            }
+
+            .meta {
+                font-size: 0.9rem;
+                padding: 5px 10px;
+            }
+        }
+
+        /* Placeholder Image */
+        .blog-card-thumb::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f3f3f3 25%, #e6e6e6 25%, #e6e6e6 50%, #f3f3f3 50%, #f3f3f3 75%, #e6e6e6 75%);
+            background-size: 20px 20px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .blog-card-thumb img {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Mouse Cursor Start -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+
+    <!-- Back To Top Start -->
+    <button id="back-top" class="back-to-top">
+        <i class="fa-solid fa-chevron-up" style="color: white !important;"></i>
+    </button>
+    <%- include('navbar') %>
+    <!-- Breadcumb Section S T A R T -->
+    <div class="breadcumb-section" style="height: 100% !important; border-bottom: 5px solid #7444FD" >
+        <div class="breadcumb-container-wrapper" style="height: 300px !important;" data-bg-src="images/bg/breadcumgBg.png">
+            <div class="container" style="height: 300px !important;">
+                <div class="shape1"><img src="images/shape/breadCumbShape1_1.png" alt="shape"></div>
+                <div class="shape2"><img src="images/shape/breadCumbShape1_2.png" alt="shape"></div>
+                <div class="breadcumb-wrapper">
+                    <div class="page-heading">
+                        <h1>Blog</h1>
+                        <div class="links">
+                            <a href="/">Home<span class="slash">/</span></a> Blog
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Grid Section S T A R T -->
+    <section class="blog-area section-padding fix">
+        <div class="container">
+            <div class="blog-card-wrap style1 mb-30">
+                <% if (blogs && blogs.length > 0) { %>
+                    <% blogs.forEach(blog => { %>
+                        <div class="blog-card style2 wow fadeInUp" data-wow-delay=".2s">
+                            <a href="/blog/<%= blog.slug %>" class="btn-a" style="color:#000;">
+                            <div class="blog-card-thumb style1">
+                                <img src="<%= blog.image || '/blogg.png' %>" 
+                                     alt="<%= blog.title %>"
+                                     onerror="this.onerror=null; this.src='/blogg.png';">
+                            </div>
+                        </a>    
+                            <div class="blog-card-body">
+                                <div class="tag-cloud">
+                                   
+                                    <div class="meta">
+                                        <span class="icon"><img src="images/icon/userIcon.svg" alt="icon"></span>
+                                        <span class="text">By <%= blog.author ? blog.author.name : 'Admin' %></span>
+                                    </div>
+                                  
+                                    <div class="meta">
+                                        <span class="icon"><img src="images/icon/tagIcon.svg" alt="icon"></span>
+                                        <span class="text"><%= blog.category %></span>
+                                    </div>
+                                </div>
+                                <h3 class="blog-title style1">
+                                    <a href="/blog/<%= blog.slug %>"><%= blog.title %></a>
+                                </h3>
+                                <div class="btn-a">
+                                    <a href="/blog/<%= blog.slug %>" class="btn-a" style="color:#000;">
+                                        Read Article
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 10" fill="none">
+                                            <path d="M11.6118 0.612305L10.8991 1.32503L14.0706 4.49652H0V5.50447H14.0706L10.8991 8.67592L11.6118 9.38865L16 5.00046L11.6118 0.612305Z" fill="currentColor"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="text-center">
+                        <p>No blog posts available yet.</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <%- include('footer') %>
+
+
+
+
+    <!--<< All JS Plugins >>-->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="js/jquery.waypoints.js"></script>
+    <!--<< Counterup Js >>-->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!--<< Viewport Js >>-->
+    <script src="js/viewport.jquery.js"></script>
+    <!--<< Tilt Js >>-->
+    <script src="js/tilt.min.js"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="js/jquery.meanmenu.min.js"></script>
+    <!--<< Magnific popup Js >>-->
+    <script src="js/magnific-popup.min.js"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="js/wow.min.js"></script>
+    <!--<< NIce Select Js >>-->
+    <script src="js/nice-select.min.js"></script>
+    <!--<< Main.js >>-->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

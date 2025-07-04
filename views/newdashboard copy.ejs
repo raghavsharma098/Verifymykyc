@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification API Dashboard</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <style>
+        body {
+            background: #fff;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+        .dashboard-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+        .api-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(16,30,54,0.04);
+        }
+        .api-card img {
+            width: 80px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-right: 24px;
+            background: #f3f4f6;
+        }
+        .api-card-content {
+            flex: 1;
+        }
+        .api-card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .api-card-desc {
+            color: #4b5563;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .api-card-doc {
+            color: #2563eb;
+            font-size: 0.98rem;
+            text-decoration: underline;
+            margin-bottom: 0;
+            display: inline-block;
+        }
+        .api-card-action {
+            display: flex;
+            align-items: center;
+            margin-left: 24px;
+        }
+        .btn-activated, .btn-subscribe {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 22px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .btn-activated {
+            background: #e6f6f0;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+        .btn-subscribe {
+            background: #155e75;
+            color: #fff;
+            border: 1px solid #155e75;
+        }
+        .btn-activated i, .btn-subscribe i {
+            margin-right: 8px;
+        }
+        @media (max-width: 700px) {
+            .api-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .api-card-action {
+                margin-left: 0;
+                margin-top: 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-title">KYC Verification API</div>
+        <!-- Aadhaar Verification API (Activated) -->
+        <div class="api-card">
+            <img src="/images/kyc-aadhaar.png" alt="Aadhaar API">
+            <div class="api-card-content">
+                <div class="api-card-title">Aadhaar Verification API (OTP)</div>
+                <div class="api-card-desc">Authenticate Aadhaar via OTP and access user information such as full name, date of birth, address, gender and more.</div>
+                <a class="api-card-doc" href="#" target="_blank">Documentation <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.9em;"></i></a>
+            </div>
+            <div class="api-card-action">
+                <button class="btn-activated"><i class="fa-solid fa-gear"></i> Activated</button>
+            </div>
+        </div>
+        <!-- Pan Card Verification API -->
+        <div class="api-card">
+            <img src="/images/kyc-pan.png" alt="PAN API">
+            <div class="api-card-content">
+                <div class="api-card-title">Pan Card Verification API</div>
+                <div class="api-card-desc">Fetch real-time PAN details like full name and status for seamless KYC and onboarding.</div>
+                <a class="api-card-doc" href="#" target="_blank">Documentation <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.9em;"></i></a>
+            </div>
+            <div class="api-card-action">
+                <button class="btn-subscribe"><i class="fa-solid fa-lock"></i> Subscribe</button>
+            </div>
+        </div>
+        <!-- Driving License Verification API -->
+        <div class="api-card">
+            <img src="/images/kyc-dl.png" alt="DL API">
+            <div class="api-card-content">
+                <div class="api-card-title">Driving License Verification API</div>
+                <div class="api-card-desc">Instantly verify a driving license and fetch details like holder's name, DOB, state, validity etc.</div>
+                <a class="api-card-doc" href="#" target="_blank">Documentation <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.9em;"></i></a>
+            </div>
+            <div class="api-card-action">
+                <button class="btn-subscribe"><i class="fa-solid fa-lock"></i> Subscribe</button>
+            </div>
+        </div>
+        <!-- Voter Id Verification API -->
+        <div class="api-card">
+            <img src="/images/kyc-voter.png" alt="Voter API">
+            <div class="api-card-content">
+                <div class="api-card-title">Voter Id Verification API</div>
+                <div class="api-card-desc">Confirm the user's identity by verifying voter ID details with ease.</div>
+                <a class="api-card-doc" href="#" target="_blank">Documentation <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.9em;"></i></a>
+            </div>
+            <div class="api-card-action">
+                <button class="btn-subscribe"><i class="fa-solid fa-lock"></i> Subscribe</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

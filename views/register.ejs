@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Verification Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png">
+    <style>
+        :root {
+            --primary-green: #10c610;
+            --primary-blue: #1a79b3;
+            --primary-orange: #ff5c16;
+            --primary-dark: #0a2233;
+            --primary-light: #f6f9fa;
+        }
+        
+        body {
+            background: var(--primary-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .register-section {
+            padding: 80px 0;
+            flex: 1;
+        }
+
+        .register-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .register-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
+        }
+
+        .register-header {
+            background: var(--primary-light);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .register-header h2 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .register-body {
+            padding: 40px;
+        }
+
+        .register-tabs {
+            margin-bottom: 30px;
+            border: none;
+        }
+
+        .register-tabs .nav-link {
+            border: none;
+            padding: 12px 25px;
+            color: #666;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .register-tabs .nav-link.active {
+            color: var(--primary-blue);
+            background: none;
+        }
+
+        .register-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-green);
+            border-radius: 3px;
+        }
+
+        .form-control {
+            border: 2px solid #eee;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(26, 121, 179, 0.15);
+        }
+
+        .form-label {
+            color: var(--primary-dark);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .btn-register {
+            background: var(--primary-green);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-register:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+            color: white !important;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--primary-green);
+        }
+
+        .otp-form {
+            display: none;
+        }
+
+        .otp-form.active {
+            display: block;
+        }
+
+        .resend-otp {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .resend-otp:hover {
+            color: var(--primary-green);
+        }
+
+        .alert {
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .alert-success {
+            background: rgba(16, 198, 16, 0.1);
+            color: var(--primary-green);
+        }
+
+        .alert-danger {
+            background: rgba(255, 92, 22, 0.1);
+            color: var(--primary-orange);
+        }
+
+        .btn-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            color: var(--primary-green);
+        }
+
+        @media (max-width: 991px) {
+            .register-section {
+                padding: 40px 0;
+            }
+            .register-card {
+                border-radius: 16px;
+            }
+            .register-body {
+                padding: 24px;
+            }
+        }
+        @media (max-width: 575px) {
+            .register-section {
+                padding: 18px 0;
+            }
+            .register-card {
+                border-radius: 10px;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            }
+            .register-header {
+                padding: 18px 8px;
+            }
+            .register-header h2 {
+                font-size: 1.4rem;
+            }
+            .register-body {
+                padding: 12px 6px;
+            }
+            .register-tabs .nav-link {
+                padding: 10px 10px;
+                font-size: 0.98rem;
+            }
+            .form-label {
+                font-size: 0.98rem;
+            }
+            .form-control {
+                padding: 10px 10px;
+                font-size: 1rem;
+            }
+            .btn-register {
+                padding: 10px 0;
+                font-size: 1.05rem;
+            }
+            .login-link {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="register-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="register-card">
+                        <div class="register-header">
+                            <h2>Create Account</h2>
+                            <p class="text-muted mb-0">Join us to get started with verification services</p>
+                        </div>
+                        <div class="register-body">
+                            <ul class="nav nav-tabs register-tabs" id="registerTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-register" type="button" role="tab">
+                                        <i class="fas fa-envelope me-2"></i>Email Registration
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="phone-tab" data-bs-toggle="tab" data-bs-target="#phone-register" type="button" role="tab">
+                                        <i class="fas fa-phone me-2"></i>Phone Registration
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="registerTabContent">
+                                <!-- Email Registration Form -->
+                                <div class="tab-pane fade show active" id="email-register" role="tabpanel">
+                                    <form id="emailRegisterForm">
+                                        <div class="mb-4">
+                                            <label for="name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-register">
+                                            <i class="fas fa-user-plus me-2"></i>Register with Email
+                                        </button>
+                                    </form>
+
+                                    <!-- Email OTP Verification Form -->
+                                    <form id="emailOtpForm" class="otp-form">
+                                        <div class="mb-4">
+                                            <label for="emailOtp" class="form-label">Enter Email OTP</label>
+                                            <input type="text" class="form-control" id="emailOtp" name="emailOtp" placeholder="Enter 6-digit OTP" required maxlength="6">
+                                            <small class="text-muted">Please enter the 6-digit OTP sent to your email</small>
+                                        </div>
+                                        <button type="submit" class="btn btn-register">
+                                            <i class="fas fa-check me-2"></i>Verify Email OTP
+                                        </button>
+                                        <div class="text-center mt-3">
+                                            <a class="resend-otp" onclick="resendEmailOTP()">
+                                                <i class="fas fa-redo me-2"></i>Resend Email OTP
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Phone Registration Form -->
+                                <div class="tab-pane fade" id="phone-register" role="tabpanel">
+                                    <form id="phoneRegisterForm">
+                                        <div class="mb-4">
+                                            <label for="phoneName" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="phoneName" name="name" placeholder="Enter your full name" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="phonePassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="phonePassword" name="password" placeholder="Create a password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-register">
+                                            <i class="fas fa-user-plus me-2"></i>Register with Phone
+                                        </button>
+                                    </form>
+
+                                    <!-- Phone OTP Verification Form -->
+                                    <form id="phoneOtpForm" class="otp-form">
+                                        <div class="mb-4">
+                                            <label for="phoneOtp" class="form-label">Enter Phone OTP</label>
+                                            <input type="text" class="form-control" id="phoneOtp" name="phoneOtp" placeholder="Enter 6-digit OTP" required maxlength="6">
+                                            <small class="text-muted">Please enter the 6-digit OTP sent to your phone</small>
+                                        </div>
+                                        <button type="submit" class="btn btn-register">
+                                            <i class="fas fa-check me-2"></i>Verify Phone OTP
+                                        </button>
+                                        <div class="text-center mt-3">
+                                            <a class="resend-otp" onclick="resendPhoneOTP()">
+                                                <i class="fas fa-redo me-2"></i>Resend Phone OTP
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="login-link">
+                                Already have an account? <a href="/login">Sign In</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let userData = {};
+
+        // Add validation functions
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePhone(phone) {
+            const phoneRegex = /^\d{10}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function showError(message) {
+            alert(message);
+        }
+
+        // Email Registration Form Handler
+        document.getElementById('emailRegisterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const password = formData.get('password');
+
+            // Store user data for later use
+            userData = { name, email, password };
+
+            // Client-side validation
+            if (!name || !email || !password) {
+                showError('All fields are required');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ...userData, registrationType: 'email' })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('emailRegisterForm').style.display = 'none';
+                    document.getElementById('emailOtpForm').style.display = 'block';
+                    showError(data.message);
+                } else {
+                    showError(data.message || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('An error occurred during registration. Please try again.');
+            }
+        });
+
+        // Phone Registration Form Handler
+        document.getElementById('phoneRegisterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const password = formData.get('password');
+
+            // Store user data for later use
+            userData = { name, phone, password };
+
+            // Client-side validation
+            if (!name || !phone || !password) {
+                showError('All fields are required');
+                return;
+            }
+
+            if (!validatePhone(phone)) {
+                showError('Phone number must be 10 digits');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ...userData, registrationType: 'phone' })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('phoneRegisterForm').style.display = 'none';
+                    document.getElementById('phoneOtpForm').style.display = 'block';
+                    showError(data.message);
+                } else {
+                    showError(data.message || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('An error occurred during registration. Please try again.');
+            }
+        });
+
+        // Email OTP Verification Handler
+        document.getElementById('emailOtpForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const emailOtp = document.getElementById('emailOtp').value;
+
+            try {
+                const response = await fetch('/auth/verify-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        otp: emailOtp
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error verifying email OTP. Please try again.');
+            }
+        });
+
+        // Phone OTP Verification Handler
+        document.getElementById('phoneOtpForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phoneOtp = document.getElementById('phoneOtp').value;
+
+            try {
+                const response = await fetch('/auth/verify-phone', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone: userData.phone,
+                        otp: phoneOtp
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error verifying phone OTP. Please try again.');
+            }
+        });
+
+        async function resendEmailOTP() {
+            try {
+                const response = await fetch('/auth/resend-email-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: userData.email
+                    })
+                });
+
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error resending email OTP. Please try again.');
+            }
+        }
+
+        async function resendPhoneOTP() {
+            try {
+                const response = await fetch('/auth/resend-phone-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone: userData.phone
+                    })
+                });
+
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error resending phone OTP. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html> 

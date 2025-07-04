@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VerifyMyKYC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #f7f8fa;
+            --sidebar-active: #e6f4ea;
+            --sidebar-text: #222;
+            --sidebar-icon: #4caf50;
+            --main-bg: #fff;
+            --border: #e0e0e0;
+            --primary: #1a7f5a;
+            --muted: #888;
+            --card-bg: #f9fafb;
+            --radius: 16px;
+            --card-shadow: 0 6px 24px rgba(16,30,54,0.10);
+            --transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main {
+            flex: 1;
+            background: var(--main-bg);
+            padding: 36px 40px 36px 300px;
+            min-width: 0;
+            margin-top: 80px;
+        }
+
+        .welcome-section {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 36px;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #22c55e);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 127, 90, 0.3);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, var(--primary), #22c55e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 127, 90, 0.4);
+            color: white;
+        }
+
+        .feature-btn i {
+            font-size: 1.1rem;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .menu-button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .menu-button:hover {
+            background: #156b4a;
+            transform: translateY(-1px);
+        }
+
+        .menu-button i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1100px) {
+            .main {
+                padding-left: 100px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .main {
+                padding: 18px;
+                margin-top: 60px;
+            }
+            .welcome-section {
+                padding: 24px;
+            }
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+            .welcome-section p {
+                font-size: 1rem;
+            }
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <%- include('sidenav') %>
+        
+        <main class="main">
+            <div class="welcome-section">
+                <h1>Welcome, <%= user.name %>!</h1>
+                <p>Access all verification services in one place</p>
+            </div>
+
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h3>Buy Tokens</h3>
+                    <p>Purchase verification tokens to access our comprehensive KYC and verification services. Get instant access to multiple verification APIs.</p>
+                    <a href="/dashboard/service" class="feature-btn">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        Buy Tokens
+                    </a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                    <h3>Verification Services</h3>
+                    <p>Access our wide range of verification services including Identity, Business, Employment, Asset, Income, and Vaccination verification.</p>
+                    <a href="/dashboard/services" class="feature-btn">
+                        <i class="fa-solid fa-search"></i>
+                        Start Verification
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Verification Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detailsContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="downloadPdf">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to update token counts
+        function updateTokenCounts(tokens) {
+            Object.entries(tokens).forEach(([service, count]) => {
+                const elements = document.querySelectorAll(`.token-count[data-service="${service}"]`);
+                elements.forEach(element => {
+                    element.textContent = count;
+                });
+            });
+        }
+
+        // Listen for token updates
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'lastTokenUpdate') {
+                fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateTokenCounts(data.tokens);
+                    }
+                })
+                .catch(error => console.error('Error updating tokens:', error));
+            }
+        });
+
+        // Check for token updates every 2 seconds
+        setInterval(async function() {
+            try {
+                const response = await fetch('/dashboard/update-tokens', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateTokenCounts(data.tokens);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking token updates:', error);
+            }
+        }, 2000);
+
+        // Add event listener for DL verification response
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'dlVerificationComplete') {
+                // Update DL token count
+                const dlTokenCount = event.data.remainingTokens;
+                updateTokenCounts({ dl: dlTokenCount });
+            }
+        });
+
+        // Handle view details button clicks
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', async function() {
+                const type = this.dataset.type;
+                const number = this.dataset.number;
+                
+                try {
+                    const response = await fetch(`/verification/details/${type}/${number}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const detailsContent = document.getElementById('detailsContent');
+                        detailsContent.innerHTML = formatDetails(data.details, type);
+                        
+                        const downloadBtn = document.getElementById('downloadPdf');
+                        downloadBtn.onclick = () => window.location.href = `/download/${type}/${number}`;
+                        
+                        const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        modal.show();
+                    }
+                } catch (error) {
+                    console.error('Error fetching details:', error);
+                }
+            });
+        });
+
+        function formatDetails(details, type) {
+            let html = '<div class="table-responsive"><table class="table">';
+            
+            if (type === 'gst') {
+                html += `
+                    <tr><th>GSTIN</th><td>${details.gstin}</td></tr>
+                    <tr><th>Legal Name</th><td>${details.legalName}</td></tr>
+                    <tr><th>Trade Name</th><td>${details.tradeName}</td></tr>
+                    <tr><th>Registration Date</th><td>${details.registrationDate}</td></tr>
+                    <tr><th>Status</th><td>${details.status}</td></tr>
+                    <tr><th>Business Type</th><td>${details.businessType}</td></tr>
+                    <tr><th>Address</th><td>${details.address}</td></tr>
+                    <tr><th>State</th><td>${details.state}</td></tr>
+                    <tr><th>Pincode</th><td>${details.pincode}</td></tr>
+                `;
+            } else if (type === 'pan') {
+                html += `
+                    <tr><th>PAN Number</th><td>${details.panNumber}</td></tr>
+                    <tr><th>Name</th><td>${details.name}</td></tr>
+                    <tr><th>Status</th><td>${details.status}</td></tr>
+                    <tr><th>Type</th><td>${details.type}</td></tr>
+                `;
+            }
+            
+            html += '</table></div>';
+            return html;
+        }
+    </script>
+</body>
+</html>
+
+<!-- SHARED DAHSBOARD IN PLACE OF SETTINGS -->
