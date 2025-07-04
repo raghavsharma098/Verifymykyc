@@ -6,8 +6,8 @@ const Payment = require('../models/Payment');
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
-    key_id: 't_rzp_tesadhAr7uGRzaZ',
-    key_secret: 'WZsEE5ahNuW9FcgsT7ubw'
+    key_id: '',
+    key_secret: ''
 });
 
 // Middleware to check if user is logged in
@@ -193,7 +193,7 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
         res.json({
             razorpayOrderId: order.id,
             amount: Math.round(total * 100),
-            razorpayKey: 'rzp_test_adhAr7uGRzaZhu'
+            razorpayKey: ''
         });
     } catch (error) {
         console.error('Error creating order:', error);

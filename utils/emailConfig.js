@@ -1,10 +1,12 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'sg2plzcpnl507618.prod.sin2.secureserver.net',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'gamec8821@gmail.com',
-        pass: 'pgaf wxxo semj zzru', // Store password in environment variable in production
+        user: 'verifymykyc@navigantinc.com',
+        pass: 'veri_kyc@#1234'
     }
 });
 
@@ -21,7 +23,7 @@ const sendVerificationEmail = async (email, otp) => {
     try {
         console.log('Preparing to send email to:', email);
         const mailOptions = {
-            from: 'gamec8821@gmail.com',
+            from: 'verifymykyc@navigantinc.com',
             to: email,
             subject: 'Email Verification OTP',
             html: `
@@ -61,7 +63,7 @@ const sendPasswordResetEmail = async (email, resetUrl) => {
     try {
         console.log('Preparing to send password reset email to:', email);
         const mailOptions = {
-            from: 'gamec8821@gmail.com',
+            from: 'verifymykyc@navigantinc.com',
             to: email,
             subject: 'Password Reset Request',
             html: `
@@ -101,8 +103,8 @@ const sendContactFormEmail = async (name, email, message) => {
     try {
         console.log('Preparing to send contact form email from:', email);
         const mailOptions = {
-            from: 'gamec8821@gmail.com',
-            to: 'gamec8821@gmail.com',
+            from: 'verifymykyc@navigantinc.com',
+            to: 'verifymykyc@navigantinc.com',
             subject: 'New Contact Form Submission',
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
