@@ -14,7 +14,7 @@ const fs = require('fs');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://gavenue110907:%4099Gavenue%40@cluster0.shcyv.mongodb.net/api?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://raghavrock098:qfKU2pFdmLKRgAOK@cluster0.yxmah.mongodb.net/websiteOrders?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {

@@ -8,12 +8,9 @@ const mongoose = require('mongoose');
 const { generatePDF, LEGAL_DISCLAIMER } = require('../utils/pdfGenerator');
 
 // Gridlines API configuration
-const GRIDLINES_API_KEY = 'yjVR74jEmdRwhn8GzO6Fpr2pZ3lE6Q28';
-const GRIDLINES_API_URL = 'https://api.gridlines.io';
 
-// Quick EKYC API configuration
-const QUICK_EKYC_API_KEY = 'efa6b816-b55b-4fae-b528-4d33019e2404';
-const QUICK_EKYC_API_URL = 'https://api.quickekyc.com';
+
+
 
 const services = {
     gst: {
