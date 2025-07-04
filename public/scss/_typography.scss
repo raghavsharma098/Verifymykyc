@@ -1,0 +1,378 @@
+/* --------------------------------------------
+    Template Default Fonts & Fonts Styles
+ ---------------------------------------------- */
+
+
+ @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+$title-font: "Urbanist", sans-serif;
+$body-font:  "Urbanist", sans-serif;
+$body-font2:   "Nunito", sans-serif;
+$heading-font: "Urbanist", sans-serif;
+
+//font-family: "Font Awesome 6 Free";
+$fa: "Font Awesome 6 Pro";
+
+body {
+	font-family: $body-font;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 28px;
+	color: $text-color;
+	background-color: $white;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+}
+
+input:focus {
+	color: $text-color;
+	outline: none;
+}
+
+input {
+	&::placeholder {
+		color: #767771;
+	}
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $title-font;
+	margin: 0px;
+	padding: 0;
+	color: $title-color;
+	text-transform: capitalize;
+	@include transition;
+}
+
+h1 {
+	font-size: 42px;
+	font-weight: 700;
+	line-height: 120%;
+}
+
+h2 {
+	font-size: 40px;
+	line-height: 145%;
+	font-weight: 700;
+
+	@include breakpoint(max-md) {
+		font-size: 34px;
+	}
+
+	@include breakpoint(max-sm) {
+		font-size: 28px;
+	}
+}
+
+h3 {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 145%;
+
+	@include breakpoint(max-md) {
+		font-size: 16px;
+	}
+}
+
+h4 {
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 130%;
+}
+
+h5 {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+h6 {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 145%;
+}
+
+a {
+	text-decoration: none;
+	outline: none !important;
+	cursor: pointer;
+	color: $title-color;
+	@include transition;
+
+	&:hover {
+		color: $theme-color !important;
+	}
+}
+
+p {
+	margin: 0px;
+	@include transition;
+}
+
+span {
+	margin: 0px;
+	@include transition;
+}
+
+
+.info-text-style {
+	color: $white;
+	font-family: $title-font;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 35.04px;
+}
+
+
+.form-contl {
+	position: relative;
+	margin-top: 30px;
+
+	input {
+		position: relative;
+		padding: 17px 20px;
+		height: 60px;
+		background: $theme-color-2;
+		width: 100%;
+		border: 1px solid #6E6E6E;
+		opacity: 0.8;
+
+		&::placeholder {
+			color: $white;
+			font-family: $body-font;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 26.08px;
+		}
+
+		&.style2 {
+			border: none;
+		}
+	}
+
+	button {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 60px;
+		height: 60px;
+		line-height: 60px;
+		text-align: center;
+		background: $theme-color;
+		color: $white;
+
+		&.style2 {
+			background: transparent;
+			color: $theme-color;
+		}
+	}
+}
+
+input.form-control,
+textarea.form-control {
+	outline: none;
+	box-shadow: none;
+	background-color: $white;
+	border: 1px solid $border-color;
+	padding: 17px 10px;
+	font-size: 1rem;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+}
+
+
+input.form-control:focus,
+textarea.form-control:focus {
+	background-color: $white;
+	border: 1px solid $border-color;
+	outline: none;
+	box-shadow: none;
+}
+
+
+label {
+	color: $title-color;
+	font-family: $title-font;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 35.04px;
+}
+
+
+.form-group {
+	margin-bottom: var(--bs-gutter-x);
+	position: relative;
+}
+
+.form-group>i {
+	display: inline-block;
+	position: absolute;
+	right: 25px;
+	top: 13px;
+	font-size: 16px;
+	color: $text-color;
+}
+
+.form-group>i.fa-envelope {
+	padding-top: 1px;
+}
+
+
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+input[type=checkbox] {
+	visibility: hidden;
+	opacity: 0;
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 0;
+	// display: none;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+input[type=checkbox]:checked~label:after {
+	opacity: 1;
+}
+
+input[type=checkbox]~label {
+	position: relative;
+	padding-left: 30px;
+	cursor: pointer;
+	display: block;
+	line-height: 30px;
+}
+
+input[type=checkbox]~label:before {
+	content: "";
+	position: absolute;
+	left: 0px;
+	top: 3.5px;
+	background: $white;
+	border: 1px solid $border-color-2;
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	z-index: 9;
+}
+
+input[type=checkbox]~label:after {
+	content: "";
+	position: absolute;
+	left: 6px;
+	top: 9px;
+	background: $theme-color;
+	height: 8px;
+	width: 8px;
+	opacity: 0;
+	-webkit-transition: 0.4s;
+	-o-transition: 0.4s;
+	-moz-transition: 0.4s;
+	transition: 0.4s;
+	z-index: 9;
+}
+
+input[type=checkbox].style2~label {
+	color: #8B929C;
+	padding-left: 23px;
+	margin-bottom: -0.5em;
+}
+
+input[type=checkbox].style2~label:before {
+	background-color: white;
+	border: 1px solid #f7ccd7;
+	height: 14px;
+	width: 14px;
+	line-height: 14px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	top: 6px;
+}
+
+input[type=checkbox].style2:checked~label:before {
+	color: $theme-color;
+}
+
+input[type=radio] {
+	visibility: hidden;
+	opacity: 0;
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 0;
+	display: none;
+}
+
+input[type=radio]~label {
+	position: relative;
+	padding-left: 30px;
+	cursor: pointer;
+	line-height: 1;
+	display: inline-block;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+input[type=radio]~label::before {
+	content: "";
+	position: absolute;
+	font-family: $fa;
+	left: 0;
+	top: -2px;
+	width: 20px;
+	height: 20px;
+	padding-left: 0;
+	font-size: 0.6em;
+	line-height: 19px;
+	text-align: center;
+	border: 1px solid $theme-color;
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+	border-radius: 100%;
+	font-weight: 700;
+	background: $white;
+	color: transparent;
+	-webkit-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+input[type=radio]:checked~label::before {
+	border-color: $theme-color;
+	background-color: $theme-color;
+	color: $white;
+}

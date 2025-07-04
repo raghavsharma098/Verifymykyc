@@ -1,0 +1,74 @@
+/*----------------------------------------------
+    # Title style here
+----------------------------------------------*/
+.single-section-title {
+	color: $title-color;
+	text-align: center; 
+	font-family: $title-font;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.96px;
+
+	@include breakpoint (max-xl) { 
+		font-size: 35px; 
+	}
+}
+ 
+
+.section-title {
+	.subtitle {
+		display: inline-flex;
+		padding: 4px 10px;
+		align-items: center;
+		gap: 10px;
+		border-radius: 100px;
+		background: rgba(116, 68, 253, 0.15); 
+		color: $theme-color; 
+		font-family: $body-font;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 28px;  
+		letter-spacing: -0.32px;
+		margin-bottom: 15px;
+		border-radius: 100px;
+		&.bg2 {
+			background: rgba(255, 255, 255, 0.15);
+		}
+		
+
+		img {
+			margin-left: 3px;
+		}
+	}
+
+	.title {
+		color: $title-color; 
+		font-family: $title-font; 
+		font-size: 48px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.96px;
+		margin-bottom: 25px;
+		@include breakpoint (max-xl) { 
+			font-size: 35px; 
+		}
+	}
+
+	.section-desc {
+		color: $text-color; 
+		font-family: $title-font;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 28px; 
+		letter-spacing: -0.32px;
+		margin-bottom: 30px;
+	}
+}
+
+
+//>>>>> Section Title End <<<<<// 

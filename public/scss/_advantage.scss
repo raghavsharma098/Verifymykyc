@@ -1,0 +1,65 @@
+.advantage-wrapper {
+    &.style1 {
+        border-radius: 50px;
+        background: #FAF8FF;
+
+        .advantage-content {
+            .checklist-wrapper {
+                margin-bottom: 30px;
+            }
+        }
+
+        .advantage-thumb {
+            position: relative;
+
+            .thumb1 {
+                position: relative;
+                z-index: 1;
+            }
+
+            .thumb2 {
+                position: absolute;
+                z-index: 2;
+                right: -30px;
+                bottom: 0;
+            }
+
+            .shape1 {
+                position: absolute;
+                bottom: 0;
+                right: -30px;
+
+                img {
+                    max-width: 100%;
+                }
+            }
+
+            @include breakpoint (max-xl) {
+                display: flex;
+                justify-content: center;
+
+                .thumb2 {
+                    right: 80px;
+                }
+            }
+
+            @include breakpoint (max-md) {
+                .thumb1 {
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+
+            .thumb2 {
+                max-width: 100%;
+                right: 0px;
+
+                img {
+                    max-width: 100%;
+                }
+
+            }
+        }
+    }
+}

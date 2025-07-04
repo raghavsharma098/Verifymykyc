@@ -1,0 +1,223 @@
+.project-card {
+    &.style1 {
+        position: relative;
+        overflow: hidden;
+
+        .project-thumb {
+            max-width: 100%;
+
+            @include breakpoint(md) {
+                img {
+                    max-width: 100%;
+                }
+            }
+            img {
+                width: 100%;
+            }
+        }
+
+        .project-content {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            bottom: -40px;
+            left: 40px;
+            right: 40px;
+            padding: 25px;
+            background-color: $white;
+            max-width: 323px;
+            border-radius: 5px;
+            transition: all 0.4s;
+            -webkit-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            -ms-transition: all 0.4s;
+            -o-transition: all 0.4s;
+
+            @include breakpoint (max-lg) { 
+                left: 10px;
+                right: 10px;
+            }
+
+            h3 {
+                line-height: normal;
+                margin-bottom: 5px;
+
+                a {
+                    color: $title-color;
+                    font-family: $title-font;
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                }
+            }
+        }
+
+        .text {
+            color: $theme-color;
+            font-family: $body-font;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 30px;
+        }
+
+
+        &:hover {
+            .project-content {
+                opacity: 1;
+                visibility: visible;
+                bottom: 40px;
+                @include breakpoint (max-lg) {  
+                    bottom: 10px;
+                }
+                
+            }
+
+        }
+    }
+}
+
+
+
+
+
+
+.project-details-wapper {
+    .main-thumb {
+        margin-bottom: 60px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .single-desc {
+        margin-top: 60px;
+        .single-desc-title {
+            color: #282C32;
+            font-family: $title-font;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 130%;  
+            text-transform: capitalize;
+            margin-bottom: 40px;
+        }
+        
+        .text1 {
+            color: $text-color;
+            font-family: $body-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px;  
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+
+        .text2 {
+            color: $text-color;
+            font-family: $body-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px;  
+            text-transform: capitalize;
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #E5E5E5;
+        }
+    }
+
+    .testimonial-wrap {
+        .testimonial-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 40px; 
+            margin-bottom: 60px;
+            border-bottom: 1px solid #E5E5E5;
+            .tesimonial-content {
+                .icon {
+                    margin-bottom: 20px;
+                }
+
+                .text3 {
+                    color: $title-color;
+                    font-family: $body-font;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 50px;  
+                    text-transform: capitalize;
+                    max-width: 650px;
+                }
+                .testimonial-author {
+                    color: $title-color;
+                    font-family: $body-font;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 50px;  
+                    text-transform: capitalize;
+                }
+            }
+
+            @include breakpoint (max-md) {
+                flex-direction: column;
+            }
+        }
+    }
+
+    
+    .single-desc2 {
+        .single-desc-title {
+            color: $title-color;
+            font-family: $body-font;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 130%;  
+            text-transform: capitalize;
+            margin-bottom: 40px;
+        }
+        
+        .text1 {
+            color: $text-color;
+            font-family: $body-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px;  
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+
+        .text2 {
+            color: $text-color;
+            font-family: $body-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px;  
+            text-transform: capitalize; 
+            margin-bottom: 60px; 
+        }
+    }
+
+    .projectSliderThree {
+        .swiper {
+            overflow: visible!important;
+
+            .swiper-slide {
+                .project-thumb {
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+}

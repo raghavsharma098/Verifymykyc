@@ -1,0 +1,45 @@
+/*----------------------------------------------
+    # All Variables here
+----------------------------------------------*/
+:root {
+    
+    --body: #fff;
+    --black: #000;
+    --white: #fff; 
+    --theme: #7444FD;
+    --theme2: #F9F3EF; 
+    --theme3: #FAF8FF;  
+    --title: #282C32;
+    --header: #282C32;
+    --orange: #e78c45;
+    --text: #858585;
+    --text2: #cbcbcb;
+    --border: #E6E6E6;
+    --border-2: #F1F1F1; 
+    --border-3: #D8D8D8; 
+    --border-4: #E0E0E0;  
+    --border-5: #565656; 
+    --bg-1: #161921;  
+    --bg-2: #F6F7FF; 
+    --box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.06);
+}
+
+// Theme Color - Defualt Colors
+$black: var(--black);
+$white: var(--white);
+$theme-color: var(--theme);
+$theme-color-2: var(--theme2);
+$theme-color-3: var(--theme3);
+$title-color: var(--title);
+$header-color: var(--header);
+$orange-color: var(--orange);
+$text-color: var(--text); 
+$text-color2: var(--text2); 
+$border-color: var(--border);
+$border-color-2: var(--border-2); 
+$border-color-3: var(--border-3); 
+$border-color-4: var(--border-4); 
+$border-color-5: var(--border-5); 
+$bg-color-1: var(--bg-1); 
+$bg-color-2: var(--bg-2); 
+$shadow: var(--box-shadow);

@@ -1,0 +1,257 @@
+.work-process-box {
+    &.style1 {
+        text-align: center;
+        max-width: 210px;
+        margin: auto;
+
+        &.child2 {
+            margin-top: 55px;
+        }
+
+        .step {
+            color: $theme-color;
+            text-align: center;
+            font-family: $title-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 28px;
+            letter-spacing: -0.32px;
+            display: inline-flex;
+            height: 24px;
+            padding: 7px 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 100px;
+            background: rgba(116, 68, 253, 0.15);
+            margin-bottom: 10px;
+        }
+
+        .title {
+            color: $title-color;
+            text-align: center;
+            font-family: $title-font;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 34px;
+            letter-spacing: -0.48px;
+            margin-bottom: 8px;
+        }
+
+        .text {
+            color: $text-color;
+            text-align: center;
+            font-family: $body-font;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 28px;
+            letter-spacing: -0.32px;
+        }
+
+        @include breakpoint (max-xl) {
+            margin-top: 30px;
+            &.child2 {
+                margin-top: 30px;
+            }
+        }
+    }
+}
+
+.work-process-wrapper {
+    &.style1 {
+        position: relative;
+        margin-top: 85px;
+        @include breakpoint (max-xl) {
+            margin-top: 30px; 
+        }
+
+        .shape {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            img {
+                max-width: 100%;
+            }
+
+            @include breakpoint (max-xl) {
+                display: none;
+            }
+        }
+    }
+}
+
+
+
+.wp-wrapper {
+    &.style2 {
+        position: relative;
+        margin-right: -370px;
+
+        .shape {
+            position: absolute;
+            top: 0;
+            left: -375px;
+        }
+
+        .section-title {
+            margin-bottom: 50px;
+        }
+
+
+        .feature-box-wrapper {
+            &.style2 {
+                margin-top: 40px;
+                .feature-box {
+                    &.style2 {
+                        display: flex;
+                        align-items: start;
+                        gap: 20px;
+
+                        .icon {
+
+                        }
+
+                        .content {
+                            h5 {
+                                color: $title-color; 
+                                font-family: $title-font;
+                                font-size: 24px;
+                                font-style: normal;
+                                font-weight: 700;
+                                line-height: 24px;  
+                                letter-spacing: -0.72px;
+                                margin-bottom: 10px;
+                            }
+
+                            .text {
+                                color: $text-color; 
+                                font-family: $title-font;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 28px;  
+                                letter-spacing: -0.32px;
+                                max-width: 310px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .wp-thumb {
+           
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        @include breakpoint (max-xl4) {
+            margin-right: 0;
+        }
+
+        @include breakpoint (max-xl) {
+            margin-top: -2em;
+            margin-bottom: -2em;
+        }
+    }
+}
+
+.wp-content {
+    .accordion-item {
+        border: 0;
+        background-color: $white;
+        margin-bottom: 30px !important;
+
+        .accordion-header {
+            .accordion-button {
+                font-weight: 600;
+                color: $white;
+                letter-spacing: -.2px;
+                border: 0;
+                box-shadow: none;
+                background-color: $theme-color;
+                padding: 15px 20px 0;
+                text-align: center;
+                font-family: $title-font;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 34px;
+                letter-spacing: -0.48px;
+                border: 1px solid transparent;
+                border-radius: 10px 10px 0px 0px;
+                -webkit-border-radius: 10px 10px 0px 0px;
+                -moz-border-radius: 10px 10px 0px 0px;
+                -ms-border-radius: 10px 10px 0px 0px;
+                -o-border-radius: 10px 10px 0px 0px;
+
+                &:after {
+                    font-size: 12px;
+                    font-weight: 500;
+                    transition: all 0.3s ease-in-out !important;
+                    background-image: url(../../assets/images/icon/chevron-right.svg);
+                    color: $theme-color-2;
+                }
+
+                &:not(.collapsed):after {
+                    font-size: 12px;
+                    background-image: url(../../assets/images/icon/chevron-down.svg);
+                    font-weight: 500;
+                    color: $theme-color-2;
+                    transform: rotate(0);
+                    -webkit-transform: rotate(0);
+                    -moz-transform: rotate(0);
+                    -ms-transform: rotate(0);
+                    -o-transform: rotate(0);
+                }
+
+                &.collapsed {
+                    background-color: transparent;
+                    border: 1px solid $border-color;
+                    padding: 18px 20px;
+                    color: $title-color;
+                }
+
+            }
+        }
+
+        .accordion-collapse {
+            border: none;
+
+            .accordion-body {
+                padding-right: 55px;
+                padding-left: 20px;
+                padding-top: 15px;
+                background-color: $theme-color;
+                color: $white;
+                font-family: $title-font;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 28px;
+                letter-spacing: -0.32px;
+                border-radius: 0 0 10px 10px;
+                -webkit-border-radius: 0 0 10px 10px;
+                -moz-border-radius: 0 0 10px 10px;
+                -ms-border-radius: 0 0 10px 10px;
+                -o-border-radius: 0 0 10px 10px;
+
+                @include breakpoint (max-xl4) {
+                    padding-right: 50px;
+                }
+
+                @include breakpoint (max-xl) {
+                    padding-right: 30px;
+                }
+            }
+        }
+    }
+}

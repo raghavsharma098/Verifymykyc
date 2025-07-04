@@ -1,0 +1,649 @@
+/*----------------------------------------------
+    # Footer style here
+----------------------------------------------*/
+.footer-top {
+    padding: 50px 50px;
+    background: $theme-color;
+    margin-bottom: 40px;
+
+    .fancy-box {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .item1 {
+            i {
+                width: 39px;
+                height: 39px;
+                line-height: 39px;
+                text-align: center;
+                background: $white;
+                color: $theme-color;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+            }
+        }
+
+        .item2 {
+            h6 {
+                color: $white;
+                font-family: $body-font;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-transform: capitalize;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: $white;
+                font-family: $title-font;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+    }
+}
+
+
+
+
+.footer-thumb {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.footer-thumb3 {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.footer-widgets-wrapper {
+    padding: 220px 0 60px;
+    position: relative;
+    z-index: 9;
+
+
+    .single-footer-widget {
+        margin-top: 30px;
+
+        .widget-head {
+            margin-bottom: 30px;
+
+            @include breakpoint (max-sm) {
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                color: $white;
+                font-family: $title-font;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                display: inline-block;
+                position: relative;
+                padding-bottom: 20px;
+
+                &::before {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    content: "";
+                    width: 25px;
+                    height: 2px;
+                    background-color: #7444FD;
+                }
+
+                &::after {
+                    position: absolute;
+                    bottom: 0;
+                    left: 40px;
+                    content: "";
+                    width: 55px;
+                    height: 2px;
+                    background-color: #C2C2C2;
+                }
+
+                @include breakpoint (max-md) {
+                    font-size: 23px;
+                }
+
+                @include breakpoint (max-sm) {
+                    font-size: 20px;
+                }
+            }
+
+            h4 {
+                font-weight: bold;
+                color: $white;
+                font-size: 24px;
+                display: inline-block;
+            }
+
+            .footer-input {
+                position: relative;
+
+                input {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    width: 100%;
+                    color: rgba(255, 255, 255, 0.69);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+                    padding-bottom: 20px;
+
+                    &::placeholder {
+                        color: rgba(255, 255, 255, 0.69);
+                    }
+                }
+
+                .newsletter-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 0;
+                    color: $white;
+
+                    i {
+                        font-size: 22px;
+                        transform: rotate(-40deg);
+                    }
+                }
+            }
+        }
+
+        .footer-content {
+            p {
+                color: rgba(255, 255, 255, 0.85);
+            }
+
+            .social-icon {
+                margin-top: 40px;
+                gap: 10px;
+                position: relative;
+                z-index: 9;
+
+                @include breakpoint (max-sm) {
+                    margin-top: 20px;
+                }
+
+                a {
+                    width: 36px;
+                    height: 36px;
+                    line-height: 36px;
+                    text-align: center;
+                    border: 1px solid rgba(255, 255, 255, .2);
+                    background-color: transparent;
+                    color: $white;
+
+                    &:hover {
+                        background-color: $theme-color-2;
+                        color: $title-color  !important;
+                    }
+                }
+
+                &.style2 {
+
+                    a {
+                        border: none;
+                        background-color: transparent;
+                        color: $white;
+                        border-radius: 5px;
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        -ms-border-radius: 5px;
+                        -o-border-radius: 5px;
+
+                        &:hover {
+                            background-color: $theme-color;
+                            color: $white  !important;
+                        }
+                    }
+                }
+            }
+
+            .footer-input {
+                position: relative;
+                margin-top: 40px;
+
+                input {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    padding: 18px 20px;
+                    width: 100%;
+                    border-radius: 8px;
+                    border: 1px solid rgba(255, 255, 255, .3);
+                    color: rgba(255, 255, 255, .8);
+
+                    &::placeholder {
+                        color: rgba(255, 255, 255, .8);
+                    }
+                }
+
+                .newsletter-btn {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    width: 60px;
+                    height: 55px;
+                    line-height: 60px;
+                    border-radius: 8px;
+                    text-align: center;
+                    background-color: $theme-color;
+                    color: $white;
+                    bottom: 5px;
+
+                    i {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+
+        .list-area {
+            li {
+                @include transition;
+                font-weight: 500;
+
+                &:not(:last-child) {
+                    margin-bottom: 20px;
+                }
+
+                a {
+                    color: rgba(255, 255, 255, 0.8);
+
+                    i {
+                        margin-right: 5px;
+                    }
+
+
+                    &:hover {
+                        margin-left: 5px;
+
+                        a {
+                            color: $theme-color-2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.style1 { 
+        padding: 90px 0 151px;
+        position: relative;
+        z-index: 9;
+
+        background-color: #EFEFEF;
+
+        .shape1 {
+            position: absolute;
+            top: 40px;
+            left: -40px;
+            z-index: 1;
+        }
+
+        .shape2 {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            z-index: 1;
+        }
+
+        .shape3 {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            z-index: 1;
+        }
+
+        .single-footer-widget {
+            position: relative;
+            z-index: 5;
+
+            .widget-head {
+                h3 {
+                    font-family: $body-font2;
+                    color: #242331;
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 128.182%;
+                    text-transform: capitalize;
+                }
+            }
+
+            .footer-content {
+                max-width: 366px;
+
+                p {
+                    color: #565656;
+                    font-family: $body-font2;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 157.4%;
+                }
+
+                .store-links {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    margin-top: 30px;
+
+                    @include breakpoint (max-xl) {
+                        flex-direction: column;
+                        align-items: start;
+                    }
+                    .apple {
+                        a {
+                            svg {
+                                margin-right: 5px;
+                            }
+
+                            display: inline-block;
+                            padding: 18px 25px;
+                            border-radius: 39px;
+                            background: $title-color;
+                            color: $white;
+                            font-family: $body-font2;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+
+                            &:hover {
+                                color: $white !important;
+                            }
+                        }
+                    }
+
+                    .play {
+                        a {
+                            svg {
+                                margin-right: 5px;
+                            }
+
+                            display: inline-block;
+                            padding: 18px 25px;
+                            border-radius: 39px;
+                            border: 1px solid #D3D3D3;
+                            font-family: $body-font2;
+                            color: #242331;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+
+                            &:hover {
+                                color: $title-color !important;
+                            }
+                        }
+                    }
+
+                    @include breakpoint (max-md) {
+                        flex-direction: column;
+                    }
+                }
+            }
+
+            .list-area {
+                li {
+                    a {
+                        color: #565656;
+                        font-family: $body-font2;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 267.5%;
+                        text-transform: capitalize;
+                    }
+
+                    &:not(:last-child) {
+                        margin-bottom: 5px;
+                    }
+                }
+
+            }
+
+            .contact-box {
+                border-radius: 20px;
+                background: #F9F9F9;
+                padding: 52px 58px 52px 45px; 
+
+                .subtitle {
+                    color: #5236FF;
+                    font-family: $body-font2;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    text-transform: capitalize;
+                    margin-bottom: 8px;
+                }
+
+                .widget-head {
+                    font-family: $body-font2;
+                    color: #242331;
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 128.182%;
+                    text-transform: capitalize;
+                    margin-bottom: 10px;
+                }
+
+                .text {
+                    color: #797979;
+                    font-family: $body-font2;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 157.4%;
+                }
+
+                .info {
+                    display: flex;
+                    align-items: start;
+                    gap: 15px;
+                    margin-top: 30px;
+
+                    .link {
+                        margin-top: -0.3em;
+
+                        a {
+                            color: #565656;
+                            font-family: $body-font2;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 157.4%;
+                        }
+                    }
+
+                }
+                @include breakpoint (max-md) {
+                    padding: 25px;
+                }
+            }
+        }
+
+        }
+    }
+
+.footer-top-logo {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        content: '';
+        top: 35px;
+        left: -555px;
+        width: 515px;
+        height: 1px;
+        background: $border-color-2;
+    }
+
+    &:after {
+        position: absolute;
+        content: '';
+        top: 35px;
+        right: -555px;
+        width: 515px;
+        height: 1px;
+        background: $border-color-2;
+    }
+}
+
+.footer-bottom {
+    position: relative;
+    z-index: 9;
+    background: #0B0B0C;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+    .footer-wrapper {
+        padding: 18px 0;
+
+        @include breakpoint (max-md) {
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center !important;
+        }
+
+        p {
+            color: $white;
+
+            @include breakpoint (max-xs) {
+                font-size: 13px;
+            }
+
+            a {
+                color: $white;
+                font-weight: 600;
+            }
+        }
+    }
+
+    &.style1 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: transparent !important;
+
+        .footer-wrapper {
+            padding: 35px 0 50px;
+            border-top: 1px solid #E3E3E3;
+            @include breakpoint (max-md) {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center !important;
+            }
+
+            p {
+                color: #797979;
+                font-family: $body-font2;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 157.4%; 
+                text-transform: capitalize;
+
+                @include breakpoint (max-xs) {
+                    font-size: 13px;
+                }
+
+                a {
+                    color: $white;
+                    font-weight: 600;
+                }
+            }
+
+            .social-links {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+
+                @include breakpoint (max-md) {
+                    gap: 5px;
+                }
+            }
+
+        }
+    }
+
+}
+
+.contact-info-area {
+    padding-top: 120px;
+    @include flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    padding-bottom: 50px;
+
+    @include breakpoint (max-xxl) {
+        flex-wrap: wrap;
+        gap: 40px;
+        padding-top: 80px;
+        justify-content: initial;
+    }
+
+    @include breakpoint (max-sm) {
+        gap: 30px;
+    }
+
+    .contact-info-items {
+        @include flex;
+        gap: 20px;
+        justify-content: space-between;
+        position: relative;
+
+        @include breakpoint (max-xl) {
+            flex-wrap: wrap;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            line-height: 65px;
+            text-align: center;
+            position: relative;
+            border: 2px dotted $white;
+            border-radius: 50%;
+            font-size: 30px;
+            color: $white;
+        }
+
+        .content {
+            p {
+                color: $white;
+                margin-bottom: 5px;
+            }
+
+            h3 {
+                font-size: 24px;
+                color: $white;
+                text-transform: initial;
+
+                a {
+                    color: $white;
+                }
+            }
+        }
+    }
+}

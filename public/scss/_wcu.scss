@@ -1,0 +1,217 @@
+ .wcu-wrapper {
+     &.style1 {
+         margin-top: 100px;
+
+         .wcu-thumb {
+            position: relative;
+            .main-thumb {
+                position: relative;
+                z-index: 3;
+                img {
+                    max-width: 100%;
+                }
+            }
+
+            .shape {
+                position: absolute;
+                bottom: -20px;
+                max-width: 100%;
+                z-index: 1;
+
+                img {
+                    max-width: 100%;
+                }
+            }
+         }
+     }
+
+     &.style2 {
+         border-radius: 50px;
+         background-color: $theme-color-3;
+
+         .wcu-thumb {
+             position: relative;
+             margin-right: 58px;
+
+             .main-thumb {
+                 position: relative;
+
+                 img {
+                     max-width: 100%;
+                     border-radius: 20px;
+                     box-shadow: 0px 5px 60px 0px rgba(0, 0, 0, 0.15);
+                     -webkit-border-radius: 20px;
+                     -moz-border-radius: 20px;
+                     -ms-border-radius: 20px;
+                     -o-border-radius: 20px;
+                 }
+             }
+
+             .thumb2 {
+                 position: absolute;
+                 bottom: -65px;
+                 left: -78px;
+
+                 img {
+                     max-width: 100%;
+                 }
+
+                 @include breakpoint (max-xl) {
+                    left: 0;
+                    bottom: 0;
+                 }
+             }
+
+             .thumb3 {
+                 position: absolute;
+                 top: 57px;
+                 right: -58px;
+
+                 @include breakpoint (max-xl) {
+                    top: 0;
+                    right: 0;
+                    margin-bottom: 30px;
+                 }
+                 
+                 img {
+                     max-width: 100%;
+                     border-radius: 10px;
+                     -webkit-border-radius: 10px;
+                     -moz-border-radius: 10px;
+                     -ms-border-radius: 10px;
+                     -o-border-radius: 10px;
+                 }
+             }
+         }
+
+         .wcu-content {
+            @include breakpoint (max-md) {
+                margin-top: 30px;
+            }
+             .section-title {
+                 .text1 {
+                     margin-bottom: 30px;
+                 }
+             }
+         }
+
+         .counter-box-wrapper {
+             margin-top: 40px;
+         }
+     }
+
+     &.style3 {
+         .wcu-content {
+             .section-title {
+                 .text1 {
+                     margin-bottom: 10px;
+                 }
+
+                 .text2 {
+                     margin-bottom: 30px;
+                 }
+             }
+         }
+
+         .wcu-thumb {
+            position: relative;
+            margin-left: 80px;
+            .main-thumb {
+                position: relative;
+                z-index: 3;
+                margin-left: 30px;
+                width: 100%;
+
+                img {
+                    max-width: 100%;
+                }
+            }
+             .thumb-box {
+                position: absolute;
+                top: 0;
+                left: -80px;
+                z-index: 3;
+                padding: 12px 35px;
+                border-radius: 10px;
+                background: linear-gradient(135deg, #AC60E5 0%, #0C87F0 100%);
+              
+                 h5 {
+                     color: $white;
+                     text-align: center; 
+                     font-family: $body-font;
+                     font-size: 18px;
+                     font-style: normal;
+                     font-weight: 700;
+                     line-height: 135%; 
+                 }
+
+                 .text {
+                    color: $white;
+                     text-align: center; 
+                     font-family: $body-font;
+                     font-size: 12px;
+                     font-style: normal;
+                     font-weight: 400;
+                     line-height: normal;
+                 }
+
+                 .shape-box {
+                     position: relative;
+                     margin-top: 10px;
+
+                     img {
+                         position: relative;
+                     }
+
+                     .shape-content {
+                         position: absolute;
+                         top: 50%;
+                         left: 50%;
+                         transform: translate(-50%, -50%);
+                         -webkit-transform: translate(-50%, -50%);
+                         -moz-transform: translate(-50%, -50%);
+                         -ms-transform: translate(-50%, -50%);
+                         -o-transform: translate(-50%, -50%);
+
+                         h6 {
+                             color: $white;
+                             text-align: center;
+                             font-family: $body-font;
+                             font-size: 12px;
+                             font-style: normal;
+                             font-weight: 400;
+                             line-height: 140%;
+                         }
+
+                         h3 {
+                             color: $white;
+                             text-align: center;
+                             font-family: $body-font;
+                             font-size: 24px;
+                             font-style: normal;
+                             font-weight: 700;
+                             line-height: 110%;
+                             letter-spacing: -0.72px;
+                         }
+                     }
+                 }
+             }
+
+             .thumb2 {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 1;
+                margin-left: -80px;
+
+                img {
+                    max-width: 100%;
+                }
+             }
+         }
+
+         .counter-box-wrapper {
+             margin-top: 40px;
+         }
+     }
+ }

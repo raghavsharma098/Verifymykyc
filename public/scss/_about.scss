@@ -1,0 +1,197 @@
+.about-wrapper {
+    &.style1 {
+        .about-thumb {
+            position: relative;
+            padding-bottom: 70px;
+            .bg  {
+                position: absolute;
+                bottom: 70px;
+                right: 0;
+                z-index: 1;
+                width: 465px;
+                height: 350px;
+                border-radius: 0px 0px 50px 50px;
+                background: #E8E5FD;
+
+                
+                @include breakpoint (max-md) {
+                   max-width: 100%;
+                }
+            }
+            .thumbShape1 {
+                position: absolute;
+                top: 0;
+                left: -100px;
+                z-index: 1;
+            }
+            .thumbShape2 {
+                position: absolute;
+                bottom: 0;
+                right: -20px;
+                z-index: 1;
+            }
+            .thumbShape3 {
+                position: absolute;
+                top: -10px;
+                left: -20px;
+                z-index: 1;
+            }
+            .thumbShape4 {
+                position: absolute;
+                top: 200px;
+                left: 130px;
+                z-index: 1;
+            }
+            .main-thumb {
+                position: relative;
+                z-index: 3;
+                display: flex;
+                justify-content: end;
+
+                @include breakpoint (max-md) {
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+
+            .absolute-thumb {
+                padding: 15px;
+                background: $white;
+                position: absolute;
+                bottom: -10px;
+                left: -10px;
+                z-index: 3;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                -ms-border-radius: 10px;
+                -o-border-radius: 10px;
+
+
+                @include breakpoint (max-xl) {
+                    bottom: 59px;
+                    left: 236px;
+                }
+
+                @include breakpoint (max-lg) {
+                    bottom: 0;
+                    left: 0;
+                }
+}
+        }
+
+        .about-content {
+            .checklist {
+                margin-bottom: 30px;
+            }
+        }
+    }
+
+    &.style2 {        
+        border-radius: 50px;
+        background-color:   $theme-color-3;
+        .about-thumb {
+            position: relative;
+            width: 100%;
+            >img { 
+                width: 100%;
+                position: relative;
+            }
+
+            .absolute-thumb {
+                position: absolute;
+                top: 12px;
+                right: -31px;
+                img {
+                    max-width: 100%;
+                }
+            }
+        }
+        .about-content {
+            .section-title {
+                .text1 {
+                    margin-bottom: 30px;
+                } 
+            }
+        }
+
+        .counter-box-wrapper  {
+            margin-top: 40px;
+        } 
+    }
+
+}
+
+.about-wrapper-3 {
+    .about-image {
+        margin-left: -70%;
+
+        @include breakpoint (max-xl){
+            margin-left: 0;
+        }
+
+        img {
+            @include imgw;
+        }
+    }
+
+    .about-content {
+        margin-left: 40px;
+
+        @include breakpoint (max-xl){
+            margin-left: 0;
+        }
+
+        ul {
+            margin-top: 40px;
+            margin-bottom: 40px;
+
+            li {
+                font-weight: 500;
+
+                b {
+                    font-weight: 700;
+                    color: $header-color;
+                    margin-left: 10px;
+                }
+
+                &:not(:last-child){
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}
+
+.feature-box-items {
+    display: flex;
+    gap: 20px;
+
+    .content {
+        h3 {
+            font-size: 32px;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #565656;
+            font-weight: 500;
+        }
+    }
+}
+
+.about-section-3 {
+    position: relative;
+
+    .about-shape {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+    }
+}

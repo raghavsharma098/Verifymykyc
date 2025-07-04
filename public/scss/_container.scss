@@ -1,0 +1,189 @@
+/*----------------------------------------------
+    # Container  style here
+----------------------------------------------*/
+@media (min-width:550px) {
+    .header-1 {
+        .container {
+            max-width: 1620px;
+        }
+    }
+
+    .header-2,
+    .header-3 {
+        .container {
+            max-width: 1620px;
+        }
+    }
+
+    .intro-container-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .intro-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1450px;
+            }
+        }
+    } 
+
+    .brand-slider-container-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1450px;
+            }
+        }
+
+        &.style2 {
+            .container {
+                max-width: 1450px;
+            }
+        }
+    }
+ 
+
+    .work-process-container-wrapper  {
+        &.style1 {
+            .container {
+                max-width: 1440px;
+            }
+        }
+    }
+
+    .advantage-container-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .advantage-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1200px;
+            }
+        }
+    }
+
+    .counter-container-wrapper  {
+        &.style1 {
+            .container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .counter-wrapper  {
+        &.style1 {
+            .container {
+                max-width: 1450px;
+            }
+        }
+    }
+
+    .testimonial-container-wrapper {
+        &.style1 {
+            >.container {
+                max-width: 1820px;
+            }
+        }
+
+        &.style2 {
+            >.container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .cta-container-wrapper {
+        &.style1 {
+            >.container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .wcu-container-wrapper {
+        &.style2 {
+            >.container {
+                max-width: 1820px;
+            }
+        }
+    }
+    
+    .about-container-wrapper {
+        &.style2 {
+            .container {
+                max-width: 1820px;
+            }
+        }
+    }
+
+    .about-wrapper {
+        &.style2 {
+            .container {
+                max-width: 1450px;
+            }
+        }
+    }
+
+    .project-container-wrapper {
+        &.style2 {
+            .container {
+                max-width: 1790px;
+            }
+        }
+    }
+
+    .project-details-container-wrapper {
+        .container {
+            max-width: 1440px;
+        }
+    }
+
+    .team-page-container-wrapper {
+        .container {
+            max-width: 1330px;
+        } 
+    }
+
+
+    .footer-widgets-wrapper {
+        &.style1 {
+            .container {
+                max-width: 1580px;
+            } 
+        }
+    }
+
+    .footer-bottom {
+        &.style1 {
+            .container {
+                max-width: 1580px;
+            } 
+        }
+    }
+
+
+    .service-details-container-wrapper {
+        .container {
+            max-width: 1440px;
+        } 
+    }
+}
+ 
+
+// @include breakpoint (max){
+//     .intro-wrapper {
+//         &.style1 {
+//             .container {
+//                 max-width: 1850px !important;
+//             }
+//         }
+//     } 
+// }

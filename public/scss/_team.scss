@@ -1,0 +1,82 @@
+
+
+.team-card {
+    &.style1 {
+        margin-top: 150px;
+        text-align: center;
+        padding: 24px;
+        border-radius: 20px;
+        background: #F8F8FF;
+        .team-thumb {
+            margin-top: -150px;
+            img {
+                max-width: 100%;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+}
+        }
+        .team-card-content {
+            h3 {
+                margin-top: 20px;
+                margin-bottom: 5px;
+                a {
+                    color: $title-color;
+                    text-align: center;
+                    font-family: $title-font;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+            }
+        }
+
+        .designation {
+            color: $title-color;
+            text-align: center;
+            font-family: $title-font;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            li {
+                a {
+                    display: inline-block;
+                    width: 40px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    background-color: #E7F1FF;
+                    color: $theme-color;
+                    border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    -ms-border-radius: 50%;
+                    -o-border-radius: 50%;
+
+                    &:hover {
+                        background-color: #FFEBEE;
+                        color: #E60023!important;
+                    }
+}
+            }
+        }
+    }
+}
+
+
+
+.team-section-3  {
+    margin-top: -1.4em;
+}

@@ -1,0 +1,75 @@
+
+
+
+.breadcumb-container-wrapper {
+    padding: 250px 0 170px;
+    background-color: $theme-color-3;
+    position: relative;
+    overflow: hidden;
+
+    .shape1 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+
+        @include breakpoint (max-lg) {
+            display: none;
+        }
+    }
+
+    .shape2 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        
+        @include breakpoint (max-lg) {
+            display: none;
+        }
+    }
+
+    .breadcumb-wrapper {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @include breakpoint (max-lg){
+           justify-content: center;
+         }
+        .page-heading {
+            text-align: center;
+            h1 {
+                color: $title-color;
+                text-align: center; 
+                font-family: $title-font;
+                font-size: 48px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                letter-spacing: -0.96px;
+                margin-bottom: 10px;
+
+                @include breakpoint (max-lg){
+                    font-size: 40px;
+                  }
+            }
+
+            .links {
+                color: $theme-color; 
+                font-family: $body-font;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 28px;  
+                letter-spacing: -0.32px;
+
+                .slash {
+                    margin: 0 5px;
+                }
+            }
+        } 
+    }
+}

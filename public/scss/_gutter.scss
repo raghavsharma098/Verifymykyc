@@ -1,0 +1,59 @@
+ /*----------------------------------------------
+    # Gutter  style here
+----------------------------------------------*/
+ @include breakpoint (xxxl) {
+   .gx-25 {
+     --bs-gutter-x: 25px;
+   }
+
+   .gx-30 {
+     --bs-gutter-x: 30px;
+   }
+
+   .gx-40 {
+     --bs-gutter-x: 40px;
+   }
+
+   .gx-60 {
+     --bs-gutter-x: 60px;
+   }
+
+   .gx-80 {
+     --bs-gutter-x: 80px;
+   }
+
+   .gx-95 {
+     --bs-gutter-x: 95px;
+   }
+
+   .gx-100 {
+    --bs-gutter-x: 100px;
+  }
+
+   .gx-114 {
+     --bs-gutter-x: 114px;
+   }
+
+   .gx-85 {
+     --bs-gutter-x: 85px;
+   }
+
+   .gx-134 {
+     --bs-gutter-x: 134px;
+   }
+
+   .gx-165 {
+     --bs-gutter-x: 165px;
+   }
+ }
+
+
+
+ .gy-30 {
+   --bs-gutter-y: 30px;
+ }
+
+
+ .gx-0 {
+   --bs-gutter-x: 0px;
+ }

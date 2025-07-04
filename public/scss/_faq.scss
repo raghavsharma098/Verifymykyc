@@ -1,0 +1,176 @@
+.faq-wrapper {
+    &.style1 {
+        .faq-thumb {
+            position: relative;
+            margin-right: -200px;
+
+            .main-thumb {
+                position: relative;
+                z-index: 1;
+                margin-left: 150px;
+                border-radius: 30px;
+                -webkit-border-radius: 30px;
+                -moz-border-radius: 30px;
+                -ms-border-radius: 30px;
+                -o-border-radius: 30px;
+
+                @include breakpoint (max-lg) {
+                    max-width: 100%;
+                    margin-left: 0;
+
+                }
+            }
+
+            .absolute-thumb {
+                position: absolute;
+                z-index: 3;
+                top: 17%;
+                left: 0px; 
+                transform: translateY(-17%); 
+                border-radius: 30px; 
+                -webkit-border-radius: 30px;
+                -moz-border-radius: 30px;
+                -ms-border-radius: 30px;
+                -o-border-radius: 30px;
+
+                img {
+                    max-width: 100%;
+                    border-radius: 30px;
+                    -webkit-border-radius: 30px;
+                    -moz-border-radius: 30px;
+                    -ms-border-radius: 30px;
+                    -o-border-radius: 30px;
+}
+
+                @include breakpoint (max-lg) {
+                    max-width: 100%;
+                    top: 0;
+                    right: 0;
+
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    &.style2 {
+        .faq-thumb {
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+
+.faq-content {
+    .accordion-item {
+        border: 0;
+        background-color: $white;
+
+        .accordion-header {
+            .accordion-button {
+                font-weight: 600;
+                color: $theme-color;
+                letter-spacing: -.2px;
+                border: 0;
+                box-shadow: none;
+                background-color: $theme-color-3;
+                padding: 15px 20px 0;
+                text-transform: capitalize;
+                font-size: 16px;
+                border: 1px solid $border-color;
+                border: 1px solid transparent;
+                border-radius: 10px;
+
+                &:after {
+                    font-size: 12px;
+                    font-weight: 500;
+                    transition: all 0.3s ease-in-out !important;
+                    background-image: url(../../assets/images/icon/chevron-right.svg);
+                    color: $theme-color-2;
+                }
+
+                &:not(.collapsed):after {
+                    font-size: 12px;
+                    background-image: url(../../assets/images/icon/chevron-down.svg);
+                    font-weight: 500;
+                    color: $theme-color-2;
+                    transform: rotate(0);
+                    -webkit-transform: rotate(0);
+                    -moz-transform: rotate(0);
+                    -ms-transform: rotate(0);
+                    -o-transform: rotate(0);
+                }
+
+                &.collapsed {
+                    background-color: transparent;
+                    border: 1px solid $border-color;
+                    padding: 15px 20px;
+                    color: $title-color;
+                }
+
+            }
+        }
+
+        .accordion-collapse {
+            border: none;
+
+            .accordion-body {
+                padding-right: 55px;
+                padding-left: 20px;
+                padding-top: 15px;
+                background-color: $theme-color;
+                color: $text-color;
+                font-family: $title-font;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 28px;
+                letter-spacing: -0.32px;
+
+                @include breakpoint (max-xl4) {
+                    padding-right: 50px;
+                }
+
+                @include breakpoint (max-xl) {
+                    padding-right: 30px;
+                }
+            }
+        }
+    }
+
+    &.style1 {
+        margin-top: 35px;
+
+        .accordion-item {
+            border: 0;
+            background-color: $theme-color-3;
+            border-radius: 10px;
+
+            .accordion-header {
+                .accordion-button {
+                    color: $title-color;
+                    font-family: $title-font;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 28px;
+                    letter-spacing: -0.32px;
+                    background-color: $theme-color-3;
+                    border: none;
+                }
+            }
+
+            .accordion-collapse {
+
+                .accordion-body {
+                    background-color: $theme-color-3;
+                    padding-bottom: 30px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,132 @@
+/*-----------------------------------------------------------------
+Theme Name: Niotech
+Author: Gramentheme
+Author URI: https://themeforest.net/user/gramentheme
+Version: 1.0.0 
+Description: Niotech - App Landing HTML Template <
+ 
+-------------------------------------------------------------------
+ CSS TABLE OF CONTENTS
+-------------------------------------------------------------------
+
+    01.Mixins
+    02.Variables
+    03.Typography
+    04.Buttons 
+    05.Gutter 
+    06.Container 
+    07.Animation 
+    08.Helping 
+    09.MeanMenu 
+    10.Preloader
+    11.Title 
+    12.Common 
+    13.Header
+    14.Breadcumb
+    15.Footer
+    16.Intro 
+    17.Brand 
+    18.About
+    19.Work Process 
+    20.Advantage
+    21.Wcu
+    22.Counter
+    23.Faq
+    24.Testimonial
+    25.Feature
+    26.Pricing 
+    27.Cta
+    28.Blog
+    29.Services
+    30.Project 
+    31.Team
+    32.Team Extra
+    33.Sidebar
+    34.Contact
+    35.Input
+    36.Useed Technologies
+------------------------------------------------------------------*/
+
+
+//>> Basic Start <<//
+
+/* 01.Mixins */
+@import "_mixins";
+/* 02.Variables */
+@import "_variables";
+/* 03.Typography */
+@import "_typography";
+/* 04.Buttons */
+@import "_buttons";
+/* 05.Gutter */
+@import "_gutter";
+/* 06.Container */
+@import "_container";
+/* 07.Animation */
+@import "_animation";
+/* 08.Helping */
+@import "_helping";
+/* 09.MeanMenu */
+@import "_meanmenu";
+/* 10.Preloader */
+@import "_preloader";
+//>> Basic End <<//	
+
+
+//>> Template Section Style Start <<//  
+
+/* 11.Title */
+@import "_title";
+/* 12.Common */
+@import "_common";
+/* 13.Header */
+@import "_header";
+/* 14.Breadcumb */
+@import "_breadcumb";
+/* 15.Footer */
+@import "_footer";
+/* 16.Intro */
+@import "_intro";
+/* 17.Brand */
+@import "_brand";
+/* 18.About */
+@import "_about"; 
+/* 19.Work Process */
+@import "_work-process";
+/* 20.Advantage */
+@import "_advantage";
+/* 21.Wcu */
+@import "_wcu"; 
+/* 22.Counter */
+@import "_counter";  
+/* 23.Faq */
+@import "_faq";  
+/* 24.Testimonial */
+@import "_testimonial";  
+/* 25.Feature */
+@import "_feature"; 
+/* 26.Pricing */
+@import "_pricing"; 
+/* 27.Cta */
+@import "_cta"; 
+/* 28.Blog */
+@import "_blog"; 
+@import "_blog-extra"; 
+/* 29.Services */
+@import "_services"; 
+/* 30.Project */
+@import "_project"; 
+/* 31.Team */
+@import "_team"; 
+/* 32.Team Extra */
+@import "_team-extra"; 
+/* 33.Sidebar */
+@import "_sidebar";
+/* 34.Contact */
+@import "_contact";
+/* 35.Input */
+@import "_input"; 
+ /* 36.Useed Technologies */
+@import "_used-technology"; 
+
+//>> Template Section Style End <<//

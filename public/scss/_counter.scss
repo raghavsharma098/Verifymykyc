@@ -1,0 +1,55 @@
+.counter-wrapper {
+    &.style1 {
+        border-radius: 30px;
+        background-color: $theme-color;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        -ms-border-radius: 30px;
+        -o-border-radius: 30px;
+    }
+}
+
+
+.counter-box {
+    &.style1 {
+        position: relative;
+        .shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .counter {
+            .counter-number {
+                color: $white;
+                font-family: $title-font;
+                font-size: 80px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100px;
+                letter-spacing: -1.6px;
+            }
+
+            .plus {
+                color: $white;
+                font-family: $title-font;
+                font-size: 80px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100px;
+                letter-spacing: -1.6px;
+            }
+
+
+        }
+
+        .text {
+            color: $white;
+            font-family: $body-font;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 26px;
+            letter-spacing: -0.36px;
+        }
+    }
+}

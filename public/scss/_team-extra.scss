@@ -1,0 +1,188 @@
+/*----------------------------------------------
+    # Team Extra style here
+----------------------------------------------*/
+.team-details-wrap {
+    padding: 30px;
+    margin-bottom: 60px;
+    border-radius: 16px;
+    border: 1px solid #E5E5E5;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+
+    .team-details-thumb {
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .team-details-content {
+        .details-info {
+            .profile {
+                h3 {
+                    color: $title-color;
+                    font-family: $title-font;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 24px;
+                    letter-spacing: -0.4px;
+                    text-transform: capitalize;
+                    margin-bottom: 5px;
+                }
+
+                span {
+                    color: $text-color;
+                    font-family: $body-font;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 14px;
+                    letter-spacing: -0.3px;
+                    text-transform: capitalize;
+                }
+            }
+
+            .gt-social {
+                a {
+                    border-radius: 100px;
+                    color: $theme-color;
+                    background: #F5F5F5;
+                    -webkit-border-radius: 100px;
+                    -moz-border-radius: 100px;
+                    -ms-border-radius: 100px;
+                    -o-border-radius: 100px;
+
+                    &:hover {
+                        background: linear-gradient(90deg, #384BFF 0%, #B42AF3 123.82%);
+                        color: $white;
+                    }
+                }
+            }
+
+            @include breakpoint (max-md) {
+                flex-direction: column;
+
+                .profile {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        .info-wrapper {
+            gap: 30px;
+
+            .checklist {
+                margin-top: 30px;
+                padding-top: 30px;
+                margin-bottom: 0;
+                border-top: 1px solid $border-color;
+
+                ul {
+                    padding-left: 0;
+                    margin-bottom: 0;
+
+                    li {
+                        i {
+                            width: 36px;
+                            height: 36px;
+                            line-height: 36px;
+                            text-align: center;
+                            border-radius: 24px;
+                            color: $theme-color;
+                            background-color: #F3EBFE;
+                            -webkit-border-radius: 24px;
+                            -moz-border-radius: 24px;
+                            -ms-border-radius: 24px;
+                            -o-border-radius: 24px;
+                        }
+                    }
+                }
+            }
+
+            @include breakpoint (max-lg)  {
+                flex-direction: column;
+
+                .checklist {
+                    margin-top: 0;
+
+                    &:first-child {
+                        margin-top: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.team-simple-history {
+    padding-top: 60px; 
+    padding-bottom: 120px;
+    background-color: #FAF8FF;;
+
+    @include breakpoint (max-lg) {
+        padding-bottom: 80px;
+    }
+
+    .title {
+        color: $title-color;
+        font-family: $title-font;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: -0.48px;
+        text-transform: capitalize;
+    }
+
+    .skills {
+        padding: 28px 40px 70px;
+        border-radius: 16px;
+        background-color: $white;
+        -webkit-border-radius: 16px;
+        -moz-border-radius: 16px;
+        -ms-border-radius: 16px;
+        -o-border-radius: 16px;
+
+        >.title {
+            color: $title-color;
+            font-family: $title-font;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px;
+            letter-spacing: -0.4px;
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+
+        .progress-wrap {
+            .progress-meta {
+                margin-bottom: 5px;
+
+                .title {
+                    color: $title-color;
+                    font-family: $title-font;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 30px;
+                    text-transform: capitalize;
+                }
+
+                .percentage {
+                    color: $theme-color;
+                }
+            }
+
+            .progress-container {
+                height: 15px;
+
+                .progress-bar {
+                    height: 15px;
+                }
+            }
+        }
+    }
+}
